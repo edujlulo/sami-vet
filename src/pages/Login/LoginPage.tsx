@@ -8,9 +8,6 @@ type LoginPageProps = {
 export default function LoginPage({ onLogin }: LoginPageProps) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem("isLoggedIn") === "true";
-  });
 
   const navigate = useNavigate();
 
@@ -51,7 +48,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
 
         <div className="bg-green-400 p-10 border-1 border-gray-600 rounded">
           {/* Internal box */}
-          <div class="bg-amber-50 border-1 border-gray-600 outline-12 outline-amber-100 py-6 px-12 rounded flex flex-col gap-5 items-center">
+          <div className="bg-amber-50 border-1 border-gray-600 outline-12 outline-amber-100 py-6 px-12 rounded flex flex-col gap-5 items-center">
             {/* Title */}
             <h1 className="text-2xl font-bold text-red-600 bg-amber-100 border-1 border-gray-600 outline-10 outline-green-400 py-1 px-20 mx-5 mt-2 mb-8">
               HUELLAS CLINICA VETERINARIA

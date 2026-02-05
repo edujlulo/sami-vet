@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./pages/login/LoginPage";
 import MainMenuPage from "./pages/main-menu/MainMenuPage";
 import PatientLocatorPage from "./pages/patient-locator/PatientLocatorPage";
-import ProtectedRoute from "./routes/ProtectedRoute";
 
 export default function App() {
   // Por defecto es false

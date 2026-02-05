@@ -1,10 +1,15 @@
 import { Navigate } from "react-router-dom";
 
 type ProtectedRouteProps = {
-  children: JSX.Element;
+  children: React.ReactNode;
 };
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-  return isLoggedIn ? children : <Navigate to="/login" />;
+  const isLoggedIn = !!localStorage.getItem("isLoggedIn");
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <>{children}</>;
 }
