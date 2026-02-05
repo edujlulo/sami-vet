@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import LoginPage from "./pages/Login/LoginPage";
-import MainMenuPage from "./pages/Main Menu/MainMenuPage";
-import PatientLocatorPage from "./pages/Patient Locator/PatientLocatorPage";
+import LoginPage from "./pages/login/LoginPage";
+import MainMenuPage from "./pages/main-menu/MainMenuPage";
+import PatientLocatorPage from "./pages/patient-locator/PatientLocatorPage";
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 export default function App() {
   // Por defecto es false
@@ -14,7 +15,14 @@ export default function App() {
         {/* Login siempre accesible */}
         <Route
           path="/login"
-          element={<LoginPage onLogin={() => setIsLoggedIn(true)} />}
+          element={
+            <LoginPage
+              onLogin={() => {
+                localStorage.setItem("isLoggedIn", "true"); // Persistir login
+                setIsLoggedIn(true); // Actualiza el state
+              }}
+            />
+          }
         />
 
         {/* Menú principal protegido */}
