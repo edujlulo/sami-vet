@@ -26,7 +26,7 @@ export default function TableOwners({ owners, handleSelect }) {
                 {owner.email}
               </td>
               <td className="border border-gray-900 px-2 py-0.5">
-                {owner.cedula}
+                {owner.idCardNumber}
               </td>
             </tr>
           ))}

@@ -16,6 +16,23 @@
       "registered": "",
       "affiliate": false,
       "id": "8"
+    },
+    {
+      "id": "9",
+      "surname": "lopez",
+      "name": "carlos",
+      "idCardNumber": "3546534",
+      "rif": "456464",
+      "homePhone": "",
+      "mobilePhone": "",
+      "officePhone": "",
+      "email": "",
+      "address": "",
+      "estate": "",
+      "person": "",
+      "taxpayer": "",
+      "registered": "",
+      "affiliate": false
     }
   ]
 }
