@@ -1,7 +1,17 @@
-export default function Button({ name }: { name: string }) {
+export default function Button({
+  name,
+  onClick,
+  disabled,
+  className,
+}: {
+  name: string;
+  onClick?: () => void;
+  disabled?: boolean;
+  className?: string;
+}) {
   return (
     <button
-      className="
+      className={`
         bg-amber-50
         border border-gray-300
         rounded-md
@@ -15,9 +25,15 @@ export default function Button({ name }: { name: string }) {
         hover:-translate-y-[1px]
         active:translate-y-0
         transition-all duration-150
-        w-40
-        transition-all duration-150 ease-in-out
-      "
+        w-35
+        disabled:bg-gray-400
+        disabled:text-gray-200
+        disabled:cursor-not-allowed
+        disabled:hover:bg-gray-400
+        disabled:opacity-60
+      `}
+      onClick={onClick}
+      disabled={disabled}
     >
       {name}
     </button>

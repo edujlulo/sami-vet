@@ -1,39 +1,21 @@
 {
   "owners": [
     {
-      "name": "Eduardo Updatedddd",
-      "email": "eduardo_updated@example.com",
-      "id": "1"
-    },
-    {
-      "id": "2",
-      "name": "Ana Perez",
-      "email": "ana@example.com"
-    },
-    {
-      "id": "3",
-      "name": "Carlos",
-      "email": "carlos@example.com"
-    }
-  ],
-  "pets": [
-    {
-      "id": "1",
-      "ownerId": 1,
-      "name": "Fido",
-      "type": "dog"
-    },
-    {
-      "id": "2",
-      "ownerId": 1,
-      "name": "Miau",
-      "type": "cat"
-    },
-    {
-      "id": "3",
-      "ownerId": 2,
-      "name": "Bobby",
-      "type": "dog"
+      "surname": "lulo",
+      "name": "eduardo",
+      "idCardNumber": "464654654",
+      "rif": "654654654",
+      "homePhone": "",
+      "mobilePhone": "",
+      "officePhone": "",
+      "email": "",
+      "address": "",
+      "estate": "",
+      "person": "",
+      "taxpayer": "",
+      "registered": "",
+      "affiliate": false,
+      "id": "8"
     }
   ]
 }

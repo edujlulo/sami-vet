@@ -1,12 +1,26 @@
 import { useEffect, useState } from "react";
-import Button from "../../components/Button";
+import FormOwners from "./FormOwners";
+import ButtonsOwners from "./ButtonsOwners";
+import TableOwners from "./TableOwners";
 
-function OwnersTable() {
+export default function PatientLocatorPage() {
   const [owners, setOwners] = useState([]);
   const [selectedOwner, setSelectedOwner] = useState({
     id: null,
+    surname: "",
     name: "",
+    idCardNumber: "",
+    rif: "",
+    homePhone: "",
+    mobilePhone: "",
+    officePhone: "",
     email: "",
+    address: "",
+    estate: "",
+    person: "",
+    taxpayer: "",
+    registered: "",
+    affiliate: false,
   });
 
   const [isEditing, setIsEditing] = useState(false);
@@ -19,55 +33,162 @@ function OwnersTable() {
       .catch((error) => console.error("Error fetching owners:", error));
   }, []);
 
-  // Nuevo
+  // Handle new
   function handleNew() {
-    setSelectedOwner({ id: null, name: "", email: "" });
+    setSelectedOwner({
+      id: null,
+      surname: "",
+      name: "",
+      idCardNumber: "",
+      rif: "",
+      homePhone: "",
+      mobilePhone: "",
+      officePhone: "",
+      email: "",
+      address: "",
+      estate: "",
+      person: "",
+      taxpayer: "",
+      registered: "",
+      affiliate: false,
+    });
     setIsCreating(true);
     setIsEditing(false);
   }
 
-  // Cancelar
+  // Handle cancel
   function handleCancel() {
     setIsCreating(false);
     setIsEditing(false);
-    setSelectedOwner({ id: null, name: "", email: "" });
+    setSelectedOwner({
+      id: null,
+      surname: "",
+      name: "",
+      idCardNumber: "",
+      rif: "",
+      homePhone: "",
+      mobilePhone: "",
+      officePhone: "",
+      email: "",
+      address: "",
+      estate: "",
+      person: "",
+      taxpayer: "",
+      registered: "",
+      affiliate: false,
+    });
   }
 
-  // Guardar
+  // ===================== HANDLE SAVE =====================
   function handleSave() {
     if (isEditing) {
-      fetch(`http://localhost:3001/owners/${selectedOwner.id}`, {
+      // editar owner existente
+      const ownerId = Number(selectedOwner.id);
+
+      fetch(`http://localhost:3001/owners/${ownerId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          surname: selectedOwner.surname,
           name: selectedOwner.name,
+          idCardNumber: selectedOwner.idCardNumber,
+          rif: selectedOwner.rif,
+          homePhone: selectedOwner.homePhone,
+          mobilePhone: selectedOwner.mobilePhone,
+          officePhone: selectedOwner.officePhone,
           email: selectedOwner.email,
+          address: selectedOwner.address,
+          estate: selectedOwner.estate,
+          person: selectedOwner.person,
+          taxpayer: selectedOwner.taxpayer,
+          registered: selectedOwner.registered,
+          affiliate: selectedOwner.affiliate,
         }),
       })
         .then((res) => res.json())
         .then((updatedOwner) => {
-          setOwners(
-            owners.map((o) => (o.id === updatedOwner.id ? updatedOwner : o))
+          // actualizar estado, asegurando que id sea número
+          setOwners((prev) =>
+            prev.map((o) =>
+              Number(o.id) === ownerId
+                ? { ...updatedOwner, id: ownerId }
+                : { ...o, id: Number(o.id) },
+            ),
           );
+
           setIsEditing(false);
-          setSelectedOwner(updatedOwner);
-        });
+          setSelectedOwner({ ...updatedOwner, id: ownerId });
+        })
+        .catch((err) => console.error("Save error:", err));
     } else if (isCreating) {
+      // crear nuevo owner
+      const nextId =
+        owners.length > 0
+          ? Math.max(...owners.map((o) => Number(o.id))) + 1
+          : 1;
+
       fetch("http://localhost:3001/owners", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          id: String(nextId),
+          surname: selectedOwner.surname,
           name: selectedOwner.name,
+          idCardNumber: selectedOwner.idCardNumber,
+          rif: selectedOwner.rif,
+          homePhone: selectedOwner.homePhone,
+          mobilePhone: selectedOwner.mobilePhone,
+          officePhone: selectedOwner.officePhone,
           email: selectedOwner.email,
+          address: selectedOwner.address,
+          estate: selectedOwner.estate,
+          person: selectedOwner.person,
+          taxpayer: selectedOwner.taxpayer,
+          registered: selectedOwner.registered,
+          affiliate: selectedOwner.affiliate,
         }),
       })
         .then((res) => res.json())
         .then((newOwner) => {
-          setOwners([...owners, newOwner]);
+          // agregar al estado, asegurando id como número
+          setOwners((prev) => [...prev, { ...newOwner, id: nextId }]);
           setIsCreating(false);
-          setSelectedOwner(newOwner);
-        });
+          setSelectedOwner({ ...newOwner, id: nextId });
+        })
+        .catch((err) => console.error("Save error:", err));
     }
+  }
+
+  // ===================== HANDLE DELETE =====================
+  function handleDelete() {
+    if (selectedOwner.id === null) return;
+
+    const ownerId = Number(selectedOwner.id);
+
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this owner?",
+    );
+    if (!confirmDelete) return;
+
+    fetch(`http://localhost:3001/owners/${ownerId}`, {
+      method: "DELETE",
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error(`Delete failed with status ${res.status}`);
+
+        // quitar del estado local y forzar id como número
+        setOwners((prev) =>
+          prev
+            .filter((o) => Number(o.id) !== ownerId)
+            .map((o) => ({ ...o, id: Number(o.id) })),
+        );
+
+        // limpiar selección y modos
+        setSelectedOwner({ id: null, name: "", email: "", cedula: "" });
+        setIsEditing(false);
+        setIsCreating(false);
+      })
+      .catch((err) => console.error("Delete error:", err));
   }
 
   // Seleccionar fila
@@ -78,81 +199,28 @@ function OwnersTable() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex flex-col items-center justify-center h-screen scale-90">
       <div className="bg-amber-100 border-20 border-amber-400 p-20 flex flex-col items-center justify-center gap-8">
         <div className="flex flex-row gap-8">
-          <form className="bg-amber-200 p-4 flex flex-col gap-2">
-            <label>Name:</label>
-            <input
-              type="text"
-              value={selectedOwner.name}
-              onChange={(e) =>
-                setSelectedOwner({ ...selectedOwner, name: e.target.value })
-              }
-              disabled={!isEditing && !isCreating}
-              className="bg-amber-50 border border-gray-700"
-            />
-            <label>Email:</label>
-            <input
-              type="text"
-              value={selectedOwner.email}
-              onChange={(e) =>
-                setSelectedOwner({ ...selectedOwner, email: e.target.value })
-              }
-              disabled={!isEditing && !isCreating}
-              className="bg-amber-50 border border-gray-700"
-            />
-          </form>
-          <div className="flex flex-col gap-2">
-            <Button
-              name="Modificar"
-              onClick={() => setIsEditing(true)}
-              disabled={selectedOwner.id === null || isCreating}
-            />
-            <Button
-              name="Guardar"
-              onClick={handleSave}
-              disabled={!isEditing && !isCreating}
-            />
-            <Button
-              name="Cancelar"
-              onClick={handleCancel}
-              disabled={!isEditing && !isCreating}
-            />
-            <Button
-              name="Nuevo"
-              onClick={handleNew}
-              disabled={isEditing || isCreating}
-            />
-          </div>
+          <FormOwners
+            selectedOwner={selectedOwner}
+            setSelectedOwner={setSelectedOwner}
+            isEditing={isEditing}
+            isCreating={isCreating}
+          />
+          <ButtonsOwners
+            setIsEditing={setIsEditing}
+            selectedOwner={selectedOwner}
+            isCreating={isCreating}
+            isEditing={isEditing}
+            handleSave={handleSave}
+            handleCancel={handleCancel}
+            handleNew={handleNew}
+            handleDelete={handleDelete}
+          />
         </div>
-
-        <table border="1" cellPadding="10" className="bg-amber-50">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {owners.map((owner) => (
-              <tr
-                key={owner.id}
-                onClick={() => handleSelect(owner)}
-                className="cursor-pointer hover:bg-amber-200"
-              >
-                <td>{owner.id}</td>
-                <td>{owner.name}</td>
-                <td>{owner.email}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <TableOwners owners={owners} handleSelect={handleSelect} />
       </div>
     </div>
   );
 }
-
-export default OwnersTable;
