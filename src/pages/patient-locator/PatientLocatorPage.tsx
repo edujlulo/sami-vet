@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import FormOwners from "./FormOwners";
 import ButtonsOwners from "./ButtonsOwners";
 import TableOwners from "./TableOwners";
+import type { Owner } from "../../types/Owner";
 
 export default function PatientLocatorPage() {
-  const [owners, setOwners] = useState([]);
-  const [selectedOwner, setSelectedOwner] = useState({
-    id: null,
+  const [owners, setOwners] = useState<Owner[]>([]);
+
+  const emptyOwner: Owner = {
+    id: "",
     surname: "",
     name: "",
     idCardNumber: "",
@@ -21,7 +23,9 @@ export default function PatientLocatorPage() {
     taxpayer: "",
     registered: "",
     affiliate: false,
-  });
+  };
+
+  const [selectedOwner, setSelectedOwner] = useState<Owner>(emptyOwner);
 
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
@@ -35,23 +39,7 @@ export default function PatientLocatorPage() {
 
   // Handle new
   function handleNew() {
-    setSelectedOwner({
-      id: null,
-      surname: "",
-      name: "",
-      idCardNumber: "",
-      rif: "",
-      homePhone: "",
-      mobilePhone: "",
-      officePhone: "",
-      email: "",
-      address: "",
-      estate: "",
-      person: "",
-      taxpayer: "",
-      registered: "",
-      affiliate: false,
-    });
+    setSelectedOwner(emptyOwner);
     setIsCreating(true);
     setIsEditing(false);
   }
@@ -60,30 +48,14 @@ export default function PatientLocatorPage() {
   function handleCancel() {
     setIsCreating(false);
     setIsEditing(false);
-    setSelectedOwner({
-      id: null,
-      surname: "",
-      name: "",
-      idCardNumber: "",
-      rif: "",
-      homePhone: "",
-      mobilePhone: "",
-      officePhone: "",
-      email: "",
-      address: "",
-      estate: "",
-      person: "",
-      taxpayer: "",
-      registered: "",
-      affiliate: false,
-    });
+    setSelectedOwner(emptyOwner);
   }
 
   // ===================== HANDLE SAVE =====================
   function handleSave() {
     if (isEditing) {
       // editar owner existente
-      const ownerId = Number(selectedOwner.id);
+      const ownerId = selectedOwner.id;
 
       fetch(`http://localhost:3001/owners/${ownerId}`, {
         method: "PUT",
@@ -110,9 +82,9 @@ export default function PatientLocatorPage() {
           // actualizar estado, asegurando que id sea número
           setOwners((prev) =>
             prev.map((o) =>
-              Number(o.id) === ownerId
+              o.id === ownerId
                 ? { ...updatedOwner, id: ownerId }
-                : { ...o, id: Number(o.id) },
+                : { ...o, id: o.id },
             ),
           );
 
@@ -150,10 +122,10 @@ export default function PatientLocatorPage() {
       })
         .then((res) => res.json())
         .then((newOwner) => {
-          // agregar al estado, asegurando id como número
-          setOwners((prev) => [...prev, { ...newOwner, id: nextId }]);
+          // agregar al estado
+          setOwners((prev) => [...prev, { ...newOwner, id: String(nextId) }]);
           setIsCreating(false);
-          setSelectedOwner({ ...newOwner, id: nextId });
+          setSelectedOwner({ ...newOwner, id: String(nextId) });
         })
         .catch((err) => console.error("Save error:", err));
     }
@@ -163,7 +135,7 @@ export default function PatientLocatorPage() {
   function handleDelete() {
     if (selectedOwner.id === null) return;
 
-    const ownerId = Number(selectedOwner.id);
+    const ownerId = selectedOwner.id;
 
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this owner?",
@@ -178,13 +150,11 @@ export default function PatientLocatorPage() {
 
         // quitar del estado local y forzar id como número
         setOwners((prev) =>
-          prev
-            .filter((o) => Number(o.id) !== ownerId)
-            .map((o) => ({ ...o, id: Number(o.id) })),
+          prev.filter((o) => o.id !== ownerId).map((o) => ({ ...o, id: o.id })),
         );
 
         // limpiar selección y modos
-        setSelectedOwner({ id: null, name: "", email: "", cedula: "" });
+        setSelectedOwner(emptyOwner);
         setIsEditing(false);
         setIsCreating(false);
       })
@@ -192,7 +162,7 @@ export default function PatientLocatorPage() {
   }
 
   // Seleccionar fila
-  function handleSelect(owner) {
+  function handleSelect(owner: Owner) {
     setSelectedOwner(owner);
     setIsEditing(false);
     setIsCreating(false);

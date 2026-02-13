@@ -1,4 +1,16 @@
 import Button from "../../components/Button";
+import type { Owner } from "../../types/Owner";
+
+interface ButtonsOwnersProps {
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedOwner: Owner;
+  isCreating: boolean;
+  isEditing: boolean;
+  handleSave: () => void;
+  handleCancel: () => void;
+  handleNew: () => void;
+  handleDelete: () => void;
+}
 
 export default function ButtonsOwners({
   setIsEditing,
@@ -9,7 +21,7 @@ export default function ButtonsOwners({
   handleCancel,
   handleNew,
   handleDelete,
-}) {
+}: ButtonsOwnersProps) {
   return (
     <div className="grid grid-cols-2 gap-2 scale-90 items-start">
       <Button

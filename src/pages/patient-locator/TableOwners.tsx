@@ -1,7 +1,17 @@
-export default function TableOwners({ owners, handleSelect }) {
+import type { Owner } from "../../types/Owner";
+
+interface TableOwnersProps {
+  owners: Owner[];
+  handleSelect: (owner: Owner) => void;
+}
+
+export default function TableOwners({
+  owners,
+  handleSelect,
+}: TableOwnersProps) {
   return (
     <div>
-      <table border="1" cellPadding="10" className="bg-amber-50">
+      <table className="bg-amber-50 border border-gray-900">
         <thead>
           <tr>
             <th className="border border-gray-900 px-2 py-0.5">Código</th>

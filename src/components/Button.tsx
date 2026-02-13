@@ -2,7 +2,6 @@ export default function Button({
   name,
   onClick,
   disabled,
-  className,
 }: {
   name: string;
   onClick?: () => void;
@@ -22,7 +21,7 @@ export default function Button({
         hover:border-green-300
         hover:shadow-md
         transform
-        hover:-translate-y-[1px]
+        hover:-translate-y-px
         active:translate-y-0
         transition-all duration-150
         w-35
