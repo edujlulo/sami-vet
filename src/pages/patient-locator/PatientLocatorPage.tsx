@@ -170,8 +170,8 @@ export default function PatientLocatorPage() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen scale-90">
-      <div className="bg-amber-100 border-20 border-amber-400 p-20 flex flex-col items-center justify-center gap-8">
-        <div className="flex flex-row gap-8">
+      <div className="bg-amber-100 border-20 border-amber-400 px-2 py-20 flex flex-col items-center justify-center gap-8 min-w-[400px]">
+        <div className="flex flex-row gap-2">
           <FormOwners
             selectedOwner={selectedOwner}
             setSelectedOwner={setSelectedOwner}
@@ -187,9 +187,12 @@ export default function PatientLocatorPage() {
             handleCancel={handleCancel}
             handleNew={handleNew}
             handleDelete={handleDelete}
+            emptyOwner={emptyOwner}
           />
         </div>
-        <TableOwners owners={owners} handleSelect={handleSelect} />
+        <div className="mr-auto ml-4">
+          <TableOwners owners={owners} handleSelect={handleSelect} />
+        </div>
       </div>
     </div>
   );

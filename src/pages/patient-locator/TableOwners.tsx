@@ -9,15 +9,25 @@ export default function TableOwners({
   owners,
   handleSelect,
 }: TableOwnersProps) {
+  const emptyRows = 8 - owners.length;
+
   return (
-    <div>
-      <table className="bg-amber-50 border border-gray-900">
+    <div className="w-[640px] h-[250px] overflow-y-auto border border-gray-900">
+      <table className="bg-amber-50 border border-gray-900 w-full table-fixed bg-amber-50">
         <thead>
           <tr>
-            <th className="border border-gray-900 px-2 py-0.5">Código</th>
-            <th className="border border-gray-900 px-2 py-0.5">Nombre</th>
-            <th className="border border-gray-900 px-2 py-0.5">Email</th>
-            <th className="border border-gray-900 px-2 py-0.5">Cédula</th>
+            <th className="w-[14%] border border-gray-900 px-2 py-0.5">
+              Código
+            </th>
+            <th className="w-[33%] border border-gray-900 px-2 py-0.5">
+              Apellidos
+            </th>
+            <th className="w-[33%] border border-gray-900 px-2 py-0.5">
+              Nombres
+            </th>
+            <th className="w-[20%] border border-gray-900 px-2 py-0.5">
+              Cédula
+            </th>
           </tr>
         </thead>
 
@@ -30,14 +40,23 @@ export default function TableOwners({
             >
               <td className="border border-gray-900 px-2 py-0.5">{owner.id}</td>
               <td className="border border-gray-900 px-2 py-0.5">
-                {owner.name}
+                {owner.surname}
               </td>
               <td className="border border-gray-900 px-2 py-0.5">
-                {owner.email}
+                {owner.name}
               </td>
               <td className="border border-gray-900 px-2 py-0.5">
                 {owner.idCardNumber}
               </td>
+            </tr>
+          ))}
+
+          {Array.from({ length: emptyRows > 0 ? emptyRows : 0 }).map((_, i) => (
+            <tr key={`empty-${i}`}>
+              <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
+              <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
+              <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
+              <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
             </tr>
           ))}
         </tbody>
