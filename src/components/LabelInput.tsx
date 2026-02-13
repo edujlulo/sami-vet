@@ -19,7 +19,6 @@ export default function LabelInput({
   ownerKey,
   owner,
   setOwner,
-  disabled = false,
   className = "",
   type = "text",
   isEditing,
