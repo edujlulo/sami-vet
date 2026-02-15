@@ -16,7 +16,7 @@ export default function MainMenuPage() {
           <div className="flex flex-col gap-1 bg-amber-100 p-5 border border-amber-500 shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
             <Link
               to="/patients"
-              className="bg-amber-50 border border-gray-300 rounded-md py-1 cursor-pointer shadow-sm hover:bg-green-50 hover:border-green-300 hover:shadow-md transform hover:-translate-y-[1px] active:translate-y-0 transition-all duration-150 w-40 text-center transition-all duration-150 ease-in-out"
+              className="bg-amber-50 border border-gray-300 rounded-md py-1 cursor-pointer shadow-sm hover:bg-green-50 hover:border-green-300 hover:shadow-md transform hover:-translate-y-[1px] active:translate-y-0 transition-all duration-150 w-35 text-center transition-all duration-150 ease-in-out"
             >
               Localizador
             </Link>

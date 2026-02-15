@@ -3,12 +3,14 @@ import FormOwners from "./FormOwners";
 import ButtonsOwners from "./ButtonsOwners";
 import TableOwners from "./TableOwners";
 import type { Owner } from "../../types/Owner";
+import TablePets from "./TablePets";
+import { supabase } from "../../supabaseClient";
 
 export default function PatientLocatorPage() {
   const [owners, setOwners] = useState<Owner[]>([]);
 
   const emptyOwner: Owner = {
-    id: "",
+    id: 0,
     surname: "",
     name: "",
     idCardNumber: "",
@@ -30,12 +32,33 @@ export default function PatientLocatorPage() {
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
 
+  // Original:
+
   useEffect(() => {
-    fetch("http://localhost:3001/owners")
-      .then((res) => res.json())
-      .then((data) => setOwners(data))
-      .catch((error) => console.error("Error fetching owners:", error));
+    supabase
+      .from("owners")
+      .select("*") // Select all columns
+      .then(({ data, error }) => {
+        if (error) {
+          console.error("Error fetching owners:", error);
+        } else if (data) {
+          setOwners(data as Owner[]); // <--- forzamos tipo
+        }
+      });
   }, []);
+
+  // For test supabase:
+
+  // useEffect(() => {
+  //   const testConnection = async () => {
+  //     const { data, error } = await supabase.from("owners").select("*");
+
+  //     console.log("DATA:", data);
+  //     console.log("ERROR:", error);
+  //   };
+
+  //   testConnection();
+  // }, []);
 
   // Handle new
   function handleNew() {
@@ -54,111 +77,103 @@ export default function PatientLocatorPage() {
   // ===================== HANDLE SAVE =====================
   function handleSave() {
     if (isEditing) {
-      // editar owner existente
-      const ownerId = selectedOwner.id;
-
-      fetch(`http://localhost:3001/owners/${ownerId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          surname: selectedOwner.surname,
-          name: selectedOwner.name,
-          idCardNumber: selectedOwner.idCardNumber,
-          rif: selectedOwner.rif,
-          homePhone: selectedOwner.homePhone,
-          mobilePhone: selectedOwner.mobilePhone,
-          officePhone: selectedOwner.officePhone,
-          email: selectedOwner.email,
-          address: selectedOwner.address,
-          estate: selectedOwner.estate,
-          person: selectedOwner.person,
-          taxpayer: selectedOwner.taxpayer,
-          registered: selectedOwner.registered,
-          affiliate: selectedOwner.affiliate,
-        }),
-      })
-        .then((res) => res.json())
-        .then((updatedOwner) => {
-          // actualizar estado, asegurando que id sea número
-          setOwners((prev) =>
-            prev.map((o) =>
-              o.id === ownerId
-                ? { ...updatedOwner, id: ownerId }
-                : { ...o, id: o.id },
-            ),
-          );
-
-          setIsEditing(false);
-          setSelectedOwner({ ...updatedOwner, id: ownerId });
-        })
-        .catch((err) => console.error("Save error:", err));
+      (async () => {
+        try {
+          const { data, error } = await supabase
+            .from("owners")
+            .update({
+              surname: selectedOwner.surname,
+              name: selectedOwner.name,
+              idCardNumber: selectedOwner.idCardNumber,
+              rif: selectedOwner.rif,
+              homePhone: selectedOwner.homePhone,
+              mobilePhone: selectedOwner.mobilePhone,
+              officePhone: selectedOwner.officePhone,
+              email: selectedOwner.email,
+              address: selectedOwner.address,
+              estate: selectedOwner.estate,
+              person: selectedOwner.person,
+              taxpayer: selectedOwner.taxpayer,
+              registered: selectedOwner.registered,
+              affiliate: selectedOwner.affiliate,
+            })
+            .eq("id", selectedOwner.id)
+            .select()
+            .single();
+          if (error) throw error;
+          if (data) {
+            setOwners((prev) => prev.map((o) => (o.id === data.id ? data : o)));
+            setIsEditing(false);
+            setSelectedOwner(data);
+          }
+        } catch (err) {
+          console.error("Error updating owner:", err);
+        }
+      })();
     } else if (isCreating) {
       // crear nuevo owner
-      const nextId =
-        owners.length > 0
-          ? Math.max(...owners.map((o) => Number(o.id))) + 1
-          : 1;
-
-      fetch("http://localhost:3001/owners", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id: String(nextId),
-          surname: selectedOwner.surname,
-          name: selectedOwner.name,
-          idCardNumber: selectedOwner.idCardNumber,
-          rif: selectedOwner.rif,
-          homePhone: selectedOwner.homePhone,
-          mobilePhone: selectedOwner.mobilePhone,
-          officePhone: selectedOwner.officePhone,
-          email: selectedOwner.email,
-          address: selectedOwner.address,
-          estate: selectedOwner.estate,
-          person: selectedOwner.person,
-          taxpayer: selectedOwner.taxpayer,
-          registered: selectedOwner.registered,
-          affiliate: selectedOwner.affiliate,
-        }),
-      })
-        .then((res) => res.json())
-        .then((newOwner) => {
-          // agregar al estado
-          setOwners((prev) => [...prev, { ...newOwner, id: String(nextId) }]);
-          setIsCreating(false);
-          setSelectedOwner({ ...newOwner, id: String(nextId) });
-        })
-        .catch((err) => console.error("Save error:", err));
+      (async () => {
+        try {
+          const { data, error } = await supabase
+            .from("owners")
+            .insert([
+              {
+                surname: selectedOwner.surname,
+                name: selectedOwner.name,
+                idCardNumber: selectedOwner.idCardNumber,
+                rif: selectedOwner.rif,
+                homePhone: selectedOwner.homePhone,
+                mobilePhone: selectedOwner.mobilePhone,
+                officePhone: selectedOwner.officePhone,
+                email: selectedOwner.email,
+                address: selectedOwner.address,
+                estate: selectedOwner.estate,
+                person: selectedOwner.person,
+                taxpayer: selectedOwner.taxpayer,
+                registered: selectedOwner.registered,
+                affiliate: selectedOwner.affiliate,
+              },
+            ])
+            .select()
+            .single();
+          if (error) throw error;
+          if (data) {
+            setOwners((prev) => [...prev, data]);
+            setIsCreating(false);
+            setSelectedOwner(data);
+          }
+        } catch (err) {
+          console.error("Error inserting owner:", err);
+        }
+      })();
     }
   }
 
   // ===================== HANDLE DELETE =====================
-  function handleDelete() {
-    if (selectedOwner.id === null) return;
-
-    const ownerId = selectedOwner.id;
+  async function handleDeleteOwner() {
+    if (!selectedOwner.id) return;
 
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this owner?",
     );
     if (!confirmDelete) return;
 
-    fetch(`http://localhost:3001/owners/${ownerId}`, {
-      method: "DELETE",
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error(`Delete failed with status ${res.status}`);
+    try {
+      const { error } = await supabase
+        .from("owners")
+        .delete()
+        .eq("id", selectedOwner.id); // WHERE id = ?
 
-        // quitar del estado local y forzar id como número
-        setOwners((prev) =>
-          prev.filter((o) => o.id !== ownerId).map((o) => ({ ...o, id: o.id })),
-        );
+      if (error) throw error;
 
-        // limpiar selección y modos
-        setSelectedOwner(emptyOwner);
-        setIsEditing(false);
-        setIsCreating(false);
-      })
-      .catch((err) => console.error("Delete error:", err));
+      // Actualizamos estado local
+      setOwners((prev) => prev.filter((o) => o.id !== selectedOwner.id));
+      setSelectedOwner(emptyOwner);
+      setIsEditing(false);
+      setIsCreating(false);
+    } catch (err) {
+      console.error("Error deleting owner:", err);
+    }
   }
 
   // Seleccionar fila
@@ -170,14 +185,17 @@ export default function PatientLocatorPage() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen scale-90">
-      <div className="bg-amber-100 border-20 border-amber-400 px-2 py-20 flex flex-col items-center justify-center gap-8 min-w-[400px]">
-        <div className="flex flex-row gap-2">
+      <div className="bg-amber-100 border-20 border-amber-400 px-2 py-20 flex flex-row items-center justify-center gap-6 min-w-[400px]">
+        <div className="flex flex-col gap-2 items-center">
           <FormOwners
             selectedOwner={selectedOwner}
             setSelectedOwner={setSelectedOwner}
             isEditing={isEditing}
             isCreating={isCreating}
           />
+          <TableOwners owners={owners} handleSelect={handleSelect} />
+        </div>
+        <div className="flex flex-col items-center gap-6">
           <ButtonsOwners
             setIsEditing={setIsEditing}
             selectedOwner={selectedOwner}
@@ -186,12 +204,10 @@ export default function PatientLocatorPage() {
             handleSave={handleSave}
             handleCancel={handleCancel}
             handleNew={handleNew}
-            handleDelete={handleDelete}
+            handleDeleteOwner={handleDeleteOwner}
             emptyOwner={emptyOwner}
           />
-        </div>
-        <div className="mr-auto ml-4">
-          <TableOwners owners={owners} handleSelect={handleSelect} />
+          <TablePets />
         </div>
       </div>
     </div>

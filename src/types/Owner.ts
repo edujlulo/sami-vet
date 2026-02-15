@@ -1,5 +1,5 @@
 export interface Owner {
-  id: string;
+  id: number;
   surname: string;
   name: string;
   idCardNumber: string;

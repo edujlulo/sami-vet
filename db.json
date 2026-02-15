@@ -1,8 +1,7 @@
 {
   "owners": [
     {
-      "id": "1",
-      "surname": "González",
+      "surname": "González Ramirez",
       "name": "Carlos",
       "idCardNumber": "12345678",
       "rif": "J-12345678-1",
@@ -15,7 +14,8 @@
       "person": "",
       "taxpayer": "",
       "registered": "",
-      "affiliate": false
+      "affiliate": false,
+      "id": "1"
     },
     {
       "id": "2",
@@ -165,6 +165,23 @@
       "email": "daniela@example.com",
       "address": "Calle Comercio",
       "estate": "Catia",
+      "person": "",
+      "taxpayer": "",
+      "registered": "",
+      "affiliate": false
+    },
+    {
+      "id": "11",
+      "surname": "Perez",
+      "name": "Pablo",
+      "idCardNumber": "654654",
+      "rif": "6546546",
+      "homePhone": "654654564",
+      "mobilePhone": "64654654",
+      "officePhone": "654654654",
+      "email": "pablo@correo",
+      "address": "Calle orinoco",
+      "estate": "baruta",
       "person": "",
       "taxpayer": "",
       "registered": "",

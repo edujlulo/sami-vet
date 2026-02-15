@@ -30,7 +30,7 @@ export default function LabelInput({
       <label className="text-blue-900 font-bold -mb-1 mt-1">{label}</label>
       <input
         type={type}
-        value={owner[ownerKey] as string} // accede dinámicamente a la propiedad
+        value={(owner[ownerKey] as string) ?? ""}
         onChange={(e) => setOwner({ ...owner, [ownerKey]: e.target.value })}
         disabled={!isEditing && !isCreating}
         ref={inputRef}
