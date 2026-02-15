@@ -5,6 +5,8 @@ import TableOwners from "./TableOwners";
 import type { Owner } from "../../types/Owner";
 import TablePets from "./TablePets";
 import { supabase } from "../../supabaseClient";
+import TableVisits from "./TableVisits";
+import ButtonsVisits from "./ButtonsVisits";
 
 export default function PatientLocatorPage() {
   const [owners, setOwners] = useState<Owner[]>([]);
@@ -185,29 +187,38 @@ export default function PatientLocatorPage() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen scale-90">
-      <div className="bg-amber-100 border-20 border-amber-400 px-2 py-20 flex flex-row items-center justify-center gap-6 min-w-[400px]">
-        <div className="flex flex-col gap-2 items-center">
-          <FormOwners
-            selectedOwner={selectedOwner}
-            setSelectedOwner={setSelectedOwner}
-            isEditing={isEditing}
-            isCreating={isCreating}
-          />
-          <TableOwners owners={owners} handleSelect={handleSelect} />
+      <div className="bg-amber-100 border-20 border-amber-400 px-2 py-20 flex flex-col items-center justify-center gap-6 min-w-[400px]">
+        {/* Top box */}
+        <div className="flex flex-row items-center justify-center gap-6">
+          <div className="flex flex-col gap-2 items-center">
+            <FormOwners
+              selectedOwner={selectedOwner}
+              setSelectedOwner={setSelectedOwner}
+              isEditing={isEditing}
+              isCreating={isCreating}
+            />
+            <TableOwners owners={owners} handleSelect={handleSelect} />
+          </div>
+          <div className="flex flex-col items-center gap-6">
+            <ButtonsOwners
+              setIsEditing={setIsEditing}
+              selectedOwner={selectedOwner}
+              isCreating={isCreating}
+              isEditing={isEditing}
+              handleSave={handleSave}
+              handleCancel={handleCancel}
+              handleNew={handleNew}
+              handleDeleteOwner={handleDeleteOwner}
+              emptyOwner={emptyOwner}
+            />
+            <TablePets />
+          </div>
         </div>
-        <div className="flex flex-col items-center gap-6">
-          <ButtonsOwners
-            setIsEditing={setIsEditing}
-            selectedOwner={selectedOwner}
-            isCreating={isCreating}
-            isEditing={isEditing}
-            handleSave={handleSave}
-            handleCancel={handleCancel}
-            handleNew={handleNew}
-            handleDeleteOwner={handleDeleteOwner}
-            emptyOwner={emptyOwner}
-          />
-          <TablePets />
+
+        {/* Bottom box */}
+        <div className="flex flex-row gap-2 justify-center items-center mx-10">
+          <TableVisits />
+          <ButtonsVisits />
         </div>
       </div>
     </div>

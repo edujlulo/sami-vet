@@ -25,7 +25,7 @@ export default function ButtonsOwners({
   emptyOwner,
 }: ButtonsOwnersProps) {
   return (
-    <div>
+    <div className="bg-amber-200 py-2 px-2 mt-4">
       <p className="flex items-center justify-center text-blue-900 font-bold">
         Propietario
       </p>

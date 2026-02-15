@@ -16,7 +16,7 @@ export default function MainMenuPage() {
           <div className="flex flex-col gap-1 bg-amber-100 p-5 border border-amber-500 shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
             <Link
               to="/patients"
-              className="bg-amber-50 border border-gray-300 rounded-md py-1 cursor-pointer shadow-sm hover:bg-green-50 hover:border-green-300 hover:shadow-md transform hover:-translate-y-[1px] active:translate-y-0 transition-all duration-150 w-35 text-center transition-all duration-150 ease-in-out"
+              className="bg-amber-50 border border-gray-300 rounded-md py-1 cursor-pointer shadow-sm hover:bg-green-50 hover:border-green-300 hover:shadow-md transform hover:-translate-y-[1px] active:translate-y-0 transition-all duration-150 w-35 text-center transition-all duration-150 ease-in-out text-blue-900 font-bold"
             >
               Localizador
             </Link>
@@ -33,7 +33,7 @@ export default function MainMenuPage() {
           <div className="flex flex-col gap-1 p-5">
             <div className="mt-auto -mb-6 bg-orange-400 py-2 px-8 rounded border border-amber-700 shadow-[0_8px_24px_rgba(0,0,0,0.08)]">
               <button
-                className=" bg-amber-50 border border-gray-300 rounded-md py-1 cursor-pointer shadow-sm hover:bg-green-50 hover:border-green-300 hover:shadow-md transform hover:-translate-y-[1px] active:translate-y-0 transition-all duration-150 w-30 text-center transition-all duration-150 ease-in-out"
+                className=" bg-amber-50 border border-gray-300 rounded-md py-1 cursor-pointer shadow-sm hover:bg-green-50 hover:border-green-300 hover:shadow-md transform hover:-translate-y-[1px] active:translate-y-0 transition-all duration-150 w-30 text-center transition-all duration-150 ease-in-out text-red-900 font-bold"
                 onClick={() => {
                   localStorage.removeItem("isLoggedIn");
                   window.location.reload();

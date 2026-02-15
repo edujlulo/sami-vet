@@ -2,6 +2,7 @@ export default function Button({
   name,
   onClick,
   disabled,
+  className,
 }: {
   name: string;
   onClick?: () => void;
@@ -25,11 +26,12 @@ export default function Button({
         active:translate-y-0
         transition-all duration-150
         w-35
-        disabled:bg-gray-400
-        disabled:text-gray-200
+       text-blue-900
+       font-bold
+        disabled:text-gray-400
         disabled:cursor-not-allowed
-        disabled:hover:bg-gray-400
-        disabled:opacity-60
+        disabled:hover:bg-gray-200
+        ${className}
       `}
       onClick={onClick}
       disabled={disabled}
