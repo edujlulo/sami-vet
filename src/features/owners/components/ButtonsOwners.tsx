@@ -1,5 +1,5 @@
-import Button from "../../components/Button";
-import type { Owner } from "../../types/Owner";
+import Button from "../../../components/Button";
+import type { Owner } from "../../../types/Owner";
 
 interface ButtonsOwnersProps {
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;

@@ -1,5 +1,5 @@
 import React from "react";
-import type { Owner } from "../types/Owner";
+import type { Owner } from "../../../types/Owner";
 
 interface LabelInputProps {
   label: string;
@@ -14,7 +14,7 @@ interface LabelInputProps {
   inputRef?: React.Ref<HTMLInputElement>;
 }
 
-export default function LabelInput({
+export default function LabelInputOwners({
   label,
   ownerKey,
   owner,

@@ -1,5 +1,5 @@
-import LabelInput from "../../components/LabelInput";
-import type { Owner } from "../../types/Owner";
+import LabelInputOwners from "./LabelInputOwners";
+import type { Owner } from "../../../types/Owner";
 import React, { useRef, useEffect } from "react";
 
 interface FormOwnersProps {
@@ -25,9 +25,9 @@ export default function FormOwners({
     }
   }, [isEditing, isCreating]);
   return (
-    <div className="flex flex-col bg-amber-200 py-4 gap-0.5">
-      <form className="bg-amber-200 px-4 py-0 flex flex-row gap-2">
-        <LabelInput
+    <div className="flex flex-col bg-amber-300 py-4 gap-0.5">
+      <form className="bg-amber-300 px-4 py-0 flex flex-row gap-2">
+        <LabelInputOwners
           label="Apellidos"
           ownerKey="surname"
           owner={selectedOwner}
@@ -36,7 +36,7 @@ export default function FormOwners({
           isCreating={isCreating}
           inputRef={surnameRef}
         />
-        <LabelInput
+        <LabelInputOwners
           label="Nombres"
           ownerKey="name"
           owner={selectedOwner}
@@ -44,7 +44,7 @@ export default function FormOwners({
           isEditing={isEditing}
           isCreating={isCreating}
         />
-        <LabelInput
+        <LabelInputOwners
           label="Cédula"
           ownerKey="idCardNumber"
           owner={selectedOwner}
@@ -53,7 +53,7 @@ export default function FormOwners({
           isCreating={isCreating}
           className="w-30"
         />
-        <LabelInput
+        <LabelInputOwners
           label="R.I.F."
           ownerKey="rif"
           owner={selectedOwner}
@@ -63,8 +63,8 @@ export default function FormOwners({
           className="w-30"
         />
       </form>
-      <form className="bg-amber-200 px-4 py-0 flex flex-row gap-2">
-        <LabelInput
+      <form className="bg-amber-300 px-4 py-0 flex flex-row gap-2">
+        <LabelInputOwners
           label="Telf. Habitación"
           ownerKey="homePhone"
           owner={selectedOwner}
@@ -73,7 +73,7 @@ export default function FormOwners({
           isCreating={isCreating}
           className="w-45"
         />
-        <LabelInput
+        <LabelInputOwners
           label="Telf. Celular"
           ownerKey="mobilePhone"
           owner={selectedOwner}
@@ -82,7 +82,7 @@ export default function FormOwners({
           isCreating={isCreating}
           className="w-45"
         />
-        <LabelInput
+        <LabelInputOwners
           label="Telf. Oficina"
           ownerKey="officePhone"
           owner={selectedOwner}
@@ -92,8 +92,8 @@ export default function FormOwners({
           className="w-45"
         />
       </form>
-      <form className="bg-amber-200 px-4 py-0 flex flex-row gap-2">
-        <LabelInput
+      <form className="bg-amber-300 px-4 py-0 flex flex-row gap-2">
+        <LabelInputOwners
           label="Email"
           ownerKey="email"
           owner={selectedOwner}
@@ -102,7 +102,7 @@ export default function FormOwners({
           isCreating={isCreating}
           className="w-65"
         />
-        <LabelInput
+        <LabelInputOwners
           label="Dirección"
           ownerKey="address"
           owner={selectedOwner}
@@ -112,8 +112,8 @@ export default function FormOwners({
           className="w-85"
         />
       </form>
-      <form className="bg-amber-200 px-4 py-0 flex flex-row gap-2">
-        <LabelInput
+      <form className="bg-amber-300 px-4 py-0 flex flex-row gap-2">
+        <LabelInputOwners
           label="Urbanización"
           ownerKey="estate"
           owner={selectedOwner}
@@ -122,7 +122,7 @@ export default function FormOwners({
           isCreating={isCreating}
           className="w-60"
         />
-        <LabelInput
+        <LabelInputOwners
           label="Persona"
           ownerKey="person"
           owner={selectedOwner}
@@ -131,7 +131,7 @@ export default function FormOwners({
           isCreating={isCreating}
           className="w-30"
         />
-        <LabelInput
+        <LabelInputOwners
           label="Contribuyente"
           ownerKey="taxpayer"
           owner={selectedOwner}
@@ -140,7 +140,7 @@ export default function FormOwners({
           isCreating={isCreating}
           className="w-30"
         />
-        <LabelInput
+        <LabelInputOwners
           label="Registrado"
           ownerKey="registered"
           owner={selectedOwner}

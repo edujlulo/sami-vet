@@ -16,6 +16,7 @@ export default function Button({
         border border-gray-300
         rounded-md
         py-1
+        px-2
         cursor-pointer
         shadow-sm
         hover:bg-green-50

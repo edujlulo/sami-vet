@@ -1,4 +1,4 @@
-export default function TablePets() {
+export default function TablePetsOwnersPage() {
   const petsEmptyRows = 8;
   const paymentsEmptyRows = 3;
   return (

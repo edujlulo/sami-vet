@@ -1,4 +1,4 @@
-import type { Owner } from "../../types/Owner";
+import type { Owner } from "../../../types/Owner";
 
 interface TableOwnersProps {
   owners: Owner[];

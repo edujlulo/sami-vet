@@ -1,4 +1,4 @@
-export default function TableVisits() {
+export default function TableVisitsOwnersPage() {
   const emptyRows = 8;
 
   return (
