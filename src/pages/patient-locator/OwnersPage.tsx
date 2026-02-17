@@ -4,24 +4,27 @@ import ButtonsOwners from "../../features/owners/components/ButtonsOwners";
 import TablePetsOwnersPage from "../../features/pets/components/TablePetsOwnersPage";
 import TableVisitsOwnersPage from "../../features/visits/components/TableVisitsOwnersPage";
 import ButtonsVisits from "../../features/visits/components/ButtonsVisits";
-import type { OwnersPageProps } from "../../types/OwnersPageProps";
+import { useOwners } from "../../features/owners/hooks/useOwners";
+// import type { OwnersPageProps } from "../../types/OwnersPageProps";
 
-export default function OwnersPage({
-  owners,
-  selectedOwner,
-  isEditing,
-  isCreating,
-  setSelectedOwner,
-  setIsEditing,
-  handleNew,
-  handleCancel,
-  handleSave,
-  handleDeleteOwner,
-  handleSelect,
-  emptyOwner,
-}: OwnersPageProps) {
+export default function OwnersPage() {
+  const {
+    owners,
+    selectedOwner,
+    isEditing,
+    isCreating,
+    setSelectedOwner,
+    setIsEditing,
+    handleNew,
+    handleCancel,
+    handleSave,
+    handleDeleteOwner,
+    handleSelect,
+    emptyOwner,
+  } = useOwners();
+
   return (
-    <div className="bg-amber-200 px-3 py-6 pb-10 rounded-b-lg border border-t-0 border-gray-300">
+    <div className="bg-amber-200 px-25 py-6 pb-10 rounded-b-lg border border-t-0 border-gray-300">
       {/* Top box */}
       <div className="flex flex-row items-center justify-center gap-6">
         <div className="flex flex-col gap-2 items-center">

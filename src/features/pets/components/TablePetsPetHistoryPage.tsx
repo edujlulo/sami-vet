@@ -1,5 +1,15 @@
-export default function TablePetsPetHistoryPage() {
-  const petsEmptyRows = 3;
+import type { Pet } from "../../../types/Pet";
+
+interface TablePetsPetHistoryPageProps {
+  pets: Pet[];
+  handleSelect: (pet: Pet) => void;
+}
+
+export default function TablePetsPetHistoryPage({
+  pets,
+  handleSelect,
+}: TablePetsPetHistoryPageProps) {
+  const petsEmptyRows = 3 - pets.length;
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -19,6 +29,23 @@ export default function TablePetsPetHistoryPage() {
           </thead>
 
           <tbody>
+            {pets.map((pet: Pet) => {
+              return (
+                <tr
+                  key={pet.id}
+                  onClick={() => handleSelect(pet)}
+                  className="cursor-pointer hover:bg-amber-200"
+                >
+                  <td className="border border-gray-900 px-2 py-0.5">
+                    {pet.id}
+                  </td>
+                  <td className="border border-gray-900 px-2 py-0.5">
+                    {pet.name}
+                  </td>
+                </tr>
+              );
+            })}
+
             {Array.from({ length: petsEmptyRows > 0 ? petsEmptyRows : 0 }).map(
               (_, i) => (
                 <tr key={`empty-${i}`}>

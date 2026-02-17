@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../../../supabaseClient";
 import type { Owner } from "../../../types/Owner";
+import {
+  fetchOwnersService,
+  insertOwnerService,
+  updateOwnerService,
+  deleteOwnerService,
+} from "../services/ownersService";
 
 export function useOwners() {
   const [owners, setOwners] = useState<Owner[]>([]);
@@ -24,7 +29,6 @@ export function useOwners() {
   };
 
   const [selectedOwner, setSelectedOwner] = useState<Owner>(emptyOwner);
-
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
 
@@ -34,15 +38,11 @@ export function useOwners() {
   }, []);
 
   async function fetchOwners() {
-    const { data, error } = await supabase.from("owners").select("*");
-
-    if (error) {
+    try {
+      const data = await fetchOwnersService();
+      setOwners(data);
+    } catch (error) {
       console.error("Error fetching owners:", error);
-      return;
-    }
-
-    if (data) {
-      setOwners(data as Owner[]);
     }
   }
 
@@ -62,43 +62,22 @@ export function useOwners() {
 
   // ================= SAVE =================
   async function handleSave() {
-    if (isEditing) {
-      const { data, error } = await supabase
-        .from("owners")
-        .update(selectedOwner)
-        .eq("id", selectedOwner.id)
-        .select()
-        .single();
-
-      if (error) {
-        console.error("Error updating owner:", error);
-        return;
-      }
-
-      if (data) {
+    try {
+      if (isEditing) {
+        const data = await updateOwnerService(selectedOwner);
         setOwners((prev) => prev.map((o) => (o.id === data.id ? data : o)));
         setIsEditing(false);
         setSelectedOwner(data);
       }
-    }
 
-    if (isCreating) {
-      const { data, error } = await supabase
-        .from("owners")
-        .insert([selectedOwner])
-        .select()
-        .single();
-
-      if (error) {
-        console.error("Error inserting owner:", error);
-        return;
-      }
-
-      if (data) {
+      if (isCreating) {
+        const data = await insertOwnerService(selectedOwner);
         setOwners((prev) => [...prev, data]);
         setIsCreating(false);
         setSelectedOwner(data);
       }
+    } catch (error) {
+      console.error("Error saving owner:", error);
     }
   }
 
@@ -111,21 +90,15 @@ export function useOwners() {
     );
     if (!confirmDelete) return;
 
-    const { error } = await supabase
-      .from("owners")
-      .delete()
-      .eq("id", selectedOwner.id);
-
-    if (error) {
+    try {
+      await deleteOwnerService(selectedOwner.id);
+      setOwners((prev) => prev.filter((o) => o.id !== selectedOwner.id));
+      setSelectedOwner(emptyOwner);
+      setIsEditing(false);
+      setIsCreating(false);
+    } catch (error) {
       console.error("Error deleting owner:", error);
-      return;
     }
-
-    setOwners((prev) => prev.filter((o) => o.id !== selectedOwner.id));
-
-    setSelectedOwner(emptyOwner);
-    setIsEditing(false);
-    setIsCreating(false);
   }
 
   // ================= SELECT =================

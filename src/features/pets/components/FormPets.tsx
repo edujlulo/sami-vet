@@ -1,13 +1,24 @@
 import LabelInputPets from "./LabelInputPets";
 import TablePetsPetHistoryPage from "./TablePetsPetHistoryPage";
+import type { Pet } from "../../../types/Pet";
 
-export default function FormPets() {
+interface FormPetsProps {
+  pets: Pet[];
+  handleSelect: (pet: Pet) => void;
+  selectedPet: Pet;
+}
+
+export default function FormPets({
+  pets,
+  handleSelect,
+  selectedPet,
+}: FormPetsProps) {
   return (
-    <div className="bg-amber-300 px-10 py-10">
+    <div className="bg-amber-300 px-4 py-4">
       {/* --- Top box --- */}
 
-      <div className="flex flex-row gap-6">
-        <TablePetsPetHistoryPage />
+      <div className="flex flex-row gap-2">
+        <TablePetsPetHistoryPage pets={pets} handleSelect={handleSelect} />
         <div>
           <form className="flex flex-row gap-2">
             <LabelInputPets
@@ -26,8 +37,11 @@ export default function FormPets() {
           <form className="flex flex-row gap-2">
             <LabelInputPets
               label="Mascota"
+              petKey="name"
+              pet={selectedPet}
               isEditing={true}
               isCreating={true}
+              className="w-30"
             />
             <LabelInputPets
               label="Fech Naci"
@@ -49,30 +63,61 @@ export default function FormPets() {
 
       <div>
         <form className="flex flex-row gap-2">
-          <LabelInputPets label="Especie" isEditing={true} isCreating={true} />
-          <LabelInputPets label="Raza" isEditing={true} isCreating={true} />
+          <LabelInputPets
+            label="Especie"
+            petKey="species"
+            pet={selectedPet}
+            isEditing={true}
+            isCreating={true}
+          />
+          <LabelInputPets
+            label="Raza"
+            petKey="breed"
+            pet={selectedPet}
+            isEditing={true}
+            isCreating={true}
+          />
           <LabelInputPets
             label="Sexo"
+            petKey="sex"
+            pet={selectedPet}
             isEditing={true}
             isCreating={true}
             className="w-30"
           />
           <LabelInputPets
             label="Pdg"
+            petKey="pedigree"
+            pet={selectedPet}
             isEditing={true}
             isCreating={true}
             className="w-8"
           />
         </form>
         <form className="flex flex-row gap-2 items-center">
-          <LabelInputPets label="Color" isEditing={true} isCreating={true} />
+          <LabelInputPets
+            label="Color"
+            petKey="color"
+            pet={selectedPet}
+            isEditing={true}
+            isCreating={true}
+            className="w-30"
+          />
           <LabelInputPets
             label="Placa"
+            petKey="licensePlate"
+            pet={selectedPet}
             isEditing={true}
             isCreating={true}
             className="w-20"
           />
-          <LabelInputPets label="Chip" isEditing={true} isCreating={true} />
+          <LabelInputPets
+            label="Chip"
+            petKey="chip"
+            pet={selectedPet}
+            isEditing={true}
+            isCreating={true}
+          />
           <LabelInputPets
             label="Fech Regis"
             isEditing={true}
@@ -101,7 +146,7 @@ export default function FormPets() {
         disabled:text-gray-400
         disabled:cursor-not-allowed
         disabled:hover:bg-gray-200
-        ml-5
+        ml-2
         self-end
       `}
           >
