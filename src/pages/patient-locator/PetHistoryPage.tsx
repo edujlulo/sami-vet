@@ -2,6 +2,9 @@ import ButtonsPetHistory from "../../features/pets/components/ButtonsPetHistory"
 import FormPets from "../../features/pets/components/FormPets";
 import { usePets } from "../../features/pets/hooks/usePets";
 import FormVisits from "../../features/visits/components/FormVisits";
+import TableVisitsPetHistoryPage from "../../features/visits/components/TableVisitsPetHistoryPage";
+import TablePetVaccines from "../../features/pets/components/TablePetVaccines";
+import TableUpcomingVisits from "../../features/visits/components/TableUpcomingVisits";
 
 export default function PetHistoryPage() {
   const { pets, handleSelect, selectedPet } = usePets();
@@ -13,13 +16,23 @@ export default function PetHistoryPage() {
           {/* --- Main top box --- */}
           <div className="flex flex-row gap-2">
             {/* --- Left box --- */}
-            <div>
+            <div className="flex flex-col gap-4">
               {/* --- Pets form --- */}
               <FormPets
                 selectedPet={selectedPet}
                 pets={pets}
                 handleSelect={handleSelect}
               />
+
+              {/* --- Visits form --- */}
+              <TableVisitsPetHistoryPage />
+              <div className="flex flex-row gap-6 ml-3">
+                {/* --- Vaccines history --- */}
+                <TablePetVaccines />
+
+                {/* --- Upcoming visits --- */}
+                <TableUpcomingVisits />
+              </div>
             </div>
 
             {/* --- Right box --- */}
