@@ -1,3 +1,4 @@
+import type { Dispatch, SetStateAction } from "react";
 import type { Owner } from "./Owner";
 
 export type OwnersPageProps = {
@@ -5,8 +6,8 @@ export type OwnersPageProps = {
   selectedOwner: Owner;
   isEditing: boolean;
   isCreating: boolean;
-  setSelectedOwner: (owner: Owner) => void;
-  setIsEditing: (value: boolean) => void;
+  setSelectedOwner: Dispatch<SetStateAction<Owner>>;
+  setIsEditing: Dispatch<SetStateAction<boolean>>;
   handleNew: () => void;
   handleCancel: () => void;
   handleSave: () => Promise<void>;

@@ -1,4 +1,3 @@
-import Button from "../../../components/Button";
 import LabelInputPets from "./LabelInputPets";
 import TablePetsPetHistoryPage from "./TablePetsPetHistoryPage";
 
