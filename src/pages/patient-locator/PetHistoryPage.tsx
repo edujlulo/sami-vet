@@ -5,9 +5,15 @@ import FormVisits from "../../features/visits/components/FormVisits";
 import TableVisitsPetHistoryPage from "../../features/visits/components/TableVisitsPetHistoryPage";
 import TablePetVaccines from "../../features/pets/components/TablePetVaccines";
 import TableUpcomingVisits from "../../features/visits/components/TableUpcomingVisits";
+import { usePetsByOwner } from "../../features/pets/hooks/usePetsByOwner";
+import { useOwnersContext } from "../../features/owners/context/OwnersContext";
 
-export default function PetHistoryPage() {
-  const { pets, handleSelect, selectedPet } = usePets();
+export default function PetHistoryPage({}) {
+  const { handleCancel, setIsEditing } = usePets();
+
+  const { selectedOwner } = useOwnersContext();
+
+  const { pets } = usePetsByOwner(selectedOwner.id ?? null);
 
   return (
     <div>
@@ -19,9 +25,9 @@ export default function PetHistoryPage() {
             <div className="flex flex-col gap-4">
               {/* --- Pets form --- */}
               <FormPets
-                selectedPet={selectedPet}
+                // selectedPet={selectedPet}
                 pets={pets}
-                handleSelect={handleSelect}
+                // handleSelect={handleSelect}
               />
 
               {/* --- Visits form --- */}
@@ -43,7 +49,10 @@ export default function PetHistoryPage() {
           </div>
 
           {/* --- Buttons Pets --- */}
-          <ButtonsPetHistory />
+          <ButtonsPetHistory
+            setIsEditing={setIsEditing}
+            handleCancel={handleCancel}
+          />
         </div>
       </div>
     </div>

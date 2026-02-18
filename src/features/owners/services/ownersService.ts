@@ -1,5 +1,6 @@
 import { supabase } from "../../../supabaseClient";
 import type { Owner } from "../../../types/Owner";
+import { normalizeStringsData } from "../../../helpers/normalizeStrings";
 
 // Obtener todos los owners
 export async function fetchOwnersService(): Promise<Owner[]> {
@@ -10,9 +11,14 @@ export async function fetchOwnersService(): Promise<Owner[]> {
 
 // Insertar un owner
 export async function insertOwnerService(owner: Owner): Promise<Owner> {
+  const normalizedOwner = normalizeStringsData(owner);
+
+  // Remove id so Supabase auto-generates it
+  const { id, ...ownerWithoutId } = normalizedOwner;
+
   const { data, error } = await supabase
     .from("owners")
-    .insert([owner])
+    .insert([ownerWithoutId])
     .select()
     .single();
 
@@ -22,9 +28,11 @@ export async function insertOwnerService(owner: Owner): Promise<Owner> {
 
 // Actualizar un owner
 export async function updateOwnerService(owner: Owner): Promise<Owner> {
+  const normalizedOwner = normalizeStringsData(owner);
+
   const { data, error } = await supabase
     .from("owners")
-    .update(owner)
+    .update(normalizedOwner)
     .eq("id", owner.id)
     .select()
     .single();

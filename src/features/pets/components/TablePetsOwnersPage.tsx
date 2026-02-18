@@ -1,6 +1,16 @@
-export default function TablePetsOwnersPage() {
+import type { Owner } from "../../../types/Owner";
+import type { Pet } from "../../../types/Pet";
+import { usePetsByOwner } from "../hooks/usePetsByOwner";
+
+type Props = {
+  selectedOwner: Owner;
+};
+
+export default function TablePetsOwnersPage({ selectedOwner }: Props) {
   const petsEmptyRows = 8;
-  const paymentsEmptyRows = 3;
+
+  const { pets } = usePetsByOwner(selectedOwner.id);
+
   return (
     <div className="flex flex-col justify-center items-center">
       {/* Pets table */}
@@ -13,6 +23,15 @@ export default function TablePetsOwnersPage() {
           </thead>
 
           <tbody>
+            {pets.map((pet: Pet) => {
+              return (
+                <tr key={pet.id}>
+                  <td className="border border-gray-900 px-2 py-0.5">
+                    {pet.name}
+                  </td>
+                </tr>
+              );
+            })}
             {Array.from({ length: petsEmptyRows > 0 ? petsEmptyRows : 0 }).map(
               (_, i) => (
                 <tr key={`empty-${i}`}>
@@ -20,40 +39,6 @@ export default function TablePetsOwnersPage() {
                 </tr>
               ),
             )}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Outstanding payments */}
-      <p className="flex items-center justify-center text-blue-900 font-bold mt-3">
-        Cuentas por cobrar
-      </p>
-      <div className="w-[290px] h-[118px] overflow-y-auto border border-gray-900">
-        <table className="bg-amber-50 border border-gray-900 w-full table-fixed bg-amber-50">
-          <thead>
-            <tr>
-              <th className="w-[33%] border border-gray-900 px-2 py-0.5">
-                Fact.
-              </th>
-              <th className="w-[33%] border border-gray-900 px-2 py-0.5">
-                Fecha
-              </th>
-              <th className="w-[33%] border border-gray-900 px-2 py-0.5">
-                Montcxco
-              </th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {Array.from({
-              length: paymentsEmptyRows > 0 ? paymentsEmptyRows : 0,
-            }).map((_, i) => (
-              <tr key={`empty-${i}`}>
-                <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
-                <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
-                <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
-              </tr>
-            ))}
           </tbody>
         </table>
       </div>

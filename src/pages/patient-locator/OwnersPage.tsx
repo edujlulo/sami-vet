@@ -3,17 +3,16 @@ import TableOwners from "../../features/owners/components/TableOwners";
 import ButtonsOwners from "../../features/owners/components/ButtonsOwners";
 import TablePetsOwnersPage from "../../features/pets/components/TablePetsOwnersPage";
 import TableVisitsOwnersPage from "../../features/visits/components/TableVisitsOwnersPage";
+import TableOutstandingPayments from "../../features/billing/components/TableOutstandingPayments";
 import ButtonsVisits from "../../features/visits/components/ButtonsVisits";
 import { useOwners } from "../../features/owners/hooks/useOwners";
-// import type { OwnersPageProps } from "../../types/OwnersPageProps";
+import { useOwnersContext } from "../../features/owners/context/OwnersContext";
 
 export default function OwnersPage() {
   const {
     owners,
-    selectedOwner,
     isEditing,
     isCreating,
-    setSelectedOwner,
     setIsEditing,
     handleNew,
     handleCancel,
@@ -22,6 +21,8 @@ export default function OwnersPage() {
     handleSelect,
     emptyOwner,
   } = useOwners();
+
+  const { selectedOwner, setSelectedOwner } = useOwnersContext();
 
   return (
     <div className="bg-amber-200 px-25 py-6 pb-10 rounded-b-lg border border-t-0 border-gray-300">
@@ -33,6 +34,7 @@ export default function OwnersPage() {
             setSelectedOwner={setSelectedOwner}
             isEditing={isEditing}
             isCreating={isCreating}
+            handleSave={handleSave}
           />
           <TableOwners owners={owners} handleSelect={handleSelect} />
         </div>
@@ -48,7 +50,8 @@ export default function OwnersPage() {
             handleDeleteOwner={handleDeleteOwner}
             emptyOwner={emptyOwner}
           />
-          <TablePetsOwnersPage />
+          <TablePetsOwnersPage selectedOwner={selectedOwner} />
+          <TableOutstandingPayments />
         </div>
       </div>
 

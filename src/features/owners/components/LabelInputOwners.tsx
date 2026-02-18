@@ -25,16 +25,27 @@ export default function LabelInputOwners({
   isCreating,
   inputRef,
 }: LabelInputProps) {
+  // Fields that should always be in lowercase
+  const lowercaseFields: (keyof Owner)[] = ["email"];
+
   return (
     <div className="flex flex-col gap-1">
       <label className="text-blue-900 font-bold -mb-1 mt-1">{label}</label>
       <input
         type={type}
         value={(owner[ownerKey] as string) ?? ""}
-        onChange={(e) => setOwner({ ...owner, [ownerKey]: e.target.value })}
+        onChange={(e) =>
+          owner &&
+          setOwner({
+            ...owner,
+            [ownerKey]: lowercaseFields.includes(ownerKey)
+              ? e.target.value.toLowerCase()
+              : e.target.value.toUpperCase(),
+          })
+        }
         disabled={!isEditing && !isCreating}
         ref={inputRef}
-        className={`bg-amber-50 border border-gray-700 ${className}`}
+        className={`bg-amber-50 border border-gray-700 px-1 ${className}`}
       />
     </div>
   );

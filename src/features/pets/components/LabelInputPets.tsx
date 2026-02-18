@@ -29,7 +29,7 @@ export default function LabelInputPets({
         type={type}
         value={value}
         disabled={!isEditing && !isCreating}
-        className={`bg-amber-50 border border-gray-700 ${className}`}
+        className={`bg-amber-50 border border-gray-700 px-1 ${className}`}
       />
     </div>
   );

@@ -6,8 +6,10 @@ import {
   updateOwnerService,
   deleteOwnerService,
 } from "../services/ownersService";
+import { useOwnersContext } from "../context/OwnersContext";
 
 export function useOwners() {
+  const { selectedOwner, setSelectedOwner } = useOwnersContext();
   const [owners, setOwners] = useState<Owner[]>([]);
 
   const emptyOwner: Owner = {
@@ -28,7 +30,6 @@ export function useOwners() {
     affiliate: false,
   };
 
-  const [selectedOwner, setSelectedOwner] = useState<Owner>(emptyOwner);
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
 

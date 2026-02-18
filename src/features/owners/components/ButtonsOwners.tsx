@@ -64,7 +64,11 @@ export default function ButtonsOwners({
           <Button
             name="Cancelar"
             onClick={handleCancel}
-            disabled={!isEditing && !isCreating && selectedOwner === emptyOwner}
+            disabled={
+              !isEditing &&
+              !isCreating &&
+              JSON.stringify(selectedOwner) === JSON.stringify(emptyOwner)
+            }
             className="h-auto"
           />
 

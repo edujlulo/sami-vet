@@ -4,28 +4,28 @@ import type { Pet } from "../../../types/Pet";
 
 interface FormPetsProps {
   pets: Pet[];
-  handleSelect: (pet: Pet) => void;
-  selectedPet: Pet;
+  // handleSelect: (pet: Pet) => void;
+  // selectedPet: Pet;
 }
 
 export default function FormPets({
   pets,
-  handleSelect,
-  selectedPet,
+  // handleSelect,
+  // selectedPet,
 }: FormPetsProps) {
   return (
-    <div className="bg-amber-300 px-4 py-4">
+    <div className="bg-amber-300 px-2 py-4">
       {/* --- Top box --- */}
 
       <div className="flex flex-row gap-2">
-        <TablePetsPetHistoryPage pets={pets} handleSelect={handleSelect} />
+        <TablePetsPetHistoryPage pets={pets} />
         <div>
           <form className="flex flex-row gap-2">
             <LabelInputPets
               label="Propietario"
               isEditing={true}
               isCreating={true}
-              className="w-70"
+              className="w-80"
             />
             <LabelInputPets
               label="N. Cliente"
@@ -38,7 +38,7 @@ export default function FormPets({
             <LabelInputPets
               label="Mascota"
               petKey="name"
-              pet={selectedPet}
+              // pet={selectedPet}
               isEditing={true}
               isCreating={true}
               className="w-30"
@@ -66,21 +66,21 @@ export default function FormPets({
           <LabelInputPets
             label="Especie"
             petKey="species"
-            pet={selectedPet}
+            // pet={selectedPet}
             isEditing={true}
             isCreating={true}
           />
           <LabelInputPets
             label="Raza"
             petKey="breed"
-            pet={selectedPet}
+            // pet={selectedPet}
             isEditing={true}
             isCreating={true}
           />
           <LabelInputPets
             label="Sexo"
             petKey="sex"
-            pet={selectedPet}
+            // pet={selectedPet}
             isEditing={true}
             isCreating={true}
             className="w-30"
@@ -88,7 +88,7 @@ export default function FormPets({
           <LabelInputPets
             label="Pdg"
             petKey="pedigree"
-            pet={selectedPet}
+            // pet={selectedPet}
             isEditing={true}
             isCreating={true}
             className="w-8"
@@ -98,7 +98,7 @@ export default function FormPets({
           <LabelInputPets
             label="Color"
             petKey="color"
-            pet={selectedPet}
+            // pet={selectedPet}
             isEditing={true}
             isCreating={true}
             className="w-30"
@@ -106,7 +106,7 @@ export default function FormPets({
           <LabelInputPets
             label="Placa"
             petKey="licensePlate"
-            pet={selectedPet}
+            // pet={selectedPet}
             isEditing={true}
             isCreating={true}
             className="w-20"
@@ -114,7 +114,7 @@ export default function FormPets({
           <LabelInputPets
             label="Chip"
             petKey="chip"
-            pet={selectedPet}
+            // pet={selectedPet}
             isEditing={true}
             isCreating={true}
           />

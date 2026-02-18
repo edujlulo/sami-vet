@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import type { Pet } from "../../../types/Pet";
-import { fetchPets } from "../services/petsService";
 
 export function usePets() {
   const [pets, setPets] = useState<Pet[]>([]);
@@ -24,10 +23,12 @@ export function usePets() {
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
 
-  // ================= FETCH =================
-  useEffect(() => {
-    fetchPets().then(setPets).catch(console.error);
-  }, []);
+  // ================= CANCEL =================
+  function handleCancel() {
+    setIsCreating(false);
+    setIsEditing(false);
+    setSelectedPet(emptyPet);
+  }
 
   // ================= SELECT =================
   function handleSelect(pet: Pet) {
@@ -40,6 +41,7 @@ export function usePets() {
     pets,
     setPets,
     handleSelect,
+    handleCancel,
     selectedPet,
     isEditing,
     setIsEditing,

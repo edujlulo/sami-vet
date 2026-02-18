@@ -13,7 +13,7 @@ export default function TableOwners({
 
   return (
     <div>
-      <div className="w-[640px] h-[250px] overflow-y-auto border border-gray-900">
+      <div className="w-[675px] h-[250px] overflow-y-auto border border-gray-900">
         <table className="bg-amber-50 border border-gray-900 w-full table-fixed bg-amber-50">
           <thead>
             <tr>
