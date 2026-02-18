@@ -10,7 +10,7 @@ import type { Owner } from "../../../types/Owner";
 
 interface OwnersContextType {
   selectedOwner: Owner;
-  setSelectedOwner: Dispatch<SetStateAction<Owner>>; // ✅ aquí
+  setSelectedOwner: Dispatch<SetStateAction<Owner>>;
   emptyOwner: Owner;
 }
 

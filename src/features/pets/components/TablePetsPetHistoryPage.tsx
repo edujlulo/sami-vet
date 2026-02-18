@@ -2,12 +2,12 @@ import type { Pet } from "../../../types/Pet";
 
 interface TablePetsPetHistoryPageProps {
   pets: Pet[];
-  // handleSelect: (pet: Pet) => void;
+  handleSelect: (pet: Pet) => void;
 }
 
 export default function TablePetsPetHistoryPage({
   pets,
-  // handleSelect,
+  handleSelect,
 }: TablePetsPetHistoryPageProps) {
   const petsEmptyRows = 3;
 
@@ -33,7 +33,7 @@ export default function TablePetsPetHistoryPage({
               return (
                 <tr
                   key={pet.id}
-                  // onClick={() => handleSelect(pet)}
+                  onClick={() => handleSelect(pet)}
                   className="cursor-pointer hover:bg-amber-200"
                 >
                   <td className="border border-gray-900 px-2 py-0.5">

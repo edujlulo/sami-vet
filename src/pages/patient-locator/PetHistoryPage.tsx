@@ -9,7 +9,8 @@ import { usePetsByOwner } from "../../features/pets/hooks/usePetsByOwner";
 import { useOwnersContext } from "../../features/owners/context/OwnersContext";
 
 export default function PetHistoryPage({}) {
-  const { handleCancel, setIsEditing } = usePets();
+  const { handleCancel, setIsEditing, handleSelect, selectedPet, emptyPet } =
+    usePets();
 
   const { selectedOwner } = useOwnersContext();
 
@@ -25,9 +26,11 @@ export default function PetHistoryPage({}) {
             <div className="flex flex-col gap-4">
               {/* --- Pets form --- */}
               <FormPets
-                // selectedPet={selectedPet}
+                selectedPet={selectedPet}
                 pets={pets}
-                // handleSelect={handleSelect}
+                selectedOwner={selectedOwner}
+                handleSelect={handleSelect}
+                emptyPet={emptyPet}
               />
 
               {/* --- Visits form --- */}

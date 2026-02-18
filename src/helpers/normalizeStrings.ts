@@ -4,9 +4,9 @@ export function normalizeStringsData<T extends Record<string, any>>(obj: T): T {
   for (const key in newObj) {
     if (typeof newObj[key] === "string") {
       if (key === "email") {
-        newObj[key] = newObj[key].toLowerCase();
+        newObj[key] = newObj[key].toLowerCase().trim();
       } else {
-        newObj[key] = newObj[key].toUpperCase();
+        newObj[key] = newObj[key].toUpperCase().trim();
       }
     }
   }

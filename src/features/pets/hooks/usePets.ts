@@ -1,7 +1,9 @@
 import { useState } from "react";
 import type { Pet } from "../../../types/Pet";
+import { usePetsContext } from "../context/PetsContext";
 
 export function usePets() {
+  const { selectedPet, setSelectedPet } = usePetsContext();
   const [pets, setPets] = useState<Pet[]>([]);
 
   const emptyPet: Pet = {
@@ -19,7 +21,6 @@ export function usePets() {
     registrationDate: "",
   };
 
-  const [selectedPet, setSelectedPet] = useState<Pet>(emptyPet);
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
 
@@ -47,5 +48,6 @@ export function usePets() {
     setIsEditing,
     isCreating,
     setIsCreating,
+    emptyPet,
   };
 }

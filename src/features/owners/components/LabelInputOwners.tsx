@@ -3,14 +3,14 @@ import type { Owner } from "../../../types/Owner";
 
 interface LabelInputProps {
   label: string;
-  ownerKey: keyof Owner; // la propiedad que modificará
-  owner: Owner; // el objeto completo
-  setOwner: React.Dispatch<React.SetStateAction<Owner>>; // setter
+  ownerKey: keyof Owner;
+  owner: Owner;
+  setOwner?: React.Dispatch<React.SetStateAction<Owner>>;
   disabled?: boolean;
   className?: string;
   type?: string;
-  isEditing: boolean;
-  isCreating: boolean;
+  isEditing?: boolean;
+  isCreating?: boolean;
   inputRef?: React.Ref<HTMLInputElement>;
 }
 
@@ -36,14 +36,15 @@ export default function LabelInputOwners({
         value={(owner[ownerKey] as string) ?? ""}
         onChange={(e) =>
           owner &&
-          setOwner({
+          setOwner?.({
             ...owner,
             [ownerKey]: lowercaseFields.includes(ownerKey)
               ? e.target.value.toLowerCase()
               : e.target.value.toUpperCase(),
           })
         }
-        disabled={!isEditing && !isCreating}
+        disabled={!setOwner || !(isEditing || isCreating)}
+        readOnly={!setOwner || !(isEditing || isCreating)}
         ref={inputRef}
         className={`bg-amber-50 border border-gray-700 px-1 ${className}`}
       />
