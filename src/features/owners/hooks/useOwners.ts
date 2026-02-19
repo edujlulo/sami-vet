@@ -7,9 +7,11 @@ import {
   deleteOwnerService,
 } from "../services/ownersService";
 import { useOwnersContext } from "../context/OwnersContext";
+import { usePetsContext } from "../../pets/context/PetsContext";
 
 export function useOwners() {
   const { selectedOwner, setSelectedOwner } = useOwnersContext();
+  const { setSelectedPet, emptyPet } = usePetsContext();
   const [owners, setOwners] = useState<Owner[]>([]);
 
   const emptyOwner: Owner = {
@@ -50,6 +52,7 @@ export function useOwners() {
   // ================= NEW =================
   function handleNew() {
     setSelectedOwner(emptyOwner);
+    setSelectedPet(emptyPet);
     setIsCreating(true);
     setIsEditing(false);
   }
@@ -59,6 +62,7 @@ export function useOwners() {
     setIsCreating(false);
     setIsEditing(false);
     setSelectedOwner(emptyOwner);
+    setSelectedPet(emptyPet);
   }
 
   // ================= SAVE =================
@@ -84,6 +88,7 @@ export function useOwners() {
 
   // ================= DELETE =================
   async function handleDeleteOwner() {
+    setSelectedPet(emptyPet);
     if (!selectedOwner.id) return;
 
     const confirmDelete = window.confirm(
@@ -105,6 +110,7 @@ export function useOwners() {
   // ================= SELECT =================
   function handleSelect(owner: Owner) {
     setSelectedOwner(owner);
+    setSelectedPet(emptyPet);
     setIsEditing(false);
     setIsCreating(false);
   }

@@ -9,12 +9,33 @@ import { usePetsByOwner } from "../../features/pets/hooks/usePetsByOwner";
 import { useOwnersContext } from "../../features/owners/context/OwnersContext";
 
 export default function PetHistoryPage({}) {
-  const { handleCancel, setIsEditing, handleSelect, selectedPet, emptyPet } =
-    usePets();
-
   const { selectedOwner } = useOwnersContext();
 
-  const { pets } = usePetsByOwner(selectedOwner.id ?? null);
+  const { pets, refetch } = usePetsByOwner(selectedOwner.id);
+
+  const {
+    handleCancel,
+    setIsEditing,
+    handleSelect,
+    handleSave,
+    handleNew,
+    handleDeletePet,
+    selectedPet,
+    setSelectedPet,
+    emptyPet,
+    isEditing,
+    isCreating,
+  } = usePets({ refetch });
+
+  async function handleSaveWithRefetch() {
+    await handleSave();
+    await refetch();
+  }
+
+  async function handleDeleteWithRefetch() {
+    await handleDeletePet();
+    await refetch();
+  }
 
   return (
     <div>
@@ -27,10 +48,14 @@ export default function PetHistoryPage({}) {
               {/* --- Pets form --- */}
               <FormPets
                 selectedPet={selectedPet}
-                pets={pets}
+                setSelectedPet={setSelectedPet}
                 selectedOwner={selectedOwner}
                 handleSelect={handleSelect}
                 emptyPet={emptyPet}
+                isEditing={isEditing}
+                isCreating={isCreating}
+                handleSave={handleSaveWithRefetch}
+                pets={pets}
               />
 
               {/* --- Visits form --- */}
@@ -55,6 +80,13 @@ export default function PetHistoryPage({}) {
           <ButtonsPetHistory
             setIsEditing={setIsEditing}
             handleCancel={handleCancel}
+            handleSave={handleSaveWithRefetch}
+            handleNew={handleNew}
+            handleDeletePet={handleDeleteWithRefetch}
+            isEditing={isEditing}
+            isCreating={isCreating}
+            selectedPet={selectedPet}
+            emptyPet={emptyPet}
           />
         </div>
       </div>

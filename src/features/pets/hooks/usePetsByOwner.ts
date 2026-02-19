@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import type { Pet } from "../../../types/Pet";
 import { fetchPetsByOwner } from "../services/petsService";
 
@@ -7,36 +7,34 @@ export function usePetsByOwner(ownerId: number | null) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const loadPets = useCallback(async () => {
     if (!ownerId) {
       setPets([]);
       return;
     }
 
-    async function loadPets() {
-      try {
-        setLoading(true);
-        setError(null);
+    try {
+      setLoading(true);
+      setError(null);
 
-        if (ownerId !== null) {
-          const data = await fetchPetsByOwner(ownerId);
-          setPets(data);
-        }
-      } catch (err) {
-        console.error(err);
-        setError("Failed to fetch pets");
-      } finally {
-        setLoading(false);
-      }
+      const data = await fetchPetsByOwner(ownerId);
+      setPets(data);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to fetch pets");
+    } finally {
+      setLoading(false);
     }
-
-    loadPets();
   }, [ownerId]);
+
+  useEffect(() => {
+    loadPets();
+  }, [loadPets]);
 
   return {
     pets,
     loading,
     error,
-    setPets, // useful after creating/deleting pets
+    refetch: loadPets,
   };
 }

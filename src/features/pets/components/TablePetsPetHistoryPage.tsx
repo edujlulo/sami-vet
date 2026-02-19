@@ -1,13 +1,15 @@
+import type { Owner } from "../../../types/Owner";
 import type { Pet } from "../../../types/Pet";
 
 interface TablePetsPetHistoryPageProps {
-  pets: Pet[];
+  selectedOwner: Owner;
   handleSelect: (pet: Pet) => void;
+  pets: Pet[];
 }
 
 export default function TablePetsPetHistoryPage({
-  pets,
   handleSelect,
+  pets,
 }: TablePetsPetHistoryPageProps) {
   const petsEmptyRows = 3;
 

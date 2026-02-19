@@ -17,19 +17,18 @@ interface PetsContextType {
 const PetsContext = createContext<PetsContextType | undefined>(undefined);
 
 export function PetsProvider({ children }: { children: ReactNode }) {
-  const emptyPet: Pet = {
-    id: 0,
+  const emptyPet: Omit<Pet, "id"> = {
+    ownerId: 0,
     name: "",
+    birthDate: "",
     species: "",
     breed: "",
     sex: "",
-    color: "",
-    chip: "",
-    licensePlate: "",
     pedigree: "",
-    birthDate: "",
+    color: "",
+    licensePlate: "",
+    chip: "",
     registrationDate: "",
-    ownerId: 0,
   };
 
   const [selectedPet, setSelectedPet] = useState<Pet | null>(emptyPet);

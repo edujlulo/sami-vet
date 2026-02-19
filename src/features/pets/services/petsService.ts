@@ -19,13 +19,20 @@ export async function fetchPetsByOwner(ownerId: number): Promise<Pet[]> {
 
 // Insert a pet
 export async function insertPet(pet: Pet): Promise<Pet> {
+  const petToInsert = {
+    ...pet,
+    birthDate: pet.birthDate || null,
+    registrationDate: pet.registrationDate || null,
+  };
+
   const { data, error } = await supabase
     .from("pets")
-    .insert([pet])
-    .select()
-    .single();
+    .insert([petToInsert])
+    .select();
+
   if (error) throw error;
-  return data;
+  if (!data || data.length === 0) throw new Error("No pet inserted");
+  return data[0];
 }
 
 // Update a pet
@@ -34,10 +41,13 @@ export async function updatePet(pet: Pet): Promise<Pet> {
     .from("pets")
     .update(pet)
     .eq("id", pet.id)
-    .select()
-    .single();
+    .select();
+
   if (error) throw error;
-  return data;
+  if (!data || data.length === 0)
+    throw new Error(`Pet with id ${pet.id} not found`);
+
+  return data[0];
 }
 
 // Delete a pet

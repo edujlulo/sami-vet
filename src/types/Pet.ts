@@ -1,8 +1,8 @@
 export type Pet = {
-  id: number; // primary key
+  id?: number; // primary key
   ownerId: number; // foreign key to Owner
   name: string;
-  birthDate: string; // Fech Naci, en formato ISO (ej: '2026-02-17')
+  birthDate: string | null;
   species: string;
   breed: string;
   sex: string;
@@ -10,5 +10,5 @@ export type Pet = {
   color: string;
   licensePlate?: string;
   chip?: string;
-  registrationDate: string;
+  registrationDate: string | null;
 };

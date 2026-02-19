@@ -3,33 +3,62 @@ import TablePetsPetHistoryPage from "./TablePetsPetHistoryPage";
 import type { Pet } from "../../../types/Pet";
 import type { Owner } from "../../../types/Owner";
 import LabelInputOwners from "../../owners/components/LabelInputOwners";
+import { useEffect, useRef } from "react";
 
 interface FormPetsProps {
-  pets: Pet[];
   selectedOwner: Owner;
   handleSelect: (pet: Pet) => void;
   selectedPet: Pet | null;
+  setSelectedPet: React.Dispatch<React.SetStateAction<Pet | null>>;
   emptyPet: Pet;
+  isEditing: boolean;
+  isCreating: boolean;
+  handleSave: () => void;
+  pets: Pet[];
 }
 
 export default function FormPets({
-  pets,
   selectedOwner,
   handleSelect,
   selectedPet,
+  setSelectedPet,
   emptyPet,
+  isEditing,
+  isCreating,
+  handleSave,
+  pets,
 }: FormPetsProps) {
   const selectedOwnerSurnameAndName = `${selectedOwner.surname} ${selectedOwner.name}`;
 
+  // initial focus on "Surname"
+  const nameRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if ((isEditing || isCreating) && nameRef.current) {
+      nameRef.current.focus();
+    }
+  }, [isEditing, isCreating]);
+
+  // Form submit when pressing Enter
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleSave();
+  };
+
   return (
-    <div className="bg-amber-300 px-2 py-4">
+    <form onSubmit={handleSubmit} className="bg-amber-300 px-2 py-4">
       {/* --- Top box --- */}
 
       <div className="flex flex-row gap-2">
-        <TablePetsPetHistoryPage pets={pets} handleSelect={handleSelect} />
+        <TablePetsPetHistoryPage
+          selectedOwner={selectedOwner}
+          handleSelect={handleSelect}
+          pets={pets}
+        />
+
         <div>
-          <form className="flex flex-row gap-2">
-            {/* --- Owner input (Only read) --- */}
+          {/* --- Owner row --- */}
+          <div className="flex flex-row gap-2">
             <div className="flex flex-col gap-1">
               <label className="text-blue-900 font-bold -mb-1 mt-1">
                 Propietario
@@ -39,9 +68,10 @@ export default function FormPets({
                 value={selectedOwnerSurnameAndName}
                 disabled={true}
                 readOnly={true}
-                className={`bg-amber-50 border border-gray-700 px-1 w-80`}
+                className="bg-amber-50 border border-gray-700 px-1 w-80"
               />
             </div>
+
             <LabelInputOwners
               label="N. Cliente"
               ownerKey="id"
@@ -50,127 +80,149 @@ export default function FormPets({
               isCreating={false}
               className="w-20"
             />
-          </form>
-          <form className="flex flex-row gap-2">
+          </div>
+
+          {/* --- Pet row --- */}
+          <div className="flex flex-row gap-2">
             <LabelInputPets
               label="Mascota"
               petKey="name"
               pet={selectedPet ?? emptyPet}
-              isEditing={true}
-              isCreating={true}
+              setPet={setSelectedPet}
+              isEditing={isEditing}
+              isCreating={isCreating}
               className="w-30"
+              inputRef={nameRef}
             />
+
             <LabelInputPets
               label="Fech Naci"
-              isEditing={true}
-              isCreating={true}
+              isEditing={false}
+              isCreating={false}
               className="w-30"
             />
+
             <LabelInputPets
               label="Edad"
-              isEditing={true}
-              isCreating={true}
+              isEditing={false}
+              isCreating={false}
               className="w-30"
             />
-          </form>
+          </div>
         </div>
       </div>
 
       {/* --- Bottom box --- */}
 
       <div>
-        <form className="flex flex-row gap-2">
+        <div className="flex flex-row gap-2">
           <LabelInputPets
             label="Especie"
             petKey="species"
             pet={selectedPet ?? emptyPet}
-            isEditing={true}
-            isCreating={true}
+            setPet={setSelectedPet}
+            isEditing={isEditing}
+            isCreating={isCreating}
           />
+
           <LabelInputPets
             label="Raza"
             petKey="breed"
             pet={selectedPet ?? emptyPet}
-            isEditing={true}
-            isCreating={true}
+            setPet={setSelectedPet}
+            isEditing={isEditing}
+            isCreating={isCreating}
           />
+
           <LabelInputPets
             label="Sexo"
             petKey="sex"
             pet={selectedPet ?? emptyPet}
-            isEditing={true}
-            isCreating={true}
+            setPet={setSelectedPet}
+            isEditing={isEditing}
+            isCreating={isCreating}
             className="w-30"
           />
+
           <LabelInputPets
             label="Pdg"
             petKey="pedigree"
             pet={selectedPet ?? emptyPet}
-            isEditing={true}
-            isCreating={true}
+            setPet={setSelectedPet}
+            isEditing={isEditing}
+            isCreating={isCreating}
             className="w-8"
           />
-        </form>
-        <form className="flex flex-row gap-2 items-center">
+        </div>
+
+        <div className="flex flex-row gap-2 items-center">
           <LabelInputPets
             label="Color"
             petKey="color"
             pet={selectedPet ?? emptyPet}
-            isEditing={true}
-            isCreating={true}
+            setPet={setSelectedPet}
+            isEditing={isEditing}
+            isCreating={isCreating}
             className="w-30"
           />
+
           <LabelInputPets
             label="Placa"
             petKey="licensePlate"
             pet={selectedPet ?? emptyPet}
-            isEditing={true}
-            isCreating={true}
+            setPet={setSelectedPet}
+            isEditing={isEditing}
+            isCreating={isCreating}
             className="w-20"
           />
+
           <LabelInputPets
             label="Chip"
             petKey="chip"
             pet={selectedPet ?? emptyPet}
-            isEditing={true}
-            isCreating={true}
+            setPet={setSelectedPet}
+            isEditing={isEditing}
+            isCreating={isCreating}
           />
+
           <LabelInputPets
             label="Fech Regis"
-            isEditing={true}
-            isCreating={true}
+            isEditing={false}
+            isCreating={false}
             className="w-30"
           />
+
           <button
-            className={`
-        bg-amber-50
-        border border-gray-300
-        rounded-md
-        py-1
-        px-2
-        cursor-pointer
-        shadow-sm
-        hover:bg-green-50
-        hover:border-green-300
-        hover:shadow-md
-        transform
-        hover:-translate-y-px
-        active:translate-y-0
-        transition-all duration-150
-        w-20
-       text-blue-900
-       font-bold
-        disabled:text-gray-400
-        disabled:cursor-not-allowed
-        disabled:hover:bg-gray-200
-        ml-2
-        self-end
-      `}
+            type="submit"
+            className="
+              bg-amber-50
+              border border-gray-300
+              rounded-md
+              py-1
+              px-2
+              cursor-pointer
+              shadow-sm
+              hover:bg-green-50
+              hover:border-green-300
+              hover:shadow-md
+              transform
+              hover:-translate-y-px
+              active:translate-y-0
+              transition-all duration-150
+              w-20
+              text-blue-900
+              font-bold
+              disabled:text-gray-400
+              disabled:cursor-not-allowed
+              disabled:hover:bg-gray-200
+              ml-2
+              self-end
+            "
           >
             Asociar
           </button>
-        </form>
+        </div>
       </div>
-    </div>
+    </form>
   );
 }
