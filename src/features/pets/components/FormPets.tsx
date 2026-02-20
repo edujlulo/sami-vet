@@ -4,6 +4,7 @@ import type { Pet } from "../../../types/Pet";
 import type { Owner } from "../../../types/Owner";
 import LabelInputOwners from "../../owners/components/LabelInputOwners";
 import { useEffect, useRef } from "react";
+import { calculateAge } from "../../../helpers/ageCalculator";
 
 interface FormPetsProps {
   selectedOwner: Owner;
@@ -44,6 +45,25 @@ export default function FormPets({
     e.preventDefault();
     handleSave();
   };
+
+  // Age for selectedPet
+  const age = selectedPet
+    ? JSON.stringify(selectedPet) !== JSON.stringify(emptyPet)
+      ? calculateAge(selectedPet.birthDate)
+      : ""
+    : "";
+
+  // Assign registration date when is creating a new pet
+  useEffect(() => {
+    if (isCreating && selectedPet && !selectedPet.registrationDate) {
+      const today = new Date().toISOString().split("T")[0];
+
+      setSelectedPet({
+        ...selectedPet,
+        registrationDate: today,
+      });
+    }
+  }, [isCreating]);
 
   return (
     <form onSubmit={handleSubmit} className="bg-amber-300 px-2 py-4">
@@ -97,17 +117,29 @@ export default function FormPets({
 
             <LabelInputPets
               label="Fech Naci"
-              isEditing={false}
-              isCreating={false}
-              className="w-30"
+              petKey="birthDate"
+              pet={selectedPet ?? emptyPet}
+              setPet={setSelectedPet}
+              isEditing={isEditing}
+              isCreating={isCreating}
+              type={
+                JSON.stringify(selectedPet) === JSON.stringify(emptyPet)
+                  ? "text"
+                  : "date"
+              }
+              className="w-32"
             />
 
-            <LabelInputPets
-              label="Edad"
-              isEditing={false}
-              isCreating={false}
-              className="w-30"
-            />
+            {/* --- Actual age --- */}
+            <div className="flex flex-col gap-1">
+              <label className="text-blue-900 font-bold -mb-1 mt-1">Edad</label>
+              <input
+                type="text"
+                value={age}
+                disabled={true}
+                className={`bg-amber-50 border border-gray-700 px-1 w-31`}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -187,8 +219,16 @@ export default function FormPets({
 
           <LabelInputPets
             label="Fech Regis"
-            isEditing={false}
-            isCreating={false}
+            petKey="registrationDate"
+            pet={selectedPet ?? emptyPet}
+            setPet={setSelectedPet}
+            isEditing={isEditing}
+            isCreating={isCreating}
+            type={
+              JSON.stringify(selectedPet) === JSON.stringify(emptyPet)
+                ? "text"
+                : "date"
+            }
             className="w-30"
           />
 

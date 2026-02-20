@@ -28,7 +28,7 @@ export function PetsProvider({ children }: { children: ReactNode }) {
     color: "",
     licensePlate: "",
     chip: "",
-    registrationDate: "",
+    registrationDate: null,
   };
 
   const [selectedPet, setSelectedPet] = useState<Pet | null>(emptyPet);

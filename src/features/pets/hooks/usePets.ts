@@ -9,25 +9,11 @@ interface UsePetsProps {
 }
 
 export function usePets({ refetch }: UsePetsProps) {
-  const { selectedPet, setSelectedPet } = usePetsContext();
+  const { selectedPet, setSelectedPet, emptyPet } = usePetsContext();
   const { selectedOwner } = useOwnersContext();
 
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
-
-  const emptyPet: Omit<Pet, "id"> = {
-    ownerId: 0,
-    name: "",
-    birthDate: "",
-    species: "",
-    breed: "",
-    sex: "",
-    pedigree: "",
-    color: "",
-    licensePlate: "",
-    chip: "",
-    registrationDate: "",
-  };
 
   // ================= NEW =================
   function handleNew() {

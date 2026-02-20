@@ -23,15 +23,17 @@ export default function TablePetsOwnersPage({ selectedOwner }: Props) {
           </thead>
 
           <tbody>
-            {pets.map((pet: Pet) => {
-              return (
-                <tr key={pet.id}>
-                  <td className="border border-gray-900 px-2 py-0.5">
-                    {pet.name}
-                  </td>
-                </tr>
-              );
-            })}
+            {pets
+              .sort((a, b) => (a.id ?? 0) - (b.id ?? 0))
+              .map((pet: Pet) => {
+                return (
+                  <tr key={pet.id}>
+                    <td className="border border-gray-900 px-2 py-0.5">
+                      {pet.name}
+                    </td>
+                  </tr>
+                );
+              })}
             {Array.from({ length: petsEmptyRows > 0 ? petsEmptyRows : 0 }).map(
               (_, i) => (
                 <tr key={`empty-${i}`}>

@@ -1,14 +1,11 @@
 import type { Owner } from "../../../types/Owner";
 
-interface TableOwnersProps {
+interface Props {
   owners: Owner[];
   handleSelect: (owner: Owner) => void;
 }
 
-export default function TableOwners({
-  owners,
-  handleSelect,
-}: TableOwnersProps) {
+export default function TableOwners({ owners, handleSelect }: Props) {
   const emptyRows = 8 - owners.length;
 
   return (
@@ -33,26 +30,28 @@ export default function TableOwners({
           </thead>
 
           <tbody>
-            {owners.map((owner) => (
-              <tr
-                key={owner.id}
-                onClick={() => handleSelect(owner)}
-                className="cursor-pointer hover:bg-amber-200"
-              >
-                <td className="border border-gray-900 px-2 py-0.5">
-                  {owner.id}
-                </td>
-                <td className="border border-gray-900 px-2 py-0.5">
-                  {owner.surname}
-                </td>
-                <td className="border border-gray-900 px-2 py-0.5">
-                  {owner.name}
-                </td>
-                <td className="border border-gray-900 px-2 py-0.5">
-                  {owner.idCardNumber}
-                </td>
-              </tr>
-            ))}
+            {owners
+              .sort((a, b) => a.id - b.id)
+              .map((owner) => (
+                <tr
+                  key={owner.id}
+                  onClick={() => handleSelect(owner)}
+                  className="cursor-pointer hover:bg-amber-200"
+                >
+                  <td className="border border-gray-900 px-2 py-0.5">
+                    {owner.id}
+                  </td>
+                  <td className="border border-gray-900 px-2 py-0.5">
+                    {owner.surname}
+                  </td>
+                  <td className="border border-gray-900 px-2 py-0.5">
+                    {owner.name}
+                  </td>
+                  <td className="border border-gray-900 px-2 py-0.5">
+                    {owner.idCardNumber}
+                  </td>
+                </tr>
+              ))}
 
             {Array.from({ length: emptyRows > 0 ? emptyRows : 0 }).map(
               (_, i) => (
