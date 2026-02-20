@@ -89,14 +89,14 @@ export function usePets({ refetch }: UsePetsProps) {
   }
 
   // ================= SELECT =================
-  function handleSelect(pet: Pet) {
+  function handleSelectPet(pet: Pet) {
     setSelectedPet(pet);
     setIsEditing(false);
     setIsCreating(false);
   }
 
   return {
-    handleSelect,
+    handleSelectPet,
     handleCancel,
     handleSave,
     handleNew,

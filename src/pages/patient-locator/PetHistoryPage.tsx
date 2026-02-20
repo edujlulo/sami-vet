@@ -7,8 +7,13 @@ import TablePetVaccines from "../../features/pets/components/TablePetVaccines";
 import TableUpcomingVisits from "../../features/visits/components/TableUpcomingVisits";
 import { usePetsByOwner } from "../../features/pets/hooks/usePetsByOwner";
 import { useOwnersContext } from "../../features/owners/context/OwnersContext";
+import type { Pet } from "../../types/Pet";
 
-export default function PetHistoryPage({}) {
+interface Props {
+  handleSelectPet: (pet: Pet) => void;
+}
+
+export default function PetHistoryPage({ handleSelectPet }: Props) {
   const { selectedOwner } = useOwnersContext();
 
   const { pets, refetch } = usePetsByOwner(selectedOwner.id);
@@ -16,7 +21,6 @@ export default function PetHistoryPage({}) {
   const {
     handleCancel,
     setIsEditing,
-    handleSelect,
     handleSave,
     handleNew,
     handleDeletePet,
@@ -50,7 +54,7 @@ export default function PetHistoryPage({}) {
                 selectedPet={selectedPet}
                 setSelectedPet={setSelectedPet}
                 selectedOwner={selectedOwner}
-                handleSelect={handleSelect}
+                handleSelectPet={handleSelectPet}
                 emptyPet={emptyPet}
                 isEditing={isEditing}
                 isCreating={isCreating}

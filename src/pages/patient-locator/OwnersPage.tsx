@@ -7,8 +7,14 @@ import TableOutstandingPayments from "../../features/billing/components/TableOut
 import ButtonsVisits from "../../features/visits/components/ButtonsVisits";
 import { useOwners } from "../../features/owners/hooks/useOwners";
 import { useOwnersContext } from "../../features/owners/context/OwnersContext";
+import type { Pet } from "../../types/Pet";
+import { usePetsContext } from "../../features/pets/context/PetsContext";
 
-export default function OwnersPage() {
+interface Props {
+  handleSelectPet: (pet: Pet) => void;
+}
+
+export default function OwnersPage({ handleSelectPet }: Props) {
   const {
     owners,
     isEditing,
@@ -23,6 +29,7 @@ export default function OwnersPage() {
   } = useOwners();
 
   const { selectedOwner, setSelectedOwner } = useOwnersContext();
+  const { selectedPet } = usePetsContext();
 
   return (
     <div className="bg-amber-200 px-25 py-6 pb-10 rounded-b-lg border border-t-0 border-gray-300">
@@ -36,7 +43,11 @@ export default function OwnersPage() {
             isCreating={isCreating}
             handleSave={handleSave}
           />
-          <TableOwners owners={owners} handleSelect={handleSelect} />
+          <TableOwners
+            owners={owners}
+            handleSelect={handleSelect}
+            selectedOwner={selectedOwner}
+          />
         </div>
         <div className="flex flex-col items-center gap-6">
           <ButtonsOwners
@@ -50,7 +61,11 @@ export default function OwnersPage() {
             handleDeleteOwner={handleDeleteOwner}
             emptyOwner={emptyOwner}
           />
-          <TablePetsOwnersPage selectedOwner={selectedOwner} />
+          <TablePetsOwnersPage
+            selectedOwner={selectedOwner}
+            handleSelectPet={handleSelectPet}
+            selectedPet={selectedPet}
+          />
           <TableOutstandingPayments />
         </div>
       </div>

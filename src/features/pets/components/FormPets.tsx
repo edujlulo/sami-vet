@@ -8,7 +8,7 @@ import { calculateAge } from "../../../helpers/ageCalculator";
 
 interface FormPetsProps {
   selectedOwner: Owner;
-  handleSelect: (pet: Pet) => void;
+  handleSelectPet: (pet: Pet) => void;
   selectedPet: Pet | null;
   setSelectedPet: React.Dispatch<React.SetStateAction<Pet | null>>;
   emptyPet: Pet;
@@ -20,7 +20,7 @@ interface FormPetsProps {
 
 export default function FormPets({
   selectedOwner,
-  handleSelect,
+  handleSelectPet,
   selectedPet,
   setSelectedPet,
   emptyPet,
@@ -72,8 +72,9 @@ export default function FormPets({
       <div className="flex flex-row gap-2">
         <TablePetsPetHistoryPage
           selectedOwner={selectedOwner}
-          handleSelect={handleSelect}
+          handleSelectPet={handleSelectPet}
           pets={pets}
+          selectedPet={selectedPet}
         />
 
         <div>

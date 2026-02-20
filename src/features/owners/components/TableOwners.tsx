@@ -3,9 +3,14 @@ import type { Owner } from "../../../types/Owner";
 interface Props {
   owners: Owner[];
   handleSelect: (owner: Owner) => void;
+  selectedOwner: Owner;
 }
 
-export default function TableOwners({ owners, handleSelect }: Props) {
+export default function TableOwners({
+  owners,
+  handleSelect,
+  selectedOwner,
+}: Props) {
   const emptyRows = 8 - owners.length;
 
   return (
@@ -14,13 +19,14 @@ export default function TableOwners({ owners, handleSelect }: Props) {
         <table className="bg-amber-50 border border-gray-900 w-full table-fixed bg-amber-50">
           <thead>
             <tr>
+              <th className="w-[4%] border border-gray-900 px-2 py-0.5"></th>
               <th className="w-[14%] border border-gray-900 px-2 py-0.5">
                 Código
               </th>
-              <th className="w-[33%] border border-gray-900 px-2 py-0.5">
+              <th className="w-[31%] border border-gray-900 px-2 py-0.5">
                 Apellidos
               </th>
-              <th className="w-[33%] border border-gray-900 px-2 py-0.5">
+              <th className="w-[31%] border border-gray-900 px-2 py-0.5">
                 Nombres
               </th>
               <th className="w-[20%] border border-gray-900 px-2 py-0.5">
@@ -36,8 +42,13 @@ export default function TableOwners({ owners, handleSelect }: Props) {
                 <tr
                   key={owner.id}
                   onClick={() => handleSelect(owner)}
-                  className="cursor-pointer hover:bg-amber-200"
+                  className={`cursor-pointer hover:bg-amber-200 ${
+                    selectedOwner?.id === owner.id ? "bg-amber-300" : ""
+                  }`}
                 >
+                  <td className="border border-gray-900 pl-1.5 py-0.5">
+                    {selectedOwner?.id === owner.id ? "➤" : ""}
+                  </td>
                   <td className="border border-gray-900 px-2 py-0.5">
                     {owner.id}
                   </td>
