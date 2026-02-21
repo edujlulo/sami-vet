@@ -31,6 +31,23 @@ export function usePets({ refetch }: UsePetsProps) {
 
   // ================= SAVE =================
   async function handleSave() {
+    if (!selectedPet) {
+      window.alert("No pet selected");
+      return;
+    }
+
+    if (selectedPet.name.trim() === "") {
+      // window.alert("A pet name is required");
+      window.alert("Debe ingresar un nombre para la mascota");
+      return;
+    }
+
+    if (selectedPet.species.trim() === "") {
+      // window.alert("A species is required");
+      window.alert("Debe ingresar la especie");
+      return;
+    }
+
     try {
       if (!selectedPet) throw new Error("No pet selected");
       if (!selectedOwner) throw new Error("No owner selected");
