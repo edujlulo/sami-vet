@@ -71,7 +71,8 @@ export function usePets({ refetch }: UsePetsProps) {
     if (!selectedPet?.id) return;
 
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this pet?",
+      // "Are you sure you want to delete this pet?"
+      "Esta acción eliminará la mascota de forma permanente. ¿Desea continuar?",
     );
     if (!confirmDelete) return;
 

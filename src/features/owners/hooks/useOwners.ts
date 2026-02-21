@@ -67,6 +67,18 @@ export function useOwners() {
 
   // ================= SAVE =================
   async function handleSave() {
+    if (selectedOwner.surname.trim() === "") {
+      // window.alert("Surname is required");
+      window.alert("Debe ingresar un apellido");
+      return;
+    }
+
+    if (selectedOwner.name.trim() === "") {
+      // window.alert("First name is required");
+      window.alert("Debe ingresar un nombre");
+      return;
+    }
+
     try {
       if (isEditing) {
         const data = await updateOwnerService(selectedOwner);
@@ -92,7 +104,8 @@ export function useOwners() {
     if (!selectedOwner.id) return;
 
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this owner?",
+      // "Are you sure you want to delete this pet?"
+      "Esta acción eliminará el propietario junto con sus mascotas de forma permanente. ¿Desea continuar?",
     );
     if (!confirmDelete) return;
 

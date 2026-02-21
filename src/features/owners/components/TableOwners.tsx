@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import type { Owner } from "../../../types/Owner";
 
 interface Props {
@@ -13,9 +14,43 @@ export default function TableOwners({
 }: Props) {
   const emptyRows = 8 - owners.length;
 
+  // Function for navigation in table with keyboard
+  function handleKeyNavigation(e: React.KeyboardEvent<HTMLDivElement>) {
+    if (!owners.length) return;
+
+    // Encuentra la fila actualmente seleccionada
+    const currentIndex = owners.findIndex((o) => o.id === selectedOwner?.id);
+
+    // Arrow Down
+    if (e.key === "ArrowDown") {
+      const nextIndex = Math.min(currentIndex + 1, owners.length - 1); // nunca pasa del último
+      if (nextIndex !== currentIndex) {
+        handleSelect(owners[nextIndex]);
+        rowRefs.current[nextIndex]?.scrollIntoView({ block: "nearest" });
+      }
+      e.preventDefault();
+    }
+
+    // Arrow Up
+    else if (e.key === "ArrowUp") {
+      const prevIndex = Math.max(currentIndex - 1, 0); // nunca pasa del primero
+      if (prevIndex !== currentIndex) {
+        handleSelect(owners[prevIndex]);
+        rowRefs.current[prevIndex]?.scrollIntoView({ block: "nearest" });
+      }
+      e.preventDefault();
+    }
+  }
+
+  const rowRefs = useRef<(HTMLTableRowElement | null)[]>([]);
+
   return (
     <div>
-      <div className="w-[675px] h-[250px] overflow-y-auto border border-gray-900">
+      <div
+        className="w-[675px] h-[250px] overflow-y-auto border border-gray-900 focus-within:ring-3 focus-within:ring-blue-300 rounded-md"
+        tabIndex={0} // allow the div to receive focus
+        onKeyDown={(e) => handleKeyNavigation(e)}
+      >
         <table className="bg-amber-50 border border-gray-900 w-full table-fixed bg-amber-50">
           <thead>
             <tr>
@@ -38,9 +73,10 @@ export default function TableOwners({
           <tbody>
             {owners
               .sort((a, b) => a.id - b.id)
-              .map((owner) => (
+              .map((owner, index) => (
                 <tr
                   key={owner.id}
+                  ref={(el) => void (rowRefs.current[index] = el)}
                   onClick={() => handleSelect(owner)}
                   className={`cursor-pointer hover:bg-amber-200 ${
                     selectedOwner?.id === owner.id ? "bg-amber-300" : ""
