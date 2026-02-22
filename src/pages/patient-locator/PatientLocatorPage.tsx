@@ -27,7 +27,11 @@ export default function PatientLocatorPage() {
               border
               border-b-0
               text-xl
-              ${activeTab === "A" ? "bg-amber-200 border-gray-300 font-semibold" : "bg-amber-500 border-transparent hover:bg-amber-600"}
+              ${
+                activeTab === "A"
+                  ? "bg-amber-200 border-gray-300 font-semibold"
+                  : "bg-amber-500 border-transparent hover:bg-amber-600"
+              }
             `}
             onClick={() => setActiveTab("A")}
           >
@@ -41,7 +45,11 @@ export default function PatientLocatorPage() {
               border
               border-b-0
               text-xl
-              ${activeTab === "B" ? "bg-amber-200 border-gray-300 font-semibold" : "bg-amber-500 border-transparent hover:bg-amber-600"}
+              ${
+                activeTab === "B"
+                  ? "bg-amber-200 border-gray-300 font-semibold"
+                  : "bg-amber-500 border-transparent hover:bg-amber-600"
+              }
             `}
             onClick={() => setActiveTab("B")}
           >

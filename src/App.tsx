@@ -5,6 +5,7 @@ import MainMenuPage from "./pages/main-menu/MainMenuPage";
 import PatientLocatorPage from "./pages/patient-locator/PatientLocatorPage";
 import { OwnersProvider } from "./features/owners/context/OwnersContext";
 import { PetsProvider } from "./features/pets/context/PetsContext";
+import { VisitsProvider } from "./features/visits/context/VisitsContext";
 
 export default function App() {
   // Por defecto es false
@@ -14,37 +15,41 @@ export default function App() {
     <BrowserRouter>
       <OwnersProvider>
         <PetsProvider>
-          <Routes>
-            {/* Login siempre accesible */}
-            <Route
-              path="/login"
-              element={
-                <LoginPage
-                  onLogin={() => {
-                    localStorage.setItem("isLoggedIn", "true"); // Persistir login
-                    setIsLoggedIn(true); // Actualiza el state
-                  }}
-                />
-              }
-            />
+          <VisitsProvider>
+            <Routes>
+              {/* Login siempre accesible */}
+              <Route
+                path="/login"
+                element={
+                  <LoginPage
+                    onLogin={() => {
+                      localStorage.setItem("isLoggedIn", "true"); // Persistir login
+                      setIsLoggedIn(true); // Actualiza el state
+                    }}
+                  />
+                }
+              />
 
-            {/* Menú principal protegido */}
-            <Route
-              path="/"
-              element={isLoggedIn ? <MainMenuPage /> : <Navigate to="/login" />}
-            />
+              {/* Menú principal protegido */}
+              <Route
+                path="/"
+                element={
+                  isLoggedIn ? <MainMenuPage /> : <Navigate to="/login" />
+                }
+              />
 
-            {/* Localizador protegido */}
-            <Route
-              path="/patients"
-              element={
-                isLoggedIn ? <PatientLocatorPage /> : <Navigate to="/login" />
-              }
-            />
+              {/* Localizador protegido */}
+              <Route
+                path="/patients"
+                element={
+                  isLoggedIn ? <PatientLocatorPage /> : <Navigate to="/login" />
+                }
+              />
 
-            {/* Redirección por defecto */}
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
+              {/* Redirección por defecto */}
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </VisitsProvider>
         </PetsProvider>
       </OwnersProvider>
     </BrowserRouter>

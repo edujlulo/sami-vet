@@ -1,23 +1,24 @@
 import React, { useState } from "react";
+import { createPortal } from "react-dom";
 
 type Props = {
-  isOpen: boolean;
-  onClose: () => void;
-  onContinue: (procedure: string, cost: string) => void;
+  isOpenAddProcedureModal: boolean;
+  handleCancelVisit: () => void;
+  onContinueAddProcedureModal: (procedure: string, cost: string) => void;
 };
 
 const AddProcedureModal: React.FC<Props> = ({
-  isOpen,
-  onClose,
-  onContinue,
+  isOpenAddProcedureModal,
+  handleCancelVisit,
+  onContinueAddProcedureModal,
 }) => {
   const [procedure, setProcedure] = useState("");
   const [cost, setCost] = useState("");
 
-  if (!isOpen) return null; // It doesn't render nothing if modal is closed
+  if (!isOpenAddProcedureModal) return null; // It doesn't render nothing if modal is closed
 
   const handleContinue = () => {
-    onContinue(procedure, cost);
+    onContinueAddProcedureModal(procedure, cost);
     setProcedure("");
     setCost("");
   };
@@ -25,11 +26,11 @@ const AddProcedureModal: React.FC<Props> = ({
   const handleClose = () => {
     setProcedure("");
     setCost("");
-    onClose();
+    handleCancelVisit();
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  return createPortal(
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-700/30">
       {/* Modal Box */}
       <div className="bg-white rounded-lg w-[400px] p-6 shadow-lg">
         <h2 className="text-xl font-semibold mb-4">Agregar Procedimiento</h2>
@@ -72,7 +73,8 @@ const AddProcedureModal: React.FC<Props> = ({
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

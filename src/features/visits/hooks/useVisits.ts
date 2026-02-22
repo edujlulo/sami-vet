@@ -8,29 +8,33 @@ import {
 } from "../services/visitsService";
 import { usePetsContext } from "../../pets/context/PetsContext";
 
-interface UseVisitsProps {
-  refetch: () => Promise<void>; // comes from useVisitsByPet
-}
+// interface UseVisitsProps {
+//   refetch: () => Promise<void>; // comes from useVisitsByPet
+// }
 
-export function useVisits({ refetch }: UseVisitsProps) {
+export function useVisits() {
   const { selectedVisit, setSelectedVisit, emptyVisit } = useVisitsContext();
   const { selectedPet } = usePetsContext();
 
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
 
+  const [isOpenAddProcedureModal, setIsOpenAddProcedureModal] = useState(false);
+
   // ================= NEW =================
-  function handleNew() {
+  function handleNewVisit() {
     setSelectedVisit(emptyVisit);
+    setIsOpenAddProcedureModal(true);
     setIsCreating(true);
     setIsEditing(false);
   }
 
   // ================= CANCEL =================
-  function handleCancel() {
+  function handleCancelVisit() {
     setIsCreating(false);
     setIsEditing(false);
     setSelectedVisit(emptyVisit);
+    setIsOpenAddProcedureModal(false);
   }
 
   // ================= SAVE =================
@@ -63,7 +67,7 @@ export function useVisits({ refetch }: UseVisitsProps) {
       setSelectedVisit(data);
 
       // refresh table
-      await refetch();
+      // await refetch();
     } catch (error) {
       console.error("Error saving visit:", error);
     }
@@ -74,7 +78,7 @@ export function useVisits({ refetch }: UseVisitsProps) {
     if (!selectedVisit?.id) return;
 
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this visit?",
+      "Are you sure you want to delete this visit?"
     );
     if (!confirmDelete) return;
 
@@ -85,7 +89,7 @@ export function useVisits({ refetch }: UseVisitsProps) {
       setIsCreating(false);
 
       // refresh list
-      await refetch();
+      // await refetch();
     } catch (error) {
       console.error("Error deleting visit:", error);
     }
@@ -98,11 +102,16 @@ export function useVisits({ refetch }: UseVisitsProps) {
     setIsCreating(false);
   }
 
+  // ============ ON CONTINUE ADD PROCEDURE MODAL ==============
+  function onContinueAddProcedureModal() {
+    console.log("Continue succesfully");
+  }
+
   return {
     handleSelect,
-    handleCancel,
+    handleCancelVisit,
     handleSave,
-    handleNew,
+    handleNewVisit,
     handleDeleteVisit,
     selectedVisit,
     setSelectedVisit,
@@ -111,5 +120,7 @@ export function useVisits({ refetch }: UseVisitsProps) {
     isCreating,
     setIsCreating,
     emptyVisit,
+    isOpenAddProcedureModal,
+    onContinueAddProcedureModal,
   };
 }
