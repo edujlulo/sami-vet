@@ -14,7 +14,7 @@ const AddProcedureModal: React.FC<Props> = ({
   const [procedure, setProcedure] = useState("");
   const [cost, setCost] = useState("");
 
-  if (!isOpen) return null; // No renderiza nada si el modal está cerrado
+  if (!isOpen) return null; // It doesn't render nothing if modal is closed
 
   const handleContinue = () => {
     onContinue(procedure, cost);
@@ -34,7 +34,7 @@ const AddProcedureModal: React.FC<Props> = ({
       <div className="bg-white rounded-lg w-[400px] p-6 shadow-lg">
         <h2 className="text-xl font-semibold mb-4">Agregar Procedimiento</h2>
 
-        {/* Procedimiento */}
+        {/* Procedure */}
         <div className="mb-4">
           <label className="block text-gray-700 mb-1">Procedimiento</label>
           <input
@@ -45,7 +45,7 @@ const AddProcedureModal: React.FC<Props> = ({
           />
         </div>
 
-        {/* Costo */}
+        {/* Cost */}
         <div className="mb-6">
           <label className="block text-gray-700 mb-1">Costo</label>
           <input
