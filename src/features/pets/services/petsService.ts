@@ -1,3 +1,4 @@
+import { normalizeStringsData } from "../../../helpers/normalizeStrings";
 import { supabase } from "../../../supabaseClient";
 import type { Pet } from "../../../types/Pet";
 
@@ -19,8 +20,10 @@ export async function fetchPetsByOwner(ownerId: number): Promise<Pet[]> {
 
 // Insert a pet
 export async function insertPet(pet: Pet): Promise<Pet> {
+  const normalizedPet = normalizeStringsData(pet);
+
   const petToInsert = {
-    ...pet,
+    ...normalizedPet,
     birthDate: pet.birthDate || null,
     registrationDate: pet.registrationDate || null,
   };
@@ -37,9 +40,11 @@ export async function insertPet(pet: Pet): Promise<Pet> {
 
 // Update a pet
 export async function updatePet(pet: Pet): Promise<Pet> {
+  const normalizedPet = normalizeStringsData(pet);
+
   const { data, error } = await supabase
     .from("pets")
-    .update(pet)
+    .update(normalizedPet)
     .eq("id", pet.id)
     .select();
 

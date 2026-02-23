@@ -35,9 +35,7 @@ export default function LabelInputPets({
         onChange={(e) => {
           if (pet && setPet && petKey) {
             const newValue =
-              type === "date"
-                ? e.target.value
-                : e.target.value.toUpperCase().trim();
+              type === "date" ? e.target.value : e.target.value.toUpperCase();
 
             setPet({
               ...pet,

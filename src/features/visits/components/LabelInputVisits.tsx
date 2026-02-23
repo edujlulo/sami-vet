@@ -28,9 +28,7 @@ export default function LabelInputVisits({
         onChange={(e) => {
           if (visit && setVisit && visitKey) {
             const newValue =
-              type === "date"
-                ? e.target.value
-                : e.target.value.toUpperCase().trim();
+              type === "date" ? e.target.value : e.target.value.toUpperCase();
 
             setVisit({
               ...visit,
