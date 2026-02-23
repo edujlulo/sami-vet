@@ -2,9 +2,13 @@ import Button from "../../../components/Button";
 
 interface Props {
   handleNewVisit: () => void;
+  handleEditVisit: () => void;
 }
 
-export default function ButtonsVisits({ handleNewVisit }: Props) {
+export default function ButtonsVisits({
+  handleNewVisit,
+  handleEditVisit,
+}: Props) {
   return (
     <div>
       <p className="flex items-center justify-center text-blue-900 font-bold">
@@ -22,7 +26,11 @@ export default function ButtonsVisits({ handleNewVisit }: Props) {
 
         {/* Columna 2 */}
         <div className="flex flex-col gap-1">
-          <Button name="Modificar" className="h-auto" />
+          <Button
+            name="Modificar"
+            onClick={handleEditVisit}
+            className="h-auto"
+          />
           <Button name="Facturar" className="h-auto" />
           <Button name="Detalles" className="h-auto" />
           <Button name="Reportes" className="h-auto" />

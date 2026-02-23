@@ -4,6 +4,7 @@ import OwnersPage from "./OwnersPage";
 import { useOwnersContext } from "../../features/owners/context/OwnersContext";
 import { usePets } from "../../features/pets/hooks/usePets";
 import { usePetsByOwner } from "../../features/pets/hooks/usePetsByOwner";
+import { useVisits } from "../../features/visits/hooks/useVisits";
 // import { usePetsByOwner } from "../../features/pets/hooks/usePetsByOwner";
 
 export default function PatientLocatorPage() {
@@ -12,6 +13,7 @@ export default function PatientLocatorPage() {
   const { selectedOwner } = useOwnersContext();
   const { refetch } = usePetsByOwner(selectedOwner.id);
   const { handleSelectPet } = usePets({ refetch });
+  const { handleSelectVisit } = useVisits();
 
   return (
     <div className="flex flex-col items-center justify-center h-screen scale-75">
@@ -60,7 +62,10 @@ export default function PatientLocatorPage() {
         {/* --- Tabs contein --- */}
         <div>
           {activeTab === "A" && (
-            <OwnersPage handleSelectPet={handleSelectPet} />
+            <OwnersPage
+              handleSelectPet={handleSelectPet}
+              handleSelectVisit={handleSelectVisit}
+            />
           )}
           {activeTab === "B" && (
             <PetHistoryPage handleSelectPet={handleSelectPet} />

@@ -2,10 +2,23 @@ import type { Visit } from "../../../types/Visit";
 
 interface Props {
   visits: Visit[];
+  handleSelectVisit: (visit: Visit) => void;
+  selectedVisit: Visit | null;
 }
 
-export default function TableVisitsOwnersPage({ visits }: Props) {
+export default function TableVisitsOwnersPage({
+  visits,
+  handleSelectVisit,
+  selectedVisit,
+}: Props) {
   const emptyRows = 8;
+
+  const formattedDate = (date: string) =>
+    new Date(date).toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "2-digit",
+    });
 
   return (
     <div>
@@ -16,13 +29,14 @@ export default function TableVisitsOwnersPage({ visits }: Props) {
         <table className="bg-amber-50 border border-gray-900 w-full table-fixed bg-amber-50 text-ellipsis">
           <thead>
             <tr>
+              <th className="w-[2.5%] border border-gray-900 px-2 py-0.5"></th>
               <th className="w-[7%] border border-gray-900 px-2 py-0.5">
                 Visita
               </th>
               <th className="w-[8%] border border-gray-900 px-2 py-0.5">
                 Factura
               </th>
-              <th className="w-[8%] border border-gray-900 px-2 py-0.5">
+              <th className="w-[9%] border border-gray-900 px-2 py-0.5">
                 Fecha
               </th>
               <th className="w-[10%] border border-gray-900 px-2 py-0.5">
@@ -50,39 +64,39 @@ export default function TableVisitsOwnersPage({ visits }: Props) {
                 <tr
                   key={visit.id}
                   // ref={(el) => void (rowRefs.current[index] = el)}
-                  // onClick={() => handleSelect(owner)}
-                  // className={`cursor-pointer hover:bg-amber-200 ${
-                  //   selectedOwner?.id === owner.id ? "bg-amber-300" : ""
-                  // }`}
+                  onClick={() => handleSelectVisit(visit)}
+                  className={`cursor-pointer hover:bg-amber-200 ${
+                    selectedVisit?.id === visit.id ? "bg-amber-300" : ""
+                  }`}
                 >
-                  {/* <td className="border border-gray-900 pl-1.5 py-0.5">
+                  <td className="border border-gray-900 pl-1.5 py-0.5">
                     {selectedVisit?.id === visit.id ? "➤" : ""}
-                  </td> */}
+                  </td>
 
-                  <td className="border border-gray-900 px-2 py-0.5">
+                  <td className="border border-gray-900 px-1 py-0.5">
                     {visit.id}
                   </td>
-                  <td className="border border-gray-900 px-2 py-0.5">
+                  <td className="border border-gray-900 px-1 py-0.5">
                     {visit.invoiceNumber}
                   </td>
-                  <td className="border border-gray-900 px-2 py-0.5">
-                    {visit.visitDate}
+                  <td className="border border-gray-900 px-1 py-0.5">
+                    {formattedDate(visit.visitDate)}
                   </td>
-                  <td className="border border-gray-900 px-2 py-0.5">TBC</td>
-                  <td className="border border-gray-900 px-2 py-0.5">TBC</td>
-                  <td className="border border-gray-900 px-2 py-0.5">
+                  <td className="border border-gray-900 px-1 py-0.5">TBC</td>
+                  <td className="border border-gray-900 px-1 py-0.5">TBC</td>
+                  <td className="border border-gray-900 px-1 py-0.5">
                     {visit.procedure}
                   </td>
-                  <td className="border border-gray-900 px-2 py-0.5">
+                  <td className="border border-gray-900 px-1 py-0.5">
                     {visit.vet}
                   </td>
-                  <td className="border border-gray-900 px-2 py-0.5">
+                  <td className="border border-gray-900 px-1 py-0.5">
                     {visit.h}
                   </td>
-                  <td className="border border-gray-900 px-2 py-0.5">
+                  <td className="border border-gray-900 px-1 py-0.5">
                     {visit.ex}
                   </td>
-                  <td className="border border-gray-900 px-2 py-0.5">
+                  <td className="border border-gray-900 px-1 py-0.5">
                     {visit.referredBy}
                   </td>
                 </tr>
@@ -101,8 +115,9 @@ export default function TableVisitsOwnersPage({ visits }: Props) {
                   <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
                   <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
                   <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
+                  <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
                 </tr>
-              ),
+              )
             )}
           </tbody>
         </table>

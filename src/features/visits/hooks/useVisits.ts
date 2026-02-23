@@ -52,6 +52,18 @@ export function useVisits() {
     setIsEditing(false);
   }
 
+  // ================= EDIT =================
+  function handleEditVisit() {
+    if (JSON.stringify(selectedVisit) === JSON.stringify(emptyVisit)) {
+      window.alert("Debe tener una visita seleccionada");
+      return;
+    }
+
+    setIsOpenAddProcedureModal(true);
+    setIsCreating(false);
+    setIsEditing(true);
+  }
+
   // ================= CANCEL =================
   function handleCancelVisit() {
     setIsCreating(false);
@@ -70,7 +82,8 @@ export function useVisits() {
       const visitToSave: Visit = {
         ...selectedVisit,
         petId: selectedPet.id!,
-        visitDate: selectedVisit.visitDate || "",
+        visitDate:
+          selectedVisit.visitDate || new Date().toISOString().split("T")[0],
       };
 
       let data: Visit;
@@ -81,6 +94,7 @@ export function useVisits() {
         }
         data = await updateVisit(visitToSave);
         setIsEditing(false);
+        setIsOpenAssignVeterinarianModal(false);
       } else if (isCreating) {
         data = await insertVisit(visitToSave);
         setIsCreating(false);
@@ -103,7 +117,7 @@ export function useVisits() {
     if (!selectedVisit?.id) return;
 
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this visit?",
+      "Are you sure you want to delete this visit?"
     );
     if (!confirmDelete) return;
 
@@ -121,7 +135,7 @@ export function useVisits() {
   }
 
   // ================= SELECT =================
-  function handleSelect(visit: Visit) {
+  function handleSelectVisit(visit: Visit) {
     setSelectedVisit(visit);
     setIsEditing(false);
     setIsCreating(false);
@@ -135,10 +149,11 @@ export function useVisits() {
 
   return {
     visits,
-    handleSelect,
+    handleSelectVisit,
     handleCancelVisit,
     handleSaveVisit,
     handleNewVisit,
+    handleEditVisit,
     handleDeleteVisit,
     selectedVisit,
     setSelectedVisit,

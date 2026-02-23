@@ -13,12 +13,17 @@ import AddProcedureModal from "../../features/visits/components/modals/AddProced
 import { useVisits } from "../../features/visits/hooks/useVisits";
 import AssignVeterinarianModal from "../../features/visits/components/modals/AssignVeterinarianModal";
 import { useVisitsContext } from "../../features/visits/context/VisitsContext";
+import type { Visit } from "../../types/Visit";
 
 interface Props {
   handleSelectPet: (pet: Pet) => void;
+  handleSelectVisit: (visit: Visit) => void;
 }
 
-export default function OwnersPage({ handleSelectPet }: Props) {
+export default function OwnersPage({
+  handleSelectPet,
+  handleSelectVisit,
+}: Props) {
   const {
     owners,
     isEditing,
@@ -80,8 +85,15 @@ export default function OwnersPage({ handleSelectPet }: Props) {
 
         {/* Bottom box */}
         <div className="flex flex-row gap-2 justify-center items-center mx-10">
-          <TableVisitsOwnersPage visits={visits.visits} />
-          <ButtonsVisits handleNewVisit={visits.handleNewVisit} />
+          <TableVisitsOwnersPage
+            visits={visits.visits}
+            handleSelectVisit={handleSelectVisit}
+            selectedVisit={selectedVisit}
+          />
+          <ButtonsVisits
+            handleNewVisit={visits.handleNewVisit}
+            handleEditVisit={visits.handleEditVisit}
+          />
         </div>
       </div>
       {visits.isOpenAddProcedureModal && (
