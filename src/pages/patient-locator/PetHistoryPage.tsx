@@ -43,7 +43,7 @@ export default function PetHistoryPage({ handleSelectPet }: Props) {
 
   return (
     <div>
-      <div className="bg-amber-200 px-3 py-6 pb-10 w-[1293px] h-[1000px] flex justify-center items-center rounded-b-lg border border-t-0 border-gray-300">
+      <div className="bg-amber-200 px-3 py-6 pb-10 w-[1350px] h-[1000px] flex justify-center items-center rounded-b-lg border border-t-0 border-gray-300">
         <div className="flex flex-col justify-center items-center gap-1">
           {/* --- Main top box --- */}
           <div className="flex flex-row gap-2">

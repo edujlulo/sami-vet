@@ -54,7 +54,7 @@ export default function TablePetsPetHistoryPage({
         tabIndex={0} // allow the div to receive focus
         onKeyDown={(e) => handleKeyNavigation(e)}
       >
-        <table className="bg-amber-50 border border-gray-900 w-full table-fixed">
+        <table className="bg-amber-50 border border-gray-900 w-full table-fixed text-ellipsis">
           <colgroup>
             <col className="w-[10%]" />
             <col className="w-[30%]" />

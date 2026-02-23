@@ -40,7 +40,7 @@ export default function OwnersPage({ handleSelectPet }: Props) {
 
   return (
     <>
-      <div className="bg-amber-200 px-25 py-6 pb-10 rounded-b-lg border border-t-0 border-gray-300">
+      <div className="bg-amber-200 px-5 py-6 pb-10 rounded-b-lg border border-t-0 border-gray-300">
         {/* Top box */}
         <div className="flex flex-row items-center justify-center gap-6">
           <div className="flex flex-col gap-2 items-center">

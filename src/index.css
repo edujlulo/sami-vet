@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+/* Your custom components */
+@layer components {
+  /* Apply truncation and max width to all table cells inside a table with class text-ellipsis */
+  .text-ellipsis th,
+  .text-ellipsis td {
+    @apply truncate overflow-hidden whitespace-nowrap;
+  }
+}

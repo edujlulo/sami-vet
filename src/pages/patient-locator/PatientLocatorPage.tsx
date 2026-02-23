@@ -15,14 +15,14 @@ export default function PatientLocatorPage() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen scale-75">
-      <div className="bg-amber-100 border-20 border-amber-400 px-2 py-20 flex flex-col items-center justify-center gap-0 w-[1400px] h-[1150px]">
+      <div className="bg-amber-100 border-20 border-amber-400 px-2 py-20 flex flex-col items-center justify-center gap-0 w-[1430px] h-[1150px]">
         {/* --- Tabs --- */}
 
         {/* --- Header with tabs --- */}
         <div className="flex space-x-2">
           <button
             className={`
-              px-65 py-2
+              px-68 py-2
               rounded-t-lg
               border
               border-b-0
@@ -40,7 +40,7 @@ export default function PatientLocatorPage() {
 
           <button
             className={`
-              px-54 py-2
+              px-56 py-2
               rounded-t-lg
               border
               border-b-0

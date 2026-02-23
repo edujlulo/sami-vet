@@ -56,7 +56,7 @@ export default function TablePetsOwnersPage({
         tabIndex={0} // allow the div to receive focus
         onKeyDown={(e) => handleKeyNavigation(e)}
       >
-        <table className="bg-amber-50 border border-gray-900 w-full table-fixed bg-amber-50">
+        <table className="bg-amber-50 border border-gray-900 w-full table-fixed bg-amber-50 text-ellipsis">
           <thead>
             <tr>
               <th className="w-[10%] border border-gray-900 px-2 py-0.5"></th>

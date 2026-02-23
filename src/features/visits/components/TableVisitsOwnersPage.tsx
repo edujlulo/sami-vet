@@ -12,34 +12,34 @@ export default function TableVisitsOwnersPage({ visits }: Props) {
       <p className=" text-red-800 font-bold">
         Total de visitas: {visits.length}
       </p>
-      <div className="w-[700px] h-[250px] overflow-y-auto border border-gray-900">
-        <table className="bg-amber-50 border border-gray-900 w-full table-fixed bg-amber-50">
+      <div className="w-[900px] h-[250px] overflow-y-auto border border-gray-900">
+        <table className="bg-amber-50 border border-gray-900 w-full table-fixed bg-amber-50 text-ellipsis">
           <thead>
             <tr>
-              <th className="w-[10%] border border-gray-900 px-2 py-0.5">
+              <th className="w-[7%] border border-gray-900 px-2 py-0.5">
                 Visita
               </th>
-              <th className="w-[12%] border border-gray-900 px-2 py-0.5">
+              <th className="w-[8%] border border-gray-900 px-2 py-0.5">
                 Factura
               </th>
-              <th className="w-[10%] border border-gray-900 px-2 py-0.5">
+              <th className="w-[8%] border border-gray-900 px-2 py-0.5">
                 Fecha
               </th>
-              <th className="w-[15%] border border-gray-900 px-2 py-0.5">
+              <th className="w-[10%] border border-gray-900 px-2 py-0.5">
                 Mascota
               </th>
               <th className="w-[16%] border border-gray-900 px-2 py-0.5">
                 Propietario
               </th>
-              <th className="w-[10%] border border-gray-900 px-2 py-0.5">
+              <th className="w-[16%] border border-gray-900 px-2 py-0.5">
                 Motivo
               </th>
-              <th className="w-[12%] border border-gray-900 px-2 py-0.5">
+              <th className="w-[16%] border border-gray-900 px-2 py-0.5">
                 Médico
               </th>
-              <th className="w-[5%] border border-gray-900 px-2 py-0.5">H</th>
-              <th className="w-[5%] border border-gray-900 px-2 py-0.5">Ex</th>
-              <th className="w-[5%] border border-gray-900 px-2 py-0.5">Ref</th>
+              <th className="w-[3%] border border-gray-900 px-2 py-0.5">H</th>
+              <th className="w-[3%] border border-gray-900 px-2 py-0.5">Ex</th>
+              <th className="w-[3%] border border-gray-900 px-2 py-0.5">Ref</th>
             </tr>
           </thead>
 

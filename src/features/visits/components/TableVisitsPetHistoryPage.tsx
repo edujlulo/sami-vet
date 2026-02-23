@@ -5,7 +5,7 @@ export default function TableVisitsPetHistoryPage() {
     <div className="flex flex-col gap-2">
       <p className=" text-blue-800 font-bold">Visitas:</p>
       <div className="w-[700px] h-[250px] overflow-y-auto border border-gray-900">
-        <table className="bg-amber-50 border border-gray-900 w-full table-fixed bg-amber-50">
+        <table className="bg-amber-50 border border-gray-900 w-full table-fixed bg-amber-50 text-ellipsis">
           <thead>
             <tr>
               <th className="w-[20%] border border-gray-900 px-2 py-0.5">
