@@ -2,7 +2,7 @@ import { supabase } from "../../../supabaseClient";
 import type { Visit } from "../../../types/Visit";
 
 // Get all visits
-export async function fetchVisits(): Promise<Visit[]> {
+export async function fetchVisitsService(): Promise<Visit[]> {
   const { data, error } = await supabase.from("visits").select("*");
   if (error) throw error;
   return data as Visit[];

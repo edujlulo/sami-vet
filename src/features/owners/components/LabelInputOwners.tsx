@@ -46,7 +46,7 @@ export default function LabelInputOwners({
         disabled={!setOwner || !(isEditing || isCreating)}
         readOnly={!setOwner || !(isEditing || isCreating)}
         ref={inputRef}
-        className={`bg-amber-50 border border-gray-700 px-1 ${className}`}
+        className={`bg-amber-50 rounded-xs border border-gray-700 px-1.5 focus:outline-none focus:ring-2 focus:ring-blue-400 ${className}`}
       />
     </div>
   );

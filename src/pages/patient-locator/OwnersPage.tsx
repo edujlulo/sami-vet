@@ -11,6 +11,8 @@ import type { Pet } from "../../types/Pet";
 import { usePetsContext } from "../../features/pets/context/PetsContext";
 import AddProcedureModal from "../../features/visits/components/modals/AddProcedureModal";
 import { useVisits } from "../../features/visits/hooks/useVisits";
+import AssignVeterinarianModal from "../../features/visits/components/modals/AssignVeterinarianModal";
+import { useVisitsContext } from "../../features/visits/context/VisitsContext";
 
 interface Props {
   handleSelectPet: (pet: Pet) => void;
@@ -30,15 +32,11 @@ export default function OwnersPage({ handleSelectPet }: Props) {
     emptyOwner,
   } = useOwners();
 
-  const {
-    isOpenAddProcedureModal,
-    handleCancelVisit,
-    onContinueAddProcedureModal,
-    handleNewVisit,
-  } = useVisits();
+  const visits = useVisits();
 
   const { selectedOwner, setSelectedOwner } = useOwnersContext();
   const { selectedPet } = usePetsContext();
+  const { selectedVisit, setSelectedVisit, emptyVisit } = useVisitsContext();
 
   return (
     <>
@@ -82,15 +80,29 @@ export default function OwnersPage({ handleSelectPet }: Props) {
 
         {/* Bottom box */}
         <div className="flex flex-row gap-2 justify-center items-center mx-10">
-          <TableVisitsOwnersPage />
-          <ButtonsVisits handleNewVisit={handleNewVisit} />
+          <TableVisitsOwnersPage visits={visits.visits} />
+          <ButtonsVisits handleNewVisit={visits.handleNewVisit} />
         </div>
       </div>
-      {isOpenAddProcedureModal && (
+      {visits.isOpenAddProcedureModal && (
         <AddProcedureModal
-          isOpenAddProcedureModal={isOpenAddProcedureModal}
-          handleCancelVisit={handleCancelVisit}
-          onContinueAddProcedureModal={onContinueAddProcedureModal}
+          isOpenAddProcedureModal={visits.isOpenAddProcedureModal}
+          selectedVisit={selectedVisit}
+          setSelectedVisit={setSelectedVisit}
+          emptyVisit={emptyVisit}
+          handleCancelVisit={visits.handleCancelVisit}
+          onContinueAddProcedureModal={visits.onContinueAddProcedureModal}
+        />
+      )}
+
+      {visits.isOpenAssignVeterinarianModal && (
+        <AssignVeterinarianModal
+          isOpenAssignVeterinarianModal={visits.isOpenAssignVeterinarianModal}
+          selectedVisit={selectedVisit}
+          setSelectedVisit={setSelectedVisit}
+          emptyVisit={emptyVisit}
+          handleCancelVisit={visits.handleCancelVisit}
+          handleSaveVisit={visits.handleSaveVisit}
         />
       )}
     </>

@@ -10,13 +10,18 @@ interface UsePetsProps {
 
 export function usePets({ refetch }: UsePetsProps) {
   const { selectedPet, setSelectedPet, emptyPet } = usePetsContext();
-  const { selectedOwner } = useOwnersContext();
+  const { selectedOwner, emptyOwner } = useOwnersContext();
 
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
 
   // ================= NEW =================
   function handleNew() {
+    if (JSON.stringify(selectedOwner) === JSON.stringify(emptyOwner)) {
+      window.alert("Debe tener un propietario seleccionado");
+      return;
+    }
+
     setSelectedPet(emptyPet);
     setIsCreating(true);
     setIsEditing(false);

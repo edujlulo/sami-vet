@@ -8,8 +8,8 @@ export interface Visit {
   h: string;
   ex: string;
   referredBy: string;
-  totalAmount: number;
-  weightKg: number | null;
+  totalAmount: string;
+  weightKg: string;
   reasonForVisit: string;
   physicalExamination: string;
   diagnosis: string;

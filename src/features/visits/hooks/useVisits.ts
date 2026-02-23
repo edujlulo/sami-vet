@@ -1,28 +1,51 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Visit } from "../../../types/Visit";
 import { useVisitsContext } from "../context/VisitsContext";
 import {
   deleteVisit,
+  fetchVisitsService,
   insertVisit,
   updateVisit,
 } from "../services/visitsService";
 import { usePetsContext } from "../../pets/context/PetsContext";
 
-// interface UseVisitsProps {
+// interface Props {
 //   refetch: () => Promise<void>; // comes from useVisitsByPet
 // }
 
 export function useVisits() {
   const { selectedVisit, setSelectedVisit, emptyVisit } = useVisitsContext();
-  const { selectedPet } = usePetsContext();
+  const { selectedPet, emptyPet } = usePetsContext();
+  const [visits, setVisits] = useState<Visit[]>([]);
 
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
 
   const [isOpenAddProcedureModal, setIsOpenAddProcedureModal] = useState(false);
+  const [isOpenAssignVeterinarianModal, setIsOpenAssignVeterinarianModal] =
+    useState(false);
+
+  // ================= FETCH ALL VISITS =================
+  useEffect(() => {
+    fetchVisits();
+  }, []);
+
+  async function fetchVisits() {
+    try {
+      const data = await fetchVisitsService();
+      setVisits(data);
+    } catch (error) {
+      console.error("Error fetching owners:", error);
+    }
+  }
 
   // ================= NEW =================
   function handleNewVisit() {
+    if (JSON.stringify(selectedPet) === JSON.stringify(emptyPet)) {
+      window.alert("Debe tener una mascota seleccionada");
+      return;
+    }
+
     setSelectedVisit(emptyVisit);
     setIsOpenAddProcedureModal(true);
     setIsCreating(true);
@@ -35,10 +58,11 @@ export function useVisits() {
     setIsEditing(false);
     setSelectedVisit(emptyVisit);
     setIsOpenAddProcedureModal(false);
+    setIsOpenAssignVeterinarianModal(false);
   }
 
   // ================= SAVE =================
-  async function handleSave() {
+  async function handleSaveVisit() {
     try {
       if (!selectedVisit) throw new Error("No visit selected");
       if (!selectedPet) throw new Error("No pet selected");
@@ -60,6 +84,7 @@ export function useVisits() {
       } else if (isCreating) {
         data = await insertVisit(visitToSave);
         setIsCreating(false);
+        setIsOpenAssignVeterinarianModal(false);
       } else {
         return;
       }
@@ -78,7 +103,7 @@ export function useVisits() {
     if (!selectedVisit?.id) return;
 
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this visit?"
+      "Are you sure you want to delete this visit?",
     );
     if (!confirmDelete) return;
 
@@ -104,13 +129,15 @@ export function useVisits() {
 
   // ============ ON CONTINUE ADD PROCEDURE MODAL ==============
   function onContinueAddProcedureModal() {
-    console.log("Continue succesfully");
+    setIsOpenAssignVeterinarianModal(true);
+    setIsOpenAddProcedureModal(false);
   }
 
   return {
+    visits,
     handleSelect,
     handleCancelVisit,
-    handleSave,
+    handleSaveVisit,
     handleNewVisit,
     handleDeleteVisit,
     selectedVisit,
@@ -122,5 +149,6 @@ export function useVisits() {
     emptyVisit,
     isOpenAddProcedureModal,
     onContinueAddProcedureModal,
+    isOpenAssignVeterinarianModal,
   };
 }

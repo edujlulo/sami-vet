@@ -10,27 +10,27 @@ import { useOwnersContext } from "../context/OwnersContext";
 import { usePetsContext } from "../../pets/context/PetsContext";
 
 export function useOwners() {
-  const { selectedOwner, setSelectedOwner } = useOwnersContext();
+  const { selectedOwner, setSelectedOwner, emptyOwner } = useOwnersContext();
   const { setSelectedPet, emptyPet } = usePetsContext();
   const [owners, setOwners] = useState<Owner[]>([]);
 
-  const emptyOwner: Owner = {
-    id: 0,
-    surname: "",
-    name: "",
-    idCardNumber: "",
-    rif: "",
-    homePhone: "",
-    mobilePhone: "",
-    officePhone: "",
-    email: "",
-    address: "",
-    estate: "",
-    person: "",
-    taxpayer: "",
-    registered: "",
-    affiliate: false,
-  };
+  // const emptyOwner: Owner = {
+  //   id: 0,
+  //   surname: "",
+  //   name: "",
+  //   idCardNumber: "",
+  //   rif: "",
+  //   homePhone: "",
+  //   mobilePhone: "",
+  //   officePhone: "",
+  //   email: "",
+  //   address: "",
+  //   estate: "",
+  //   person: "",
+  //   taxpayer: "",
+  //   registered: "",
+  //   affiliate: false,
+  // };
 
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);

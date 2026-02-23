@@ -12,7 +12,7 @@ export default function FormVisits() {
       <LabelInputVisits label="Diagnóstico - Comentarios" className="w-100" />
       <input
         type="text"
-        className={`bg-amber-50 border border-gray-700 w-140 h-20 mt-2`}
+        className={`bg-amber-50 rounded-xs border border-gray-700 w-140 h-20 mt-2 px-1.5 focus:outline-none focus:ring-2 focus:ring-blue-400`}
       />
       <LabelInputVisits
         label="Pruebas complementarias"

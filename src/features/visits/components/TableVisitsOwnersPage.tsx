@@ -1,9 +1,17 @@
-export default function TableVisitsOwnersPage() {
+import type { Visit } from "../../../types/Visit";
+
+interface Props {
+  visits: Visit[];
+}
+
+export default function TableVisitsOwnersPage({ visits }: Props) {
   const emptyRows = 8;
 
   return (
     <div>
-      <p className=" text-red-800 font-bold">Total de visitas: 0</p>
+      <p className=" text-red-800 font-bold">
+        Total de visitas: {visits.length}
+      </p>
       <div className="w-[700px] h-[250px] overflow-y-auto border border-gray-900">
         <table className="bg-amber-50 border border-gray-900 w-full table-fixed bg-amber-50">
           <thead>
@@ -36,6 +44,50 @@ export default function TableVisitsOwnersPage() {
           </thead>
 
           <tbody>
+            {visits
+              // .sort((a, b) => a.id - b.id)
+              .map((visit) => (
+                <tr
+                  key={visit.id}
+                  // ref={(el) => void (rowRefs.current[index] = el)}
+                  // onClick={() => handleSelect(owner)}
+                  // className={`cursor-pointer hover:bg-amber-200 ${
+                  //   selectedOwner?.id === owner.id ? "bg-amber-300" : ""
+                  // }`}
+                >
+                  {/* <td className="border border-gray-900 pl-1.5 py-0.5">
+                    {selectedVisit?.id === visit.id ? "➤" : ""}
+                  </td> */}
+
+                  <td className="border border-gray-900 px-2 py-0.5">
+                    {visit.id}
+                  </td>
+                  <td className="border border-gray-900 px-2 py-0.5">
+                    {visit.invoiceNumber}
+                  </td>
+                  <td className="border border-gray-900 px-2 py-0.5">
+                    {visit.visitDate}
+                  </td>
+                  <td className="border border-gray-900 px-2 py-0.5">TBC</td>
+                  <td className="border border-gray-900 px-2 py-0.5">TBC</td>
+                  <td className="border border-gray-900 px-2 py-0.5">
+                    {visit.procedure}
+                  </td>
+                  <td className="border border-gray-900 px-2 py-0.5">
+                    {visit.vet}
+                  </td>
+                  <td className="border border-gray-900 px-2 py-0.5">
+                    {visit.h}
+                  </td>
+                  <td className="border border-gray-900 px-2 py-0.5">
+                    {visit.ex}
+                  </td>
+                  <td className="border border-gray-900 px-2 py-0.5">
+                    {visit.referredBy}
+                  </td>
+                </tr>
+              ))}
+
             {Array.from({ length: emptyRows > 0 ? emptyRows : 0 }).map(
               (_, i) => (
                 <tr key={`empty-${i}`}>
