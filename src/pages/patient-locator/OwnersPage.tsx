@@ -86,7 +86,6 @@ export default function OwnersPage({
         {/* Bottom box */}
         <div className="flex flex-row gap-2 justify-center items-center mx-10">
           <TableVisitsOwnersPage
-            visits={visits.visits}
             handleSelectVisit={handleSelectVisit}
             selectedVisit={selectedVisit}
           />

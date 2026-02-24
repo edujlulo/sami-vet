@@ -12,10 +12,6 @@ import { usePetsContext } from "../../pets/context/PetsContext";
 import { usePetsByOwner } from "../../pets/hooks/usePetsByOwner";
 import { useOwnersContext } from "../../owners/context/OwnersContext";
 
-// interface Props {
-//   refetch: () => Promise<void>; // comes from useVisitsByPet
-// }
-
 export function useVisits() {
   const { selectedVisit, setSelectedVisit, emptyVisit } = useVisitsContext();
   const { selectedPet, setSelectedPet, emptyPet } = usePetsContext();
@@ -57,21 +53,6 @@ export function useVisits() {
       setSelectedPet(petFromVisit);
     }
   }, [selectedVisit, pets]);
-
-  // ========== FILTER VISITS AFTER CHANGE SELECTEDPET OR VISITS ============
-  // function filterVisitsByPetId(id?: number) {
-  //   const visitsFiltered = visits.filter((v) => v.petId === id);
-
-  //   setVisitsByPet(visitsFiltered);
-  // }
-
-  // useEffect(() => {
-  //   if (selectedPet?.id) {
-  //     filterVisitsByPetId(selectedPet.id);
-  //   } else {
-  //     setVisitsByPet([]);
-  //   }
-  // }, [selectedPet, visits]);
 
   // ================= NEW =================
   function handleNewVisit() {

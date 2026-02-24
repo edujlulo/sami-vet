@@ -1,23 +1,29 @@
+import { useState, useEffect, useRef } from "react";
 import type { VisitEntity } from "../../../types/VisitEntity";
 import type { VisitWithRelations } from "../../../types/VisitWithRelations";
 import { useOwners } from "../../owners/hooks/useOwners";
-// import { usePetsByOwner } from "../../pets/hooks/usePetsByOwner";
+import FiltersTableVisitsOwnersPage from "./FiltersTableVisitsOwnersPage";
+import {
+  fetchVisitsService,
+  fetchVisitsByDate,
+} from "../services/visitsService";
 
 interface Props {
-  visits: VisitWithRelations[];
   handleSelectVisit: (visit: VisitWithRelations) => void;
   selectedVisit: VisitEntity | null;
 }
 
 export default function TableVisitsOwnersPage({
-  visits,
   handleSelectVisit,
   selectedVisit,
 }: Props) {
   const { handleSelectOwnerById } = useOwners();
-  // const { handleSelectPetById } = usePetsByOwner();
 
-  const emptyRows = 8;
+  // 🔹 STATE VISITS (ahora vive aquí)
+  const [visits, setVisits] = useState<VisitWithRelations[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const emptyRows = 8 - visits.length;
 
   const formattedDate = (date: string) =>
     new Date(date).toLocaleDateString("en-GB", {
@@ -26,13 +32,96 @@ export default function TableVisitsOwnersPage({
       year: "2-digit",
     });
 
+  // ================= LOAD ALL =================
+  const loadVisitsAll = async () => {
+    try {
+      setLoading(true);
+      const data = await fetchVisitsService();
+      setVisits(data);
+    } catch (error) {
+      console.error("Error loading visits:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ================= LOAD BY DATE =================
+  const loadVisitsByDate = async (date: string) => {
+    try {
+      setLoading(true);
+      const data = await fetchVisitsByDate(date);
+      setVisits(data);
+    } catch (error) {
+      console.error("Error loading visits by date:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ================= LOAD TODAY =================
+  const loadVisitsToday = async () => {
+    const today = new Date().toISOString().split("T")[0];
+    await loadVisitsByDate(today);
+  };
+
+  // ================= HANDLE FILTER =================
+  const handleFilterChange = (
+    filter: "today" | "byDate" | "all",
+    date?: string,
+  ) => {
+    if (filter === "today") {
+      loadVisitsToday();
+    } else if (filter === "byDate" && date) {
+      loadVisitsByDate(date);
+    } else {
+      loadVisitsAll();
+    }
+  };
+
+  // Function for navigation in table with keyboard
+  function handleKeyNavigation(e: React.KeyboardEvent<HTMLDivElement>) {
+    if (!visits.length) return;
+
+    // Encuentra la fila actualmente seleccionada
+    const currentIndex = visits.findIndex((o) => o.id === selectedVisit?.id);
+
+    // Arrow Down
+    if (e.key === "ArrowDown") {
+      const nextIndex = Math.min(currentIndex + 1, visits.length - 1); // nunca pasa del último
+      if (nextIndex !== currentIndex) {
+        handleSelectVisit(visits[nextIndex]);
+        rowRefs.current[nextIndex]?.scrollIntoView({ block: "nearest" });
+      }
+      e.preventDefault();
+    }
+
+    // Arrow Up
+    else if (e.key === "ArrowUp") {
+      const prevIndex = Math.max(currentIndex - 1, 0); // nunca pasa del primero
+      if (prevIndex !== currentIndex) {
+        handleSelectVisit(visits[prevIndex]);
+        rowRefs.current[prevIndex]?.scrollIntoView({ block: "nearest" });
+      }
+      e.preventDefault();
+    }
+  }
+
+  const rowRefs = useRef<(HTMLTableRowElement | null)[]>([]);
+
   return (
     <div>
-      <p className=" text-red-800 font-bold">
+      <p className="text-red-800 font-bold">
         Total de visitas: {visits.length}
       </p>
-      <div className="w-[900px] h-[250px] overflow-y-auto border border-gray-900">
-        <table className="bg-amber-50 border border-gray-900 w-full table-fixed bg-amber-50 text-ellipsis">
+
+      {loading && <p className="text-blue-800 font-bold">Loading visits...</p>}
+
+      <div
+        className="w-[900px] h-[250px] overflow-y-auto border border-gray-900"
+        tabIndex={0} // allow the div to receive focus
+        onKeyDown={(e) => handleKeyNavigation(e)}
+      >
+        <table className="bg-amber-50 border border-gray-900 w-full table-fixed text-ellipsis">
           <thead>
             <tr>
               <th className="w-[2.5%] border border-gray-900 px-2 py-0.5"></th>
@@ -65,11 +154,11 @@ export default function TableVisitsOwnersPage({
 
           <tbody>
             {visits
-              // .sort((a, b) => a.id - b.id)
-              .map((visit) => (
+              .sort((a, b) => (a.id ?? 0) - (b.id ?? 0))
+              .map((visit, index) => (
                 <tr
                   key={visit.id}
-                  // ref={(el) => void (rowRefs.current[index] = el)}
+                  ref={(el) => void (rowRefs.current[index] = el)}
                   onClick={() => {
                     handleSelectVisit(visit);
                     handleSelectOwnerById(visit.ownerId);
@@ -94,7 +183,9 @@ export default function TableVisitsOwnersPage({
                   <td className="border border-gray-900 px-1 py-0.5">
                     {visit.petName}
                   </td>
-                  <td className="border border-gray-900 px-1 py-0.5">{`${visit.ownerSurname} ${visit.ownerName}`}</td>
+                  <td className="border border-gray-900 px-1 py-0.5">
+                    {visit.ownerSurname} {visit.ownerName}
+                  </td>
                   <td className="border border-gray-900 px-1 py-0.5">
                     {visit.procedure}
                   </td>
@@ -113,61 +204,28 @@ export default function TableVisitsOwnersPage({
                 </tr>
               ))}
 
-            {Array.from({ length: emptyRows > 0 ? emptyRows : 0 }).map(
-              (_, i) => (
-                <tr key={`empty-${i}`}>
-                  <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
-                  <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
-                  <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
-                  <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
-                  <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
-                  <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
-                  <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
-                  <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
-                  <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
-                  <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
-                  <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
-                </tr>
-              ),
-            )}
+            {Array.from({ length: emptyRows }).map((_, i) => (
+              <tr key={`empty-${i}`}>
+                {Array.from({ length: 11 }).map((__, j) => (
+                  <td key={j} className="border border-gray-900 px-2 py-0.5">
+                    &nbsp;
+                  </td>
+                ))}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
+
       <div className="flex flex-row gap-8 items-center">
         <div className="mt-2">
           <p className="text-blue-900 font-bold">Buscar N. de Visita</p>
-          <input className="bg-amber-50 border border-gray-700"></input>
+          <input className="bg-amber-50 border border-gray-700" />
         </div>
+
         <p className="text-blue-900 font-bold">Ver Visitas</p>
-        <div className="flex flex-row gap-8 bg-blue-50 py-1 px-5">
-          <label className="flex gap-1.5 text-blue-900 font-bold">
-            <input
-              type="checkbox"
-              name="terms"
-              id="terms"
-              className="scale-120"
-            />
-            Hoy
-          </label>
-          <label className="flex gap-1.5 text-blue-900 font-bold">
-            <input
-              type="checkbox"
-              name="terms"
-              id="terms"
-              className="scale-120"
-            />
-            Por fecha
-          </label>
-          <label className="flex gap-1.5 text-blue-900 font-bold">
-            <input
-              type="checkbox"
-              name="terms"
-              id="terms"
-              className="scale-120"
-            />
-            Todas
-          </label>
-        </div>
+
+        <FiltersTableVisitsOwnersPage onFilterChange={handleFilterChange} />
       </div>
     </div>
   );

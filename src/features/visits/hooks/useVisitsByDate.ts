@@ -1,15 +1,15 @@
 import { useState, useEffect, useCallback } from "react";
-import { fetchVisitsByPet } from "../services/visitsService";
+import { fetchVisitsByDate } from "../services/visitsService";
 import type { VisitWithRelations } from "../../../types/VisitWithRelations";
 
-export function useVisitsByPet(petId: number | null) {
-  const [visitsByPet, setVisitsByPet] = useState<VisitWithRelations[]>([]);
+export function useVisitsByDate(date: string | null) {
+  const [visitsByDate, setVisitsByDate] = useState<VisitWithRelations[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const loadVisits = useCallback(async () => {
-    if (!petId) {
-      setVisitsByPet([]);
+    if (!date) {
+      setVisitsByDate([]);
       return;
     }
 
@@ -17,22 +17,22 @@ export function useVisitsByPet(petId: number | null) {
       setLoading(true);
       setError(null);
 
-      const data = await fetchVisitsByPet(petId);
-      setVisitsByPet(data);
+      const data = await fetchVisitsByDate(date);
+      setVisitsByDate(data);
     } catch (err) {
       console.error(err);
       setError("Failed to fetch visits");
     } finally {
       setLoading(false);
     }
-  }, [petId]);
+  }, [date]);
 
   useEffect(() => {
     loadVisits();
   }, [loadVisits]);
 
   return {
-    visitsByPet,
+    visitsByDate,
     loading,
     error,
     refetch: loadVisits,

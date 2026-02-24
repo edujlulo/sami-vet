@@ -34,11 +34,29 @@ export async function fetchVisitsByDate(
 ): Promise<VisitWithRelations[]> {
   const { data, error } = await supabase
     .from("visits")
-    .select("*")
+    .select(
+      `
+      *,
+      pet:petId (
+        name,
+        owner:ownerId (
+          id,
+          name,
+          surname
+        )
+      )
+    `,
+    )
     .eq("visitDate", visitDate);
 
   if (error) throw error;
-  return data as VisitWithRelations[];
+  return data.map((v: any) => ({
+    ...v,
+    ownerId: v.pet?.owner?.id ?? "",
+    petName: v.pet?.name ?? "",
+    ownerSurname: v.pet?.owner?.surname ?? "",
+    ownerName: v.pet?.owner?.name ?? "",
+  }));
 }
 
 // Get visits by pet
