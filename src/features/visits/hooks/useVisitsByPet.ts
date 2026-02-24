@@ -3,13 +3,13 @@ import { fetchVisitsByPet } from "../services/visitsService";
 import type { VisitWithRelations } from "../../../types/VisitWithRelations";
 
 export function useVisitsByPet(petId: number | null) {
-  const [visits, setVisits] = useState<VisitWithRelations[]>([]);
+  const [visitsByPet, setVisitsByPets] = useState<VisitWithRelations[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const loadVisits = useCallback(async () => {
     if (!petId) {
-      setVisits([]);
+      setVisitsByPets([]);
       return;
     }
 
@@ -18,7 +18,7 @@ export function useVisitsByPet(petId: number | null) {
       setError(null);
 
       const data = await fetchVisitsByPet(petId);
-      setVisits(data);
+      setVisitsByPets(data);
     } catch (err) {
       console.error(err);
       setError("Failed to fetch visits");
@@ -32,7 +32,7 @@ export function useVisitsByPet(petId: number | null) {
   }, [loadVisits]);
 
   return {
-    visits,
+    visitsByPet,
     loading,
     error,
     refetch: loadVisits,

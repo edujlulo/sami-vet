@@ -1,3 +1,4 @@
+import type { VisitEntity } from "../../../types/VisitEntity";
 import type { VisitWithRelations } from "../../../types/VisitWithRelations";
 import { useOwners } from "../../owners/hooks/useOwners";
 // import { usePetsByOwner } from "../../pets/hooks/usePetsByOwner";
@@ -5,7 +6,7 @@ import { useOwners } from "../../owners/hooks/useOwners";
 interface Props {
   visits: VisitWithRelations[];
   handleSelectVisit: (visit: VisitWithRelations) => void;
-  selectedVisit: VisitWithRelations | null;
+  selectedVisit: VisitEntity | null;
 }
 
 export default function TableVisitsOwnersPage({

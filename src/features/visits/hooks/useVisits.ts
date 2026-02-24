@@ -21,7 +21,6 @@ export function useVisits() {
   const { selectedPet, setSelectedPet, emptyPet } = usePetsContext();
   const { selectedOwner } = useOwnersContext();
   const [visits, setVisits] = useState<VisitWithRelations[]>([]);
-  const [visitsByPet, setVisitsByPet] = useState<VisitWithRelations[]>([]);
 
   const { pets } = usePetsByOwner(selectedOwner.id);
 
@@ -38,8 +37,10 @@ export function useVisits() {
     try {
       const data = await fetchVisitsService();
       setVisits(data);
+      return data;
     } catch (error) {
       console.error("Error fetching visits:", error);
+      return [];
     }
   }, []);
 
@@ -58,19 +59,19 @@ export function useVisits() {
   }, [selectedVisit, pets]);
 
   // ========== FILTER VISITS AFTER CHANGE SELECTEDPET OR VISITS ============
-  function filterVisitsByPetId(id?: number) {
-    const visitsFiltered = visits.filter((v) => v.petId === id);
+  // function filterVisitsByPetId(id?: number) {
+  //   const visitsFiltered = visits.filter((v) => v.petId === id);
 
-    setVisitsByPet(visitsFiltered);
-  }
+  //   setVisitsByPet(visitsFiltered);
+  // }
 
-  useEffect(() => {
-    if (selectedPet?.id) {
-      filterVisitsByPetId(selectedPet.id);
-    } else {
-      setVisitsByPet([]);
-    }
-  }, [selectedPet, visits]);
+  // useEffect(() => {
+  //   if (selectedPet?.id) {
+  //     filterVisitsByPetId(selectedPet.id);
+  //   } else {
+  //     setVisitsByPet([]);
+  //   }
+  // }, [selectedPet, visits]);
 
   // ================= NEW =================
   function handleNewVisit() {
@@ -135,8 +136,14 @@ export function useVisits() {
       } else {
         return;
       }
-      await fetchVisits();
-      setSelectedVisit(data);
+
+      const updatedVisits = await fetchVisits();
+
+      const updatedVisit = updatedVisits.find((v) => v.id === data.id);
+
+      if (updatedVisit) {
+        setSelectedVisit(updatedVisit);
+      }
     } catch (error) {
       console.error("Error saving visit:", error);
     }
@@ -193,7 +200,5 @@ export function useVisits() {
     isOpenAddProcedureModal,
     onContinueAddProcedureModal,
     isOpenAssignVeterinarianModal,
-    filterVisitsByPetId,
-    visitsByPet,
   };
 }

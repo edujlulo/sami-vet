@@ -28,15 +28,48 @@ export async function fetchVisitsService(): Promise<VisitWithRelations[]> {
   }));
 }
 
-// Get visits by pet
-export async function fetchVisitsByPet(petId: number): Promise<VisitEntity[]> {
+// Get visits by date
+export async function fetchVisitsByDate(
+  visitDate: string,
+): Promise<VisitWithRelations[]> {
   const { data, error } = await supabase
     .from("visits")
     .select("*")
+    .eq("visitDate", visitDate);
+
+  if (error) throw error;
+  return data as VisitWithRelations[];
+}
+
+// Get visits by pet
+export async function fetchVisitsByPet(
+  petId: number,
+): Promise<VisitWithRelations[]> {
+  const { data, error } = await supabase
+    .from("visits")
+    .select(
+      `
+      *,
+      pet:petId (
+        name,
+        owner:ownerId (
+          id,
+          name,
+          surname
+        )
+      )
+    `,
+    )
     .eq("petId", petId);
 
   if (error) throw error;
-  return data as VisitEntity[];
+  return data.map((v: any) => ({
+    ...v,
+    ownerId: v.pet?.owner?.id ?? "",
+    petName: v.pet?.name ?? "",
+    ownerSurname: v.pet?.owner?.surname ?? "",
+    ownerName: v.pet?.owner?.name ?? "",
+  }));
 }
 
 // Insert a visit
@@ -62,9 +95,30 @@ export async function insertVisit(visit: VisitEntity): Promise<VisitEntity> {
 export async function updateVisit(visit: VisitEntity): Promise<VisitEntity> {
   const normalizedVisit = normalizeStringsData(visit);
 
+  // Solo campos de la tabla 'visits'
+  const visitToUpdate: VisitEntity = {
+    petId: normalizedVisit.petId,
+    visitDate: normalizedVisit.visitDate || null,
+    procedure: normalizedVisit.procedure || null,
+    invoiceNumber: normalizedVisit.invoiceNumber || null,
+    totalAmount: normalizedVisit.totalAmount || null,
+    weightKg: normalizedVisit.weightKg || null,
+    reasonForVisit: normalizedVisit.reasonForVisit || null,
+    physicalExamination: normalizedVisit.physicalExamination || null,
+    diagnosis: normalizedVisit.diagnosis || null,
+    notes: normalizedVisit.notes || null,
+    additionalTests: normalizedVisit.additionalTests || null,
+    treatmentGiven: normalizedVisit.treatmentGiven || null,
+    prescribedTreatment: normalizedVisit.prescribedTreatment || null,
+    vet: normalizedVisit.vet || null,
+    h: normalizedVisit.h || null,
+    ex: normalizedVisit.ex || null,
+    referredBy: normalizedVisit.referredBy || null,
+  };
+
   const { data, error } = await supabase
     .from("visits")
-    .update(normalizedVisit)
+    .update(visitToUpdate)
     .eq("id", visit.id)
     .select();
 

@@ -3,7 +3,7 @@ import type { VisitEntity } from "../../../types/VisitEntity";
 interface LabelInputProps {
   label: string;
   visitKey?: keyof VisitEntity;
-  visit?: VisitEntity;
+  visit?: VisitEntity | null;
   setVisit?: React.Dispatch<React.SetStateAction<VisitEntity | null>>;
   className?: string;
   type?: string;

@@ -6,25 +6,21 @@ import {
   type Dispatch,
   type SetStateAction,
 } from "react";
-import type { VisitWithRelations } from "../../../types/VisitWithRelations";
+import type { VisitEntity } from "../../../types/VisitEntity";
 
 interface VisitsContextType {
-  selectedVisit: VisitWithRelations | null;
-  setSelectedVisit: Dispatch<SetStateAction<VisitWithRelations | null>>;
-  emptyVisit: VisitWithRelations;
+  selectedVisit: VisitEntity | null;
+  setSelectedVisit: Dispatch<SetStateAction<VisitEntity | null>>;
+  emptyVisit: VisitEntity;
 }
 
 const VisitsContext = createContext<VisitsContextType | undefined>(undefined);
 
 export function VisitsProvider({ children }: { children: ReactNode }) {
-  const emptyVisit: Omit<VisitWithRelations, "id"> = {
+  const emptyVisit: Omit<VisitEntity, "id"> = {
     petId: 0,
-    ownerId: 0,
     invoiceNumber: "",
     visitDate: "",
-    petName: "",
-    ownerSurname: "",
-    ownerName: "",
     procedure: "",
     vet: "",
     h: "",
@@ -41,7 +37,7 @@ export function VisitsProvider({ children }: { children: ReactNode }) {
     prescribedTreatment: "",
   };
 
-  const [selectedVisit, setSelectedVisit] = useState<VisitWithRelations | null>(
+  const [selectedVisit, setSelectedVisit] = useState<VisitEntity | null>(
     emptyVisit,
   );
 

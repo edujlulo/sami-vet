@@ -1,6 +1,7 @@
 import type { VisitWithRelations } from "../../../types/VisitWithRelations";
+import { usePetsContext } from "../../pets/context/PetsContext";
 import { useVisitsContext } from "../context/VisitsContext";
-import { useVisits } from "../hooks/useVisits";
+import { useVisitsByPet } from "../hooks/useVisitsByPet";
 
 interface Props {
   handleSelectVisit: (visit: VisitWithRelations) => void;
@@ -10,7 +11,9 @@ export default function TableVisitsPetHistoryPage({
   handleSelectVisit,
 }: Props) {
   const { selectedVisit } = useVisitsContext();
-  const { visitsByPet } = useVisits();
+  const { selectedPet } = usePetsContext();
+
+  const { visitsByPet } = useVisitsByPet(selectedPet?.id ?? null);
 
   const emptyRows = 8;
 
