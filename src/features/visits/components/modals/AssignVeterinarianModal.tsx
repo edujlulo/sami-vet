@@ -1,13 +1,13 @@
 import { createPortal } from "react-dom";
 import Button from "../../../../components/Button";
 import LabelInputVisits from "../LabelInputVisits";
-import type { Visit } from "../../../../types/Visit";
+import type { VisitEntity } from "../../../../types/VisitEntity";
 
 type Props = {
   isOpenAssignVeterinarianModal: boolean;
-  selectedVisit: Visit | null;
-  setSelectedVisit: React.Dispatch<React.SetStateAction<Visit | null>>;
-  emptyVisit: Visit;
+  selectedVisit: VisitEntity | null;
+  setSelectedVisit: React.Dispatch<React.SetStateAction<VisitEntity | null>>;
+  emptyVisit: VisitEntity;
   handleCancelVisit: () => void;
   handleSaveVisit: () => void;
 };

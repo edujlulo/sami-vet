@@ -3,6 +3,7 @@ import type { Pet } from "../../../types/Pet";
 import { usePetsContext } from "../context/PetsContext";
 import { deletePet, insertPet, updatePet } from "../services/petsService";
 import { useOwnersContext } from "../../owners/context/OwnersContext";
+import { useVisitsContext } from "../../visits/context/VisitsContext";
 
 interface UsePetsProps {
   refetch: () => Promise<void>; // viene de usePetsByOwner
@@ -11,6 +12,7 @@ interface UsePetsProps {
 export function usePets({ refetch }: UsePetsProps) {
   const { selectedPet, setSelectedPet, emptyPet } = usePetsContext();
   const { selectedOwner, emptyOwner } = useOwnersContext();
+  const { setSelectedVisit, emptyVisit } = useVisitsContext();
 
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
@@ -114,6 +116,7 @@ export function usePets({ refetch }: UsePetsProps) {
   // ================= SELECT =================
   function handleSelectPet(pet: Pet) {
     setSelectedPet(pet);
+    setSelectedVisit(emptyVisit);
     setIsEditing(false);
     setIsCreating(false);
   }

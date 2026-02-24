@@ -1,26 +1,46 @@
 import { normalizeStringsData } from "../../../helpers/normalizeStrings";
 import { supabase } from "../../../supabaseClient";
-import type { Visit } from "../../../types/Visit";
+import type { VisitEntity } from "../../../types/VisitEntity";
+import type { VisitWithRelations } from "../../../types/VisitWithRelations";
 
 // Get all visits
-export async function fetchVisitsService(): Promise<Visit[]> {
-  const { data, error } = await supabase.from("visits").select("*");
+export async function fetchVisitsService(): Promise<VisitWithRelations[]> {
+  const { data, error } = await supabase.from("visits").select(`
+      *,
+      pet:petId (
+        name,
+        owner:ownerId (
+          id,
+          name,
+          surname
+        )
+      )
+    `);
+
   if (error) throw error;
-  return data as Visit[];
+
+  return data.map((v: any) => ({
+    ...v,
+    ownerId: v.pet?.owner?.id ?? "",
+    petName: v.pet?.name ?? "",
+    ownerSurname: v.pet?.owner?.surname ?? "",
+    ownerName: v.pet?.owner?.name ?? "",
+  }));
 }
 
-export async function fetchVisitsByPet(petId: number): Promise<Visit[]> {
+// Get visits by pet
+export async function fetchVisitsByPet(petId: number): Promise<VisitEntity[]> {
   const { data, error } = await supabase
     .from("visits")
     .select("*")
     .eq("petId", petId);
 
   if (error) throw error;
-  return data as Visit[];
+  return data as VisitEntity[];
 }
 
 // Insert a visit
-export async function insertVisit(visit: Visit): Promise<Visit> {
+export async function insertVisit(visit: VisitEntity): Promise<VisitEntity> {
   const normalizedVisit = normalizeStringsData(visit);
 
   const visitToInsert = {
@@ -39,7 +59,7 @@ export async function insertVisit(visit: Visit): Promise<Visit> {
 }
 
 // Update a visit
-export async function updateVisit(visit: Visit): Promise<Visit> {
+export async function updateVisit(visit: VisitEntity): Promise<VisitEntity> {
   const normalizedVisit = normalizeStringsData(visit);
 
   const { data, error } = await supabase

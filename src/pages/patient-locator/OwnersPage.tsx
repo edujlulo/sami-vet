@@ -13,11 +13,11 @@ import AddProcedureModal from "../../features/visits/components/modals/AddProced
 import { useVisits } from "../../features/visits/hooks/useVisits";
 import AssignVeterinarianModal from "../../features/visits/components/modals/AssignVeterinarianModal";
 import { useVisitsContext } from "../../features/visits/context/VisitsContext";
-import type { Visit } from "../../types/Visit";
+import type { VisitWithRelations } from "../../types/VisitWithRelations";
 
 interface Props {
   handleSelectPet: (pet: Pet) => void;
-  handleSelectVisit: (visit: Visit) => void;
+  handleSelectVisit: (visit: VisitWithRelations) => void;
 }
 
 export default function OwnersPage({

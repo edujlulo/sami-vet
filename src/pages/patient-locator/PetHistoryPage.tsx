@@ -8,12 +8,17 @@ import TableUpcomingVisits from "../../features/visits/components/TableUpcomingV
 import { usePetsByOwner } from "../../features/pets/hooks/usePetsByOwner";
 import { useOwnersContext } from "../../features/owners/context/OwnersContext";
 import type { Pet } from "../../types/Pet";
+import type { VisitWithRelations } from "../../types/VisitWithRelations";
 
 interface Props {
   handleSelectPet: (pet: Pet) => void;
+  handleSelectVisit: (visit: VisitWithRelations) => void;
 }
 
-export default function PetHistoryPage({ handleSelectPet }: Props) {
+export default function PetHistoryPage({
+  handleSelectPet,
+  handleSelectVisit,
+}: Props) {
   const { selectedOwner } = useOwnersContext();
 
   const { pets, refetch } = usePetsByOwner(selectedOwner.id);
@@ -63,7 +68,9 @@ export default function PetHistoryPage({ handleSelectPet }: Props) {
               />
 
               {/* --- Visits form --- */}
-              <TableVisitsPetHistoryPage />
+              <TableVisitsPetHistoryPage
+                handleSelectVisit={handleSelectVisit}
+              />
               <div className="flex flex-row gap-6 ml-3">
                 {/* --- Vaccines history --- */}
                 <TablePetVaccines />

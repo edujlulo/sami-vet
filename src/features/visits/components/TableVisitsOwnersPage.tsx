@@ -1,9 +1,11 @@
-import type { Visit } from "../../../types/Visit";
+import type { VisitWithRelations } from "../../../types/VisitWithRelations";
+import { useOwners } from "../../owners/hooks/useOwners";
+// import { usePetsByOwner } from "../../pets/hooks/usePetsByOwner";
 
 interface Props {
-  visits: Visit[];
-  handleSelectVisit: (visit: Visit) => void;
-  selectedVisit: Visit | null;
+  visits: VisitWithRelations[];
+  handleSelectVisit: (visit: VisitWithRelations) => void;
+  selectedVisit: VisitWithRelations | null;
 }
 
 export default function TableVisitsOwnersPage({
@@ -11,6 +13,9 @@ export default function TableVisitsOwnersPage({
   handleSelectVisit,
   selectedVisit,
 }: Props) {
+  const { handleSelectOwnerById } = useOwners();
+  // const { handleSelectPetById } = usePetsByOwner();
+
   const emptyRows = 8;
 
   const formattedDate = (date: string) =>
@@ -64,7 +69,10 @@ export default function TableVisitsOwnersPage({
                 <tr
                   key={visit.id}
                   // ref={(el) => void (rowRefs.current[index] = el)}
-                  onClick={() => handleSelectVisit(visit)}
+                  onClick={() => {
+                    handleSelectVisit(visit);
+                    handleSelectOwnerById(visit.ownerId);
+                  }}
                   className={`cursor-pointer hover:bg-amber-200 ${
                     selectedVisit?.id === visit.id ? "bg-amber-300" : ""
                   }`}
@@ -82,8 +90,10 @@ export default function TableVisitsOwnersPage({
                   <td className="border border-gray-900 px-1 py-0.5">
                     {formattedDate(visit.visitDate)}
                   </td>
-                  <td className="border border-gray-900 px-1 py-0.5">TBC</td>
-                  <td className="border border-gray-900 px-1 py-0.5">TBC</td>
+                  <td className="border border-gray-900 px-1 py-0.5">
+                    {visit.petName}
+                  </td>
+                  <td className="border border-gray-900 px-1 py-0.5">{`${visit.ownerSurname} ${visit.ownerName}`}</td>
                   <td className="border border-gray-900 px-1 py-0.5">
                     {visit.procedure}
                   </td>
@@ -117,7 +127,7 @@ export default function TableVisitsOwnersPage({
                   <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
                   <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
                 </tr>
-              )
+              ),
             )}
           </tbody>
         </table>

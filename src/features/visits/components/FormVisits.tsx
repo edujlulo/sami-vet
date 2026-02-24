@@ -1,10 +1,19 @@
+import { useVisitsContext } from "../context/VisitsContext";
 import LabelInputVisits from "./LabelInputVisits";
 
 export default function FormVisits() {
+  const { selectedVisit } = useVisitsContext();
+
   return (
     <div className="bg-amber-400 py-6 px-2">
       <div className="flex flex-row gap-4">
-        <LabelInputVisits label="Médico consulta" className="w-60" />
+        <LabelInputVisits
+          label="Médico consulta"
+          visitKey="vet"
+          visit={selectedVisit}
+          disable={true}
+          className="w-60"
+        />
         <LabelInputVisits label="Peso" className="w-20" />
       </div>
       <LabelInputVisits label="Motivo" className="w-140 h-20" />

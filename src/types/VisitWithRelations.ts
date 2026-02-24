@@ -1,8 +1,12 @@
-export interface Visit {
+export interface VisitWithRelations {
   id?: number;
   petId: number;
+  ownerId: number;
   invoiceNumber: string;
   visitDate: string;
+  petName: string;
+  ownerSurname: string;
+  ownerName: string;
   procedure: string;
   vet: string;
   h: string;

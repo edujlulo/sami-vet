@@ -1,12 +1,13 @@
-import type { Visit } from "../../../types/Visit";
+import type { VisitEntity } from "../../../types/VisitEntity";
 
 interface LabelInputProps {
   label: string;
-  visitKey?: keyof Visit;
-  visit?: Visit;
-  setVisit?: React.Dispatch<React.SetStateAction<Visit | null>>;
+  visitKey?: keyof VisitEntity;
+  visit?: VisitEntity;
+  setVisit?: React.Dispatch<React.SetStateAction<VisitEntity | null>>;
   className?: string;
   type?: string;
+  disable?: boolean;
 }
 
 export default function LabelInputVisits({
@@ -16,6 +17,7 @@ export default function LabelInputVisits({
   setVisit,
   className = "",
   type = "text",
+  disable = false,
 }: LabelInputProps) {
   const value = visit && visitKey ? String(visit[visitKey] ?? "") : "";
 
@@ -36,6 +38,7 @@ export default function LabelInputVisits({
             });
           }
         }}
+        disabled={disable}
         className={`bg-amber-50 border border-gray-700 rounded-xs px-1.5 focus:outline-none focus:ring-2 focus:ring-blue-400 ${className}`}
       />
     </div>

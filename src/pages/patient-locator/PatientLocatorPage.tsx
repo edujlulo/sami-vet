@@ -68,7 +68,10 @@ export default function PatientLocatorPage() {
             />
           )}
           {activeTab === "B" && (
-            <PetHistoryPage handleSelectPet={handleSelectPet} />
+            <PetHistoryPage
+              handleSelectPet={handleSelectPet}
+              handleSelectVisit={handleSelectVisit}
+            />
           )}
         </div>
       </div>

@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
-import type { Visit } from "../../../types/Visit";
 import { fetchVisitsByPet } from "../services/visitsService";
+import type { VisitWithRelations } from "../../../types/VisitWithRelations";
 
 export function useVisitsByPet(petId: number | null) {
-  const [visits, setVisits] = useState<Visit[]>([]);
+  const [visits, setVisits] = useState<VisitWithRelations[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

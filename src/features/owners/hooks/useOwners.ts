@@ -8,29 +8,13 @@ import {
 } from "../services/ownersService";
 import { useOwnersContext } from "../context/OwnersContext";
 import { usePetsContext } from "../../pets/context/PetsContext";
+import { useVisitsContext } from "../../visits/context/VisitsContext";
 
 export function useOwners() {
   const { selectedOwner, setSelectedOwner, emptyOwner } = useOwnersContext();
   const { setSelectedPet, emptyPet } = usePetsContext();
+  const { setSelectedVisit, emptyVisit } = useVisitsContext();
   const [owners, setOwners] = useState<Owner[]>([]);
-
-  // const emptyOwner: Owner = {
-  //   id: 0,
-  //   surname: "",
-  //   name: "",
-  //   idCardNumber: "",
-  //   rif: "",
-  //   homePhone: "",
-  //   mobilePhone: "",
-  //   officePhone: "",
-  //   email: "",
-  //   address: "",
-  //   estate: "",
-  //   person: "",
-  //   taxpayer: "",
-  //   registered: "",
-  //   affiliate: false,
-  // };
 
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
@@ -124,8 +108,15 @@ export function useOwners() {
   function handleSelect(owner: Owner) {
     setSelectedOwner(owner);
     setSelectedPet(emptyPet);
+    setSelectedVisit(emptyVisit);
     setIsEditing(false);
     setIsCreating(false);
+  }
+
+  // ============= SELECT OWNER BY ID =============
+  function handleSelectOwnerById(id: number) {
+    const owner = owners.find((o) => o.id === id);
+    setSelectedOwner(owner ?? emptyOwner);
   }
 
   return {
@@ -141,5 +132,6 @@ export function useOwners() {
     handleDeleteOwner,
     handleSelect,
     emptyOwner,
+    handleSelectOwnerById,
   };
 }

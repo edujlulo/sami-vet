@@ -9,6 +9,7 @@ export async function fetchPets(): Promise<Pet[]> {
   return data as Pet[];
 }
 
+// Get pets by owner
 export async function fetchPetsByOwner(ownerId: number): Promise<Pet[]> {
   const { data, error } = await supabase
     .from("pets")
