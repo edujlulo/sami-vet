@@ -90,6 +90,11 @@ export function useVisits() {
 
   // ================= SAVE =================
   async function handleSaveVisit() {
+    if (!selectedVisit?.vet?.trim()) {
+      window.alert("Debe ingresar un médico");
+      return;
+    }
+
     try {
       if (!selectedVisit) throw new Error("No visit selected");
       if (!selectedPet) throw new Error("No pet selected");
@@ -135,7 +140,7 @@ export function useVisits() {
     if (!selectedVisit?.id) return;
 
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this visit?",
+      "Are you sure you want to delete this visit?"
     );
     if (!confirmDelete) return;
 
@@ -159,6 +164,10 @@ export function useVisits() {
 
   // ============ ON CONTINUE ADD PROCEDURE MODAL ==============
   function onContinueAddProcedureModal() {
+    if (!selectedVisit?.procedure?.trim()) {
+      alert("Debe ingresar un procedimiento");
+      return;
+    }
     setIsOpenAssignVeterinarianModal(true);
     setIsOpenAddProcedureModal(false);
   }

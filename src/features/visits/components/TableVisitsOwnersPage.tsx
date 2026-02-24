@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import type { VisitEntity } from "../../../types/VisitEntity";
 import type { VisitWithRelations } from "../../../types/VisitWithRelations";
 import { useOwners } from "../../owners/hooks/useOwners";
@@ -67,7 +67,7 @@ export default function TableVisitsOwnersPage({
   // ================= HANDLE FILTER =================
   const handleFilterChange = (
     filter: "today" | "byDate" | "all",
-    date?: string,
+    date?: string
   ) => {
     if (filter === "today") {
       loadVisitsToday();
@@ -90,6 +90,7 @@ export default function TableVisitsOwnersPage({
       const nextIndex = Math.min(currentIndex + 1, visits.length - 1); // nunca pasa del último
       if (nextIndex !== currentIndex) {
         handleSelectVisit(visits[nextIndex]);
+        handleSelectOwnerById(visits[nextIndex].ownerId);
         rowRefs.current[nextIndex]?.scrollIntoView({ block: "nearest" });
       }
       e.preventDefault();
@@ -100,6 +101,7 @@ export default function TableVisitsOwnersPage({
       const prevIndex = Math.max(currentIndex - 1, 0); // nunca pasa del primero
       if (prevIndex !== currentIndex) {
         handleSelectVisit(visits[prevIndex]);
+        handleSelectOwnerById(visits[prevIndex].ownerId);
         rowRefs.current[prevIndex]?.scrollIntoView({ block: "nearest" });
       }
       e.preventDefault();
@@ -117,7 +119,7 @@ export default function TableVisitsOwnersPage({
       {loading && <p className="text-blue-800 font-bold">Loading visits...</p>}
 
       <div
-        className="w-[900px] h-[250px] overflow-y-auto border border-gray-900"
+        className="w-[900px] h-[250px] overflow-y-auto border border-gray-900 focus-within:ring-3 focus-within:ring-blue-300 rounded-md"
         tabIndex={0} // allow the div to receive focus
         onKeyDown={(e) => handleKeyNavigation(e)}
       >

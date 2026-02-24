@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import type { VisitWithRelations } from "../../../types/VisitWithRelations";
 import { usePetsContext } from "../../pets/context/PetsContext";
 import { useVisitsContext } from "../context/VisitsContext";
@@ -24,10 +25,46 @@ export default function TableVisitsPetHistoryPage({
       year: "2-digit",
     });
 
+  // Function for navigation in table with keyboard
+  function handleKeyNavigation(e: React.KeyboardEvent<HTMLDivElement>) {
+    if (!visitsByPet.length) return;
+
+    // Encuentra la fila actualmente seleccionada
+    const currentIndex = visitsByPet.findIndex(
+      (o) => o.id === selectedVisit?.id
+    );
+
+    // Arrow Down
+    if (e.key === "ArrowDown") {
+      const nextIndex = Math.min(currentIndex + 1, visitsByPet.length - 1); // nunca pasa del último
+      if (nextIndex !== currentIndex) {
+        handleSelectVisit(visitsByPet[nextIndex]);
+        rowRefs.current[nextIndex]?.scrollIntoView({ block: "nearest" });
+      }
+      e.preventDefault();
+    }
+
+    // Arrow Up
+    else if (e.key === "ArrowUp") {
+      const prevIndex = Math.max(currentIndex - 1, 0); // nunca pasa del primero
+      if (prevIndex !== currentIndex) {
+        handleSelectVisit(visitsByPet[prevIndex]);
+        rowRefs.current[prevIndex]?.scrollIntoView({ block: "nearest" });
+      }
+      e.preventDefault();
+    }
+  }
+
+  const rowRefs = useRef<(HTMLTableRowElement | null)[]>([]);
+
   return (
     <div className="flex flex-col gap-2">
       <p className=" text-blue-800 font-bold">Visitas:</p>
-      <div className="w-[700px] h-[250px] overflow-y-auto border border-gray-900">
+      <div
+        className="w-[700px] h-[250px] overflow-y-auto border border-gray-900 focus-within:ring-3 focus-within:ring-blue-300 rounded-md"
+        tabIndex={0} // allow the div to receive focus
+        onKeyDown={(e) => handleKeyNavigation(e)}
+      >
         <table className="bg-amber-50 border border-gray-900 w-full table-fixed bg-amber-50 text-ellipsis">
           <thead>
             <tr>
@@ -50,10 +87,10 @@ export default function TableVisitsPetHistoryPage({
           <tbody>
             {visitsByPet
               // .sort((a, b) => a.id - b.id)
-              .map((visit) => (
+              .map((visit, index) => (
                 <tr
                   key={visit.id}
-                  // ref={(el) => void (rowRefs.current[index] = el)}
+                  ref={(el) => void (rowRefs.current[index] = el)}
                   onClick={() => {
                     handleSelectVisit(visit);
                   }}
@@ -90,7 +127,7 @@ export default function TableVisitsPetHistoryPage({
                   <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
                   <td className="border border-gray-900 px-2 py-0.5">&nbsp;</td>
                 </tr>
-              ),
+              )
             )}
           </tbody>
         </table>

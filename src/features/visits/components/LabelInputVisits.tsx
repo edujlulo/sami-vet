@@ -8,6 +8,7 @@ interface LabelInputProps {
   className?: string;
   type?: string;
   disable?: boolean;
+  inputRef?: React.Ref<HTMLInputElement>;
 }
 
 export default function LabelInputVisits({
@@ -18,6 +19,7 @@ export default function LabelInputVisits({
   className = "",
   type = "text",
   disable = false,
+  inputRef,
 }: LabelInputProps) {
   const value = visit && visitKey ? String(visit[visitKey] ?? "") : "";
 
@@ -39,6 +41,7 @@ export default function LabelInputVisits({
           }
         }}
         disabled={disable}
+        ref={inputRef}
         className={`bg-amber-50 border border-gray-700 rounded-xs px-1.5 focus:outline-none focus:ring-2 focus:ring-blue-400 ${className}`}
       />
     </div>
