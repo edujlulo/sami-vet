@@ -67,7 +67,7 @@ export default function TableVisitsOwnersPage({
   // ================= HANDLE FILTER =================
   const handleFilterChange = (
     filter: "today" | "byDate" | "all",
-    date?: string
+    date?: string,
   ) => {
     if (filter === "today") {
       loadVisitsToday();
@@ -112,12 +112,15 @@ export default function TableVisitsOwnersPage({
 
   return (
     <div>
-      <p className="text-red-800 font-bold">
-        Total de visitas: {visits.length}
-      </p>
+      <div className="flex flex-row gap-5">
+        <p className="text-red-800 font-bold">
+          Total de visitas: {visits.length}
+        </p>
 
-      {loading && <p className="text-blue-800 font-bold">Loading visits...</p>}
-
+        {loading && (
+          <p className="text-blue-800 font-bold">Cargando visitas...</p>
+        )}
+      </div>
       <div
         className="w-[900px] h-[250px] overflow-y-auto border border-gray-900 focus-within:ring-3 focus-within:ring-blue-300 rounded-md"
         tabIndex={0} // allow the div to receive focus

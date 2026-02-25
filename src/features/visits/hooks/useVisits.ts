@@ -20,7 +20,7 @@ export function useVisits() {
 
   const { pets } = usePetsByOwner(selectedOwner.id);
 
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(true);
   const [isCreating, setIsCreating] = useState(false);
 
   const [isOpenAddProcedureModal, setIsOpenAddProcedureModal] = useState(false);
@@ -82,7 +82,7 @@ export function useVisits() {
   // ================= CANCEL =================
   function handleCancelVisit() {
     setIsCreating(false);
-    setIsEditing(false);
+    setIsEditing(true);
     setSelectedVisit(emptyVisit);
     setIsOpenAddProcedureModal(false);
     setIsOpenAssignVeterinarianModal(false);
@@ -109,16 +109,18 @@ export function useVisits() {
       let data: VisitEntity;
 
       if (isEditing) {
+        console.log("Updating visit data...");
         if (!visitToSave.id || visitToSave.id === 0) {
           throw new Error("Cannot update visit without a valid ID");
         }
         data = await updateVisit(visitToSave);
-        setIsEditing(false);
         setIsOpenAssignVeterinarianModal(false);
       } else if (isCreating) {
+        console.log("Saving new visit data...");
         data = await insertVisit(visitToSave);
         setIsCreating(false);
         setIsOpenAssignVeterinarianModal(false);
+        setIsEditing(true);
       } else {
         return;
       }
@@ -140,7 +142,7 @@ export function useVisits() {
     if (!selectedVisit?.id) return;
 
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this visit?"
+      "Are you sure you want to delete this visit?",
     );
     if (!confirmDelete) return;
 
@@ -148,7 +150,6 @@ export function useVisits() {
       await deleteVisit(selectedVisit.id);
       await fetchVisits();
       setSelectedVisit(emptyVisit);
-      setIsEditing(false);
       setIsCreating(false);
     } catch (error) {
       console.error("Error deleting visit:", error);
@@ -158,7 +159,7 @@ export function useVisits() {
   // ================= SELECT =================
   function handleSelectVisit(visit: VisitWithRelations) {
     setSelectedVisit(visit);
-    setIsEditing(false);
+    setIsEditing(true);
     setIsCreating(false);
   }
 

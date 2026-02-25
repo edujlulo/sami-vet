@@ -9,6 +9,9 @@ interface LabelInputProps {
   type?: string;
   disable?: boolean;
   inputRef?: React.Ref<HTMLInputElement>;
+  onFocus?: () => void;
+  onBlur?: () => void;
+  onChange?: () => void;
 }
 
 export default function LabelInputVisits({
@@ -20,8 +23,24 @@ export default function LabelInputVisits({
   type = "text",
   disable = false,
   inputRef,
+  onFocus,
+  onBlur,
+  onChange,
 }: LabelInputProps) {
   const value = visit && visitKey ? String(visit[visitKey] ?? "") : "";
+
+  // Fields that should not be normalized:
+  const notNormalizedFields: (keyof VisitEntity)[] = [
+    "visitDate",
+    "weightKg",
+    "reasonForVisit",
+    "physicalExamination",
+    "diagnosis",
+    "notes",
+    "additionalTests",
+    "treatmentGiven",
+    "prescribedTreatment",
+  ];
 
   return (
     <div className="flex flex-col gap-1">
@@ -31,17 +50,22 @@ export default function LabelInputVisits({
         value={value}
         onChange={(e) => {
           if (visit && setVisit && visitKey) {
-            const newValue =
-              type === "date" ? e.target.value : e.target.value.toUpperCase();
-
             setVisit({
               ...visit,
-              [visitKey]: newValue,
+              [visitKey]: notNormalizedFields.includes(visitKey)
+                ? e.target.value
+                : e.target.value.toUpperCase(),
             });
+
+            if (onChange) onChange();
           }
+        }}
+        onBlur={() => {
+          if (onBlur) onBlur(); // disparas la función desde el formulario
         }}
         disabled={disable}
         ref={inputRef}
+        onFocus={onFocus}
         className={`bg-amber-50 border border-gray-700 rounded-xs px-1.5 focus:outline-none focus:ring-2 focus:ring-blue-400 ${className}`}
       />
     </div>
