@@ -106,31 +106,21 @@ export function useVisits() {
           selectedVisit.visitDate || new Date().toISOString().split("T")[0],
       };
 
-      let data: VisitEntity;
-
       if (isEditing) {
         console.log("Updating visit data...");
         if (!visitToSave.id || visitToSave.id === 0) {
           throw new Error("Cannot update visit without a valid ID");
         }
-        data = await updateVisit(visitToSave);
+        await updateVisit(visitToSave);
         setIsOpenAssignVeterinarianModal(false);
       } else if (isCreating) {
         console.log("Saving new visit data...");
-        data = await insertVisit(visitToSave);
+        await insertVisit(visitToSave);
         setIsCreating(false);
         setIsOpenAssignVeterinarianModal(false);
         setIsEditing(true);
       } else {
         return;
-      }
-
-      const updatedVisits = await fetchVisits();
-
-      const updatedVisit = updatedVisits.find((v) => v.id === data.id);
-
-      if (updatedVisit) {
-        setSelectedVisit(updatedVisit);
       }
     } catch (error) {
       console.error("Error saving visit:", error);
