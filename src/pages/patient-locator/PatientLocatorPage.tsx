@@ -16,8 +16,17 @@ export default function PatientLocatorPage() {
   const { handleSelectVisit } = useVisits();
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen scale-75">
-      <div className="bg-amber-100 border-20 border-amber-400 px-2 py-20 flex flex-col items-center justify-center gap-0 w-[1430px] h-[1150px]">
+    <div className="min-h-screen flex items-center justify-start xl:justify-center overflow-auto">
+      <div
+        className="
+    bg-amber-100
+    border-[20px] border-amber-400
+    px-2 py-8
+    flex flex-col items-center
+  
+    w-[1400px]
+  "
+      >
         {/* --- Tabs --- */}
 
         {/* --- Header with tabs --- */}
@@ -28,7 +37,7 @@ export default function PatientLocatorPage() {
               rounded-t-lg
               border
               border-b-0
-              text-xl
+              text-lg
               ${
                 activeTab === "A"
                   ? "bg-amber-200 border-gray-300 font-semibold"
@@ -46,7 +55,7 @@ export default function PatientLocatorPage() {
               rounded-t-lg
               border
               border-b-0
-              text-xl
+            text-lg
               ${
                 activeTab === "B"
                   ? "bg-amber-200 border-gray-300 font-semibold"

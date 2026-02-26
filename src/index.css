@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* Base styles */
+@layer base {
+  html {
+    font-size: 14px;
+  }
+}
+
 /* Your custom components */
 @layer components {
   /* Apply truncation and max width to all table cells inside a table with class text-ellipsis */
