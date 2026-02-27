@@ -1,11 +1,15 @@
+import { useTranslation } from "react-i18next";
+
 export default function TablePetVaccines() {
-  const emptyRows = 7;
+  const { t } = useTranslation("pets");
+
+  const emptyRows = 9;
 
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-row gap-2 items-center">
         <p className=" text-red-800 font-bold w-50">
-          Historial de vacunas y desparasitaciones
+          {t("vaccinesHistoryTitle")}
         </p>
         <button
           className={`
@@ -32,7 +36,7 @@ export default function TablePetVaccines() {
         disabled:hover:bg-gray-200
       `}
         >
-          Quitar
+          {t("remove")}
         </button>
       </div>
       <div className="w-[320px] h-[205px] overflow-y-auto border border-gray-900">
@@ -40,10 +44,10 @@ export default function TablePetVaccines() {
           <thead>
             <tr>
               <th className="w-[20%] border border-gray-900 px-2 py-0.5">
-                Fecha
+                {t("date")}
               </th>
               <th className="w-[40%] border border-gray-900 px-2 py-0.5">
-                Vacuna
+                {t("vaccine")}
               </th>
             </tr>
           </thead>

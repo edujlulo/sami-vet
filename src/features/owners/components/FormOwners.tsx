@@ -1,6 +1,7 @@
 import LabelInputOwners from "./LabelInputOwners";
 import type { Owner } from "../../../types/Owner";
 import React, { useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 interface FormOwnersProps {
   selectedOwner: Owner;
@@ -17,6 +18,8 @@ export default function FormOwners({
   isCreating,
   handleSave,
 }: FormOwnersProps) {
+  const { t } = useTranslation("owners");
+
   const surnameRef = useRef<HTMLInputElement>(null);
 
   // initial focus on "Surname"
@@ -34,6 +37,9 @@ export default function FormOwners({
 
   return (
     <div className="flex flex-col bg-amber-300 py-4 gap-0.5">
+      <p className="flex items-center justify-center text-blue-900 font-bold">
+        {t("owner")}
+      </p>
       <form
         className="bg-amber-300 px-4 py-0 flex flex-col gap-0.5"
         onSubmit={handleSubmit}
@@ -41,7 +47,7 @@ export default function FormOwners({
         {/* First row */}
         <div className="flex flex-row gap-2">
           <LabelInputOwners
-            label="Apellidos"
+            label={t("surname")}
             ownerKey="surname"
             owner={selectedOwner}
             setOwner={setSelectedOwner}
@@ -50,7 +56,7 @@ export default function FormOwners({
             inputRef={surnameRef}
           />
           <LabelInputOwners
-            label="Nombres"
+            label={t("name")}
             ownerKey="name"
             owner={selectedOwner}
             setOwner={setSelectedOwner}
@@ -58,7 +64,7 @@ export default function FormOwners({
             isCreating={isCreating}
           />
           <LabelInputOwners
-            label="Cédula"
+            label={t("idCardNumber")}
             ownerKey="idCardNumber"
             owner={selectedOwner}
             setOwner={setSelectedOwner}
@@ -67,7 +73,7 @@ export default function FormOwners({
             className="w-30"
           />
           <LabelInputOwners
-            label="R.I.F."
+            label={t("rif")}
             ownerKey="rif"
             owner={selectedOwner}
             setOwner={setSelectedOwner}
@@ -80,7 +86,7 @@ export default function FormOwners({
         {/* Second row */}
         <div className="flex flex-row gap-2">
           <LabelInputOwners
-            label="Telf. Habitación"
+            label={t("homePhone")}
             ownerKey="homePhone"
             owner={selectedOwner}
             setOwner={setSelectedOwner}
@@ -89,7 +95,7 @@ export default function FormOwners({
             className="w-45"
           />
           <LabelInputOwners
-            label="Telf. Celular"
+            label={t("mobilePhone")}
             ownerKey="mobilePhone"
             owner={selectedOwner}
             setOwner={setSelectedOwner}
@@ -98,7 +104,7 @@ export default function FormOwners({
             className="w-45"
           />
           <LabelInputOwners
-            label="Telf. Oficina"
+            label={t("officePhone")}
             ownerKey="officePhone"
             owner={selectedOwner}
             setOwner={setSelectedOwner}
@@ -111,7 +117,7 @@ export default function FormOwners({
         {/* Third row */}
         <div className="flex flex-row gap-2">
           <LabelInputOwners
-            label="Email"
+            label={t("email")}
             ownerKey="email"
             owner={selectedOwner}
             setOwner={setSelectedOwner}
@@ -120,7 +126,7 @@ export default function FormOwners({
             className="w-65"
           />
           <LabelInputOwners
-            label="Dirección"
+            label={t("address")}
             ownerKey="address"
             owner={selectedOwner}
             setOwner={setSelectedOwner}
@@ -133,7 +139,7 @@ export default function FormOwners({
         {/* Fourth row */}
         <div className="flex flex-row gap-2">
           <LabelInputOwners
-            label="Urbanización"
+            label={t("estate")}
             ownerKey="estate"
             owner={selectedOwner}
             setOwner={setSelectedOwner}
@@ -142,7 +148,7 @@ export default function FormOwners({
             className="w-60"
           />
           <LabelInputOwners
-            label="Persona"
+            label={t("person")}
             ownerKey="person"
             owner={selectedOwner}
             setOwner={setSelectedOwner}
@@ -151,7 +157,7 @@ export default function FormOwners({
             className="w-30"
           />
           <LabelInputOwners
-            label="Contribuyente"
+            label={t("taxpayer")}
             ownerKey="taxpayer"
             owner={selectedOwner}
             setOwner={setSelectedOwner}
@@ -160,7 +166,7 @@ export default function FormOwners({
             className="w-30"
           />
           <LabelInputOwners
-            label="Registrado"
+            label={t("registered")}
             ownerKey="registered"
             owner={selectedOwner}
             setOwner={setSelectedOwner}

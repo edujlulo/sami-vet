@@ -1,6 +1,7 @@
 import { useRef, useState, useMemo } from "react";
 import type { Owner } from "../../../types/Owner";
 import type { Pet } from "../../../types/Pet";
+import { useTranslation } from "react-i18next";
 
 interface TablePetsPetHistoryPageProps {
   selectedOwner: Owner;
@@ -14,7 +15,9 @@ export default function TablePetsPetHistoryPage({
   pets,
   selectedPet,
 }: TablePetsPetHistoryPageProps) {
-  const petsEmptyRows = 4 - pets.length;
+  const { t } = useTranslation("pets");
+
+  const petsEmptyRows = 6 - pets.length;
 
   // Refs para scroll
   const rowRefs = useRef<(HTMLTableRowElement | null)[]>([]);
@@ -92,7 +95,7 @@ export default function TablePetsPetHistoryPage({
                 onClick={() => handleSort("id")}
                 className="border border-gray-900  py-0.5 cursor-pointer select-none hover:bg-amber-200"
               >
-                Historia{" "}
+                {t("recordId")}{" "}
                 {sortConfig.key === "id"
                   ? sortConfig.direction === "asc"
                     ? "▲"
@@ -104,7 +107,7 @@ export default function TablePetsPetHistoryPage({
                 onClick={() => handleSort("name")}
                 className="border border-gray-900 px-2 py-0.5 cursor-pointer select-none hover:bg-amber-200"
               >
-                Mascota{" "}
+                {t("pet")}{" "}
                 {sortConfig.key === "name"
                   ? sortConfig.direction === "asc"
                     ? "▲"

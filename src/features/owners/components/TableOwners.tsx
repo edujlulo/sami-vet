@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import type { Owner } from "../../../types/Owner";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   owners: Owner[];
@@ -12,7 +13,9 @@ export default function TableOwners({
   handleSelect,
   selectedOwner,
 }: Props) {
-  const emptyRows = 9 - owners.length;
+  const { t } = useTranslation("owners");
+
+  const emptyRows = 11 - owners.length;
 
   /* ================= SORT ================= */
 
@@ -52,10 +55,10 @@ export default function TableOwners({
   /* ================= RESIZE ================= */
 
   const [columnWidths, setColumnWidths] = useState({
-    id: 90,
-    surname: 200,
-    name: 200,
-    idCardNumber: 150,
+    id: 95,
+    surname: 190,
+    name: 190,
+    idCardNumber: 100,
   });
 
   const resizingColumn = useRef<keyof typeof columnWidths | null>(null);
@@ -157,7 +160,8 @@ export default function TableOwners({
                 onClick={() => handleSort("id")}
                 className="relative select-none cursor-pointer border-b border-r border-gray-900 px-2 py-0.5"
               >
-                Código{renderSortArrow("id")}
+                {t("customerId")}
+                {renderSortArrow("id")}
                 <Resizer column="id" />
               </th>
 
@@ -166,7 +170,8 @@ export default function TableOwners({
                 onClick={() => handleSort("surname")}
                 className="relative select-none cursor-pointer border-b border-r border-gray-900 px-2 py-0.5"
               >
-                Apellidos{renderSortArrow("surname")}
+                {t("surname")}
+                {renderSortArrow("surname")}
                 <Resizer column="surname" />
               </th>
 
@@ -175,7 +180,8 @@ export default function TableOwners({
                 onClick={() => handleSort("name")}
                 className="relative select-none cursor-pointer border-b border-r border-gray-900 px-2 py-0.5"
               >
-                Nombres{renderSortArrow("name")}
+                {t("name")}
+                {renderSortArrow("name")}
                 <Resizer column="name" />
               </th>
 
@@ -184,7 +190,8 @@ export default function TableOwners({
                 onClick={() => handleSort("idCardNumber")}
                 className="relative select-none cursor-pointer border-b border-gray-900 px-2 py-0.5"
               >
-                Cédula{renderSortArrow("idCardNumber")}
+                {t("idCardNumber")}
+                {renderSortArrow("idCardNumber")}
                 <Resizer column="idCardNumber" />
               </th>
             </tr>
@@ -244,7 +251,7 @@ export default function TableOwners({
       </div>
 
       <div className="mt-2">
-        <p className="text-blue-900 font-bold">Buscar propietario</p>
+        <p className="text-blue-900 font-bold">{t("searchOwner")}</p>
         <input className="bg-amber-50 border border-gray-700" />
       </div>
     </div>

@@ -3,6 +3,7 @@ import type { VisitWithRelations } from "../../../types/VisitWithRelations";
 import { usePetsContext } from "../../pets/context/PetsContext";
 import { useVisitsContext } from "../context/VisitsContext";
 import { useVisitsByPet } from "../hooks/useVisitsByPet";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   handleSelectVisit: (visit: VisitWithRelations) => void;
@@ -11,11 +12,13 @@ interface Props {
 export default function TableVisitsPetHistoryPage({
   handleSelectVisit,
 }: Props) {
+  const { t } = useTranslation("visits");
+
   const { selectedVisit } = useVisitsContext();
   const { selectedPet } = usePetsContext();
   const { visitsByPet } = useVisitsByPet(selectedPet?.id ?? null);
 
-  const emptyRows = 9 - visitsByPet.length;
+  const emptyRows = 11 - visitsByPet.length;
 
   const rowRefs = useRef<(HTMLTableRowElement | null)[]>([]);
 
@@ -101,7 +104,7 @@ export default function TableVisitsPetHistoryPage({
 
   return (
     <div className="flex flex-col gap-2">
-      <p className="text-blue-800 font-bold">Visitas:</p>
+      <p className="text-blue-800 font-bold">{t("visits")}:</p>
       <div
         className="w-[700px] h-[250px] overflow-y-auto border border-gray-900 focus-within:ring-3 focus-within:ring-blue-300 rounded-md"
         tabIndex={0}
@@ -116,7 +119,7 @@ export default function TableVisitsPetHistoryPage({
                 onClick={() => handleSort("visitDate")}
                 className="w-[20%] border border-gray-900 px-2 py-0.5 cursor-pointer hover:bg-amber-200 select-none"
               >
-                Fecha{" "}
+                {t("date")}{" "}
                 {sortConfig.key === "visitDate"
                   ? sortConfig.direction === "asc"
                     ? "▲"
@@ -128,7 +131,7 @@ export default function TableVisitsPetHistoryPage({
                 onClick={() => handleSort("procedure")}
                 className="w-[40%] border border-gray-900 px-2 py-0.5 cursor-pointer hover:bg-amber-200 select-none"
               >
-                Procedimiento{" "}
+                {t("procedure")}{" "}
                 {sortConfig.key === "procedure"
                   ? sortConfig.direction === "asc"
                     ? "▲"
@@ -140,7 +143,7 @@ export default function TableVisitsPetHistoryPage({
                 onClick={() => handleSort("invoiceNumber")}
                 className="w-[20%] border border-gray-900 px-2 py-0.5 cursor-pointer hover:bg-amber-200 select-none"
               >
-                Factura N.{" "}
+                {t("invoiceNumber")}{" "}
                 {sortConfig.key === "invoiceNumber"
                   ? sortConfig.direction === "asc"
                     ? "▲"
@@ -152,7 +155,7 @@ export default function TableVisitsPetHistoryPage({
                 onClick={() => handleSort("totalAmount")}
                 className="w-[20%] border border-gray-900 px-2 py-0.5 cursor-pointer hover:bg-amber-200 select-none"
               >
-                Monto{" "}
+                {t("amount")}{" "}
                 {sortConfig.key === "totalAmount"
                   ? sortConfig.direction === "asc"
                     ? "▲"

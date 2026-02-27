@@ -1,0 +1,57 @@
+{
+  "addProcedure": "Add Procedure",
+  "procedure": "Medical Procedure",
+  "cost": "Cost",
+  "continue": "Continue",
+  "exit": "Exit",
+
+  "assignVeterinarian": "Assign Veterinarian",
+  "veterinarian": "Doctor",
+  "saveVisit": "Save Visit",
+
+  "visits": "Visits",
+  "add": "Add",
+  "abort": "Abort",
+  "till": "Till",
+  "estimates": "Estimates",
+  "pending": "Pending",
+  "edit": "Edit",
+  "invoice": "Invoice",
+  "details": "Details",
+  "reports": "Reports",
+
+  "today": "Today's",
+  "byDate": "Filter by Date",
+  "all": "All Visits",
+
+  "consultingVet": "Veterinarian",
+  "weight": "Weight (kg)",
+  "reasonForVisit": "Reason for Visit",
+  "physicalExamination": "Physical Examination",
+  "diagnosisComments": "Diagnosis - Comments",
+  "additionalTests": "Additional Tests",
+  "treatmentGiven": "Treatment Given",
+  "prescribedTreatment": "Prescribed Treatment",
+
+  "upcomingVisits": "Upcoming Visits",
+  "schedule": "Schedule",
+  "remove": "Remove",
+  "date": "Date",
+  "vaccine": "Vaccine",
+
+  "totalVisits": "Total visits",
+  "loadingVisits": "Loading visits...",
+  "visit": "Visit",
+  "pet": "Pet",
+  "owner": "Owner",
+  "reason": "Reason",
+  "vet": "Veterinarian",
+  "historyShort": "H",
+  "examinationShort": "Ex",
+  "referredShort": "Ref",
+  "searchVisitNumber": "Search Visit No.",
+  "viewVisits": "View Visits",
+
+  "invoiceNumber": "Invoice No.",
+  "amount": "Total"
+}

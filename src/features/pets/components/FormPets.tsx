@@ -5,6 +5,7 @@ import type { Owner } from "../../../types/Owner";
 import LabelInputOwners from "../../owners/components/LabelInputOwners";
 import { useEffect, useRef } from "react";
 import { calculateAge } from "../../../helpers/ageCalculator";
+import { useTranslation } from "react-i18next";
 
 interface FormPetsProps {
   selectedOwner: Owner;
@@ -29,46 +30,38 @@ export default function FormPets({
   handleSave,
   pets,
 }: FormPetsProps) {
+  const { t } = useTranslation("pets");
   const selectedOwnerSurnameAndName = `${selectedOwner.surname} ${selectedOwner.name}`;
 
-  // initial focus on "Surname"
+  // initial focus on "Pet Name"
   const nameRef = useRef<HTMLInputElement>(null);
-
   useEffect(() => {
     if ((isEditing || isCreating) && nameRef.current) {
       nameRef.current.focus();
     }
   }, [isEditing, isCreating]);
 
-  // Form submit when pressing Enter
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     handleSave();
   };
 
-  // Age for selectedPet
   const age = selectedPet
     ? JSON.stringify(selectedPet) !== JSON.stringify(emptyPet)
       ? calculateAge(selectedPet.birthDate)
       : ""
     : "";
 
-  // Assign registration date when is creating a new pet
   useEffect(() => {
     if (isCreating && selectedPet && !selectedPet.registrationDate) {
       const today = new Date().toISOString().split("T")[0];
-
-      setSelectedPet({
-        ...selectedPet,
-        registrationDate: today,
-      });
+      setSelectedPet({ ...selectedPet, registrationDate: today });
     }
   }, [isCreating]);
 
   return (
     <form onSubmit={handleSubmit} className="bg-amber-300 px-2 py-4">
       {/* --- Top box --- */}
-
       <div className="flex flex-row gap-2">
         <TablePetsPetHistoryPage
           selectedOwner={selectedOwner}
@@ -82,19 +75,19 @@ export default function FormPets({
           <div className="flex flex-row gap-2">
             <div className="flex flex-col gap-1">
               <label className="text-blue-900 font-bold -mb-1 mt-1">
-                Propietario
+                {t("owner")}
               </label>
               <input
                 type="text"
                 value={selectedOwnerSurnameAndName}
-                disabled={true}
-                readOnly={true}
+                disabled
+                readOnly
                 className="bg-amber-50 border border-gray-700 px-1 w-80"
               />
             </div>
 
             <LabelInputOwners
-              label="N. Cliente"
+              label={t("customerNumber")}
               ownerKey="id"
               owner={selectedOwner}
               isEditing={false}
@@ -106,7 +99,7 @@ export default function FormPets({
           {/* --- Pet row --- */}
           <div className="flex flex-row gap-2">
             <LabelInputPets
-              label="Mascota"
+              label={t("petName")}
               petKey="name"
               pet={selectedPet ?? emptyPet}
               setPet={setSelectedPet}
@@ -117,7 +110,7 @@ export default function FormPets({
             />
 
             <LabelInputPets
-              label="Fech Naci"
+              label={t("birthDate")}
               petKey="birthDate"
               pet={selectedPet ?? emptyPet}
               setPet={setSelectedPet}
@@ -131,14 +124,15 @@ export default function FormPets({
               className="w-32"
             />
 
-            {/* --- Actual age --- */}
             <div className="flex flex-col gap-1">
-              <label className="text-blue-900 font-bold -mb-1 mt-1">Edad</label>
+              <label className="text-blue-900 font-bold -mb-1 mt-1">
+                {t("age")}
+              </label>
               <input
                 type="text"
                 value={age}
-                disabled={true}
-                className={`bg-amber-50 border border-gray-700 px-1 w-31`}
+                disabled
+                className="bg-amber-50 border border-gray-700 px-1 w-31"
               />
             </div>
           </div>
@@ -146,29 +140,26 @@ export default function FormPets({
       </div>
 
       {/* --- Bottom box --- */}
-
       <div>
         <div className="flex flex-row gap-2">
           <LabelInputPets
-            label="Especie"
+            label={t("species")}
             petKey="species"
             pet={selectedPet ?? emptyPet}
             setPet={setSelectedPet}
             isEditing={isEditing}
             isCreating={isCreating}
           />
-
           <LabelInputPets
-            label="Raza"
+            label={t("breed")}
             petKey="breed"
             pet={selectedPet ?? emptyPet}
             setPet={setSelectedPet}
             isEditing={isEditing}
             isCreating={isCreating}
           />
-
           <LabelInputPets
-            label="Sexo"
+            label={t("sex")}
             petKey="sex"
             pet={selectedPet ?? emptyPet}
             setPet={setSelectedPet}
@@ -176,9 +167,8 @@ export default function FormPets({
             isCreating={isCreating}
             className="w-30"
           />
-
           <LabelInputPets
-            label="Pdg"
+            label={t("pedigree")}
             petKey="pedigree"
             pet={selectedPet ?? emptyPet}
             setPet={setSelectedPet}
@@ -190,7 +180,7 @@ export default function FormPets({
 
         <div className="flex flex-row gap-2 items-center">
           <LabelInputPets
-            label="Color"
+            label={t("color")}
             petKey="color"
             pet={selectedPet ?? emptyPet}
             setPet={setSelectedPet}
@@ -198,9 +188,8 @@ export default function FormPets({
             isCreating={isCreating}
             className="w-30"
           />
-
           <LabelInputPets
-            label="Placa"
+            label={t("TagNumber")}
             petKey="licensePlate"
             pet={selectedPet ?? emptyPet}
             setPet={setSelectedPet}
@@ -208,18 +197,16 @@ export default function FormPets({
             isCreating={isCreating}
             className="w-20"
           />
-
           <LabelInputPets
-            label="Chip"
+            label={t("chip")}
             petKey="chip"
             pet={selectedPet ?? emptyPet}
             setPet={setSelectedPet}
             isEditing={isEditing}
             isCreating={isCreating}
           />
-
           <LabelInputPets
-            label="Fech Regis"
+            label={t("registrationDate")}
             petKey="registrationDate"
             pet={selectedPet ?? emptyPet}
             setPet={setSelectedPet}
@@ -232,7 +219,6 @@ export default function FormPets({
             }
             className="w-30"
           />
-
           <button
             type="submit"
             className="
@@ -250,7 +236,7 @@ export default function FormPets({
               hover:-translate-y-px
               active:translate-y-0
               transition-all duration-150
-              w-20
+              w-23
               text-blue-900
               font-bold
               disabled:text-gray-400
@@ -260,7 +246,7 @@ export default function FormPets({
               self-end
             "
           >
-            Asociar
+            {t("associate")}
           </button>
         </div>
       </div>

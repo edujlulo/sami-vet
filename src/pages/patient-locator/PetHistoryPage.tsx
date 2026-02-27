@@ -9,6 +9,7 @@ import { usePetsByOwner } from "../../features/pets/hooks/usePetsByOwner";
 import { useOwnersContext } from "../../features/owners/context/OwnersContext";
 import type { Pet } from "../../types/Pet";
 import type { VisitWithRelations } from "../../types/VisitWithRelations";
+import LanguageSwitcher from "../../components/LanguageSwitcher";
 
 interface Props {
   handleSelectPet: (pet: Pet) => void;
@@ -48,6 +49,9 @@ export default function PetHistoryPage({
 
   return (
     <div>
+      {/* Language buttons top-right */}
+      <LanguageSwitcher />
+
       <div className="bg-amber-200 px-8 py-6 flex justify-center items-center rounded-b-lg border border-t-0 border-gray-300">
         <div className="flex flex-col justify-center items-center gap-1">
           {/* --- Main top box --- */}

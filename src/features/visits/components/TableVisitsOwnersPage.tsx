@@ -7,6 +7,7 @@ import {
   fetchVisitsService,
   fetchVisitsByDate,
 } from "../services/visitsService";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   handleSelectVisit: (visit: VisitWithRelations) => void;
@@ -17,13 +18,15 @@ export default function TableVisitsOwnersPage({
   handleSelectVisit,
   selectedVisit,
 }: Props) {
+  const { t } = useTranslation("visits");
+
   const { handleSelectOwnerById } = useOwners();
 
   // 🔹 STATE VISITS (ahora vive aquí)
   const [visits, setVisits] = useState<VisitWithRelations[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const emptyRows = 9 - visits.length;
+  const emptyRows = 11 - visits.length;
 
   const formattedDate = (date: string) =>
     new Date(date).toLocaleDateString("en-GB", {
@@ -114,46 +117,63 @@ export default function TableVisitsOwnersPage({
     <div>
       <div className="flex flex-row gap-5">
         <p className="text-red-800 font-bold">
-          Total de visitas: {visits.length}
+          {t("totalVisits")}: {visits.length}
         </p>
 
         {loading && (
-          <p className="text-blue-800 font-bold">Cargando visitas...</p>
+          <p className="text-blue-800 font-bold">{t("loadingVisits")}</p>
         )}
       </div>
+
       <div
         className="w-[900px] h-[250px] overflow-y-auto border border-gray-900 focus-within:ring-3 focus-within:ring-blue-300 rounded-md"
-        tabIndex={0} // allow the div to receive focus
+        tabIndex={0}
         onKeyDown={(e) => handleKeyNavigation(e)}
       >
         <table className="bg-amber-50 border border-gray-900 w-full table-fixed text-ellipsis">
           <thead>
             <tr>
               <th className="w-[2.5%] border border-gray-900 px-2 py-0.5"></th>
+
               <th className="w-[7%] border border-gray-900 px-2 py-0.5">
-                Visita
+                {t("visit")}
               </th>
+
               <th className="w-[8%] border border-gray-900 px-2 py-0.5">
-                Factura
+                {t("invoice")}
               </th>
+
               <th className="w-[9%] border border-gray-900 px-2 py-0.5">
-                Fecha
+                {t("date")}
               </th>
+
               <th className="w-[10%] border border-gray-900 px-2 py-0.5">
-                Mascota
+                {t("pet")}
               </th>
+
               <th className="w-[16%] border border-gray-900 px-2 py-0.5">
-                Propietario
+                {t("owner")}
               </th>
+
               <th className="w-[16%] border border-gray-900 px-2 py-0.5">
-                Motivo
+                {t("reason")}
               </th>
+
               <th className="w-[16%] border border-gray-900 px-2 py-0.5">
-                Médico
+                {t("vet")}
               </th>
-              <th className="w-[3%] border border-gray-900 px-2 py-0.5">H</th>
-              <th className="w-[3%] border border-gray-900 px-2 py-0.5">Ex</th>
-              <th className="w-[3%] border border-gray-900 px-2 py-0.5">Ref</th>
+
+              <th className="w-[3%] border border-gray-900 px-2 py-0.5">
+                {t("historyShort")}
+              </th>
+
+              <th className="w-[3%] border border-gray-900 px-2 py-0.5">
+                {t("examinationShort")}
+              </th>
+
+              <th className="w-[3%] border border-gray-900 px-2 py-0.5">
+                {t("referredShort")}
+              </th>
             </tr>
           </thead>
 
@@ -179,30 +199,39 @@ export default function TableVisitsOwnersPage({
                   <td className="border border-gray-900 px-1 py-0.5">
                     {visit.id}
                   </td>
+
                   <td className="border border-gray-900 px-1 py-0.5">
                     {visit.invoiceNumber}
                   </td>
+
                   <td className="border border-gray-900 px-1 py-0.5">
                     {formattedDate(visit.visitDate)}
                   </td>
+
                   <td className="border border-gray-900 px-1 py-0.5">
                     {visit.petName}
                   </td>
+
                   <td className="border border-gray-900 px-1 py-0.5">
                     {visit.ownerSurname} {visit.ownerName}
                   </td>
+
                   <td className="border border-gray-900 px-1 py-0.5">
                     {visit.procedure}
                   </td>
+
                   <td className="border border-gray-900 px-1 py-0.5">
                     {visit.vet}
                   </td>
+
                   <td className="border border-gray-900 px-1 py-0.5">
                     {visit.h}
                   </td>
+
                   <td className="border border-gray-900 px-1 py-0.5">
                     {visit.ex}
                   </td>
+
                   <td className="border border-gray-900 px-1 py-0.5">
                     {visit.referredBy}
                   </td>
@@ -224,11 +253,11 @@ export default function TableVisitsOwnersPage({
 
       <div className="flex flex-row gap-8 items-center">
         <div className="mt-2">
-          <p className="text-blue-900 font-bold">Buscar N. de Visita</p>
+          <p className="text-blue-900 font-bold">{t("searchVisitNumber")}</p>
           <input className="bg-amber-50 border border-gray-700" />
         </div>
 
-        <p className="text-blue-900 font-bold">Ver Visitas</p>
+        <p className="text-blue-900 font-bold">{t("viewVisits")}</p>
 
         <FiltersTableVisitsOwnersPage onFilterChange={handleFilterChange} />
       </div>

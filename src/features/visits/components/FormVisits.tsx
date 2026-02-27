@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import { useVisitsContext } from "../context/VisitsContext";
 import LabelInputVisits from "./LabelInputVisits";
 import { useVisits } from "../hooks/useVisits";
+import { useTranslation } from "react-i18next";
 
 export default function FormVisits() {
+  const { t } = useTranslation("visits");
+
   const { selectedVisit, setSelectedVisit, emptyVisit } = useVisitsContext();
   const { setIsEditing, setIsCreating, handleSaveVisit } = useVisits();
 
@@ -46,14 +49,15 @@ export default function FormVisits() {
     <div className="bg-amber-400 py-6 px-2">
       <div className="flex flex-row gap-4">
         <LabelInputVisits
-          label="Médico consulta"
+          label={t("consultingVet")}
           visitKey="vet"
           visit={selectedVisit}
           disable={true}
           className="w-60"
         />
+
         <LabelInputVisits
-          label="Peso"
+          label={t("weight")}
           visitKey="weightKg"
           visit={selectedVisit}
           setVisit={setSelectedVisit}
@@ -67,8 +71,9 @@ export default function FormVisits() {
           className="w-20"
         />
       </div>
+
       <LabelInputVisits
-        label="Motivo"
+        label={t("reasonForVisit")}
         visitKey="reasonForVisit"
         visit={selectedVisit}
         setVisit={setSelectedVisit}
@@ -81,8 +86,9 @@ export default function FormVisits() {
         onFocus={handleInputFocus}
         className="w-140 h-20"
       />
+
       <LabelInputVisits
-        label="Examen físico"
+        label={t("physicalExamination")}
         visitKey="physicalExamination"
         visit={selectedVisit}
         setVisit={setSelectedVisit}
@@ -95,8 +101,9 @@ export default function FormVisits() {
         onFocus={handleInputFocus}
         className="w-140 h-20"
       />
+
       <LabelInputVisits
-        label="Diagnóstico - Comentarios"
+        label={t("diagnosisComments")}
         visitKey="diagnosis"
         visit={selectedVisit}
         setVisit={setSelectedVisit}
@@ -110,7 +117,6 @@ export default function FormVisits() {
         className="w-100"
       />
 
-      {/* Notes input */}
       <input
         type="text"
         value={selectedVisit?.notes ?? ""}
@@ -134,7 +140,7 @@ export default function FormVisits() {
       />
 
       <LabelInputVisits
-        label="Pruebas complementarias"
+        label={t("additionalTests")}
         visitKey="additionalTests"
         visit={selectedVisit}
         setVisit={setSelectedVisit}
@@ -147,8 +153,9 @@ export default function FormVisits() {
         onFocus={handleInputFocus}
         className="w-140 h-20"
       />
+
       <LabelInputVisits
-        label="Tratamiento en consulta"
+        label={t("treatmentGiven")}
         visitKey="treatmentGiven"
         visit={selectedVisit}
         setVisit={setSelectedVisit}
@@ -161,8 +168,9 @@ export default function FormVisits() {
         onFocus={handleInputFocus}
         className="w-140 h-20"
       />
+
       <LabelInputVisits
-        label="Tratamiento"
+        label={t("prescribedTreatment")}
         visitKey="prescribedTreatment"
         visit={selectedVisit}
         setVisit={setSelectedVisit}

@@ -1,0 +1,37 @@
+{
+  "new": "Nuevo",
+  "edit": "Modificar",
+  "save": "Guardar",
+  "cancel": "Cancelar",
+  "delete": "Eliminar",
+  "tests": "Pruebas",
+  "treatment": "Tratamiento",
+  "certificate": "Certificado",
+  "statistics": "Estadísticas",
+  "report": "Informe",
+
+  "owner": "Propietario",
+  "customerNumber": "N. Cliente",
+  "petName": "Mascota",
+  "birthDate": "Fech Naci",
+  "age": "Edad",
+  "species": "Especie",
+  "breed": "Raza",
+  "sex": "Sexo",
+  "pedigree": "Pdg",
+  "color": "Color",
+  "TagNumber": "Placa",
+  "chip": "Chip",
+  "registrationDate": "Fech Regis",
+  "associate": "Asociar",
+
+  "pets": "Mascotas",
+
+  "pet": "Mascota",
+  "recordId": "Historia",
+
+  "vaccinesHistoryTitle": "Historial de vacunas y desparasitaciones",
+  "remove": "Quitar",
+  "date": "Fecha",
+  "vaccine": "Vacuna"
+}

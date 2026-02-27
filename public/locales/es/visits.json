@@ -1,0 +1,57 @@
+{
+  "addProcedure": "Agregar Procedimiento",
+  "procedure": "Procedimiento",
+  "cost": "Costo",
+  "continue": "Continuar",
+  "exit": "Salir",
+
+  "assignVeterinarian": "Agregar Médico",
+  "veterinarian": "Médico",
+  "saveVisit": "Guardar visita",
+
+  "visits": "Visitas",
+  "add": "Agregar",
+  "abort": "Anular",
+  "till": "Caja",
+  "estimates": "Presupuestos",
+  "pending": "Pendientes",
+  "edit": "Modificar",
+  "invoice": "Facturar",
+  "details": "Detalles",
+  "reports": "Reportes",
+
+  "today": "Hoy",
+  "byDate": "Por fecha",
+  "all": "Todas",
+
+  "consultingVet": "Médico consulta",
+  "weight": "Peso",
+  "reasonForVisit": "Motivo",
+  "physicalExamination": "Examen físico",
+  "diagnosisComments": "Diagnóstico - Comentarios",
+  "additionalTests": "Pruebas complementarias",
+  "treatmentGiven": "Tratamiento en consulta",
+  "prescribedTreatment": "Tratamiento",
+
+  "upcomingVisits": "Próximas visitas",
+  "schedule": "Citar",
+  "remove": "Quitar",
+  "date": "Fecha",
+  "vaccine": "Vacuna",
+
+  "totalVisits": "Total de visitas",
+  "loadingVisits": "Cargando visitas...",
+  "visit": "Visita",
+  "pet": "Mascota",
+  "owner": "Propietario",
+  "reason": "Motivo",
+  "vet": "Médico",
+  "historyShort": "H",
+  "examinationShort": "Ex",
+  "referredShort": "Ref",
+  "searchVisitNumber": "Buscar N. de Visita",
+  "viewVisits": "Ver Visitas",
+
+  "invoiceNumber": "Factura N.",
+  "amount": "Monto"
+}

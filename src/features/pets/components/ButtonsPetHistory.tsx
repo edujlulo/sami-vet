@@ -1,5 +1,6 @@
 import Button from "../../../components/Button";
 import type { Pet } from "../../../types/Pet";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,19 +25,21 @@ export default function ButtonsPetHistory({
   selectedPet,
   emptyPet,
 }: Props) {
+  const { t } = useTranslation("pets");
+
   return (
     <div className="bg-amber-200 py-2 px-2 mt-4">
       <div className="flex flex-col gap-1 overflow-x-auto">
         {/* Row 1 */}
         <div className="flex flex-row gap-1">
           <Button
-            name="Nuevo"
+            name={t("new")}
             onClick={handleNew}
             disabled={isEditing || isCreating}
             className="h-auto"
           />
           <Button
-            name="Modificar"
+            name={t("edit")}
             onClick={() => setIsEditing(true)}
             disabled={
               JSON.stringify(selectedPet) === JSON.stringify(emptyPet) ||
@@ -45,13 +48,13 @@ export default function ButtonsPetHistory({
             className="h-auto"
           />
           <Button
-            name="Guardar"
+            name={t("save")}
             onClick={handleSave}
             disabled={!isEditing && !isCreating}
             className="h-auto"
           />
           <Button
-            name="Cancelar"
+            name={t("cancel")}
             onClick={handleCancel}
             disabled={
               !isEditing &&
@@ -61,7 +64,7 @@ export default function ButtonsPetHistory({
             className="h-auto"
           />
           <Button
-            name="Eliminar"
+            name={t("delete")}
             onClick={handleDeletePet}
             disabled={
               JSON.stringify(selectedPet) === JSON.stringify(emptyPet) ||
@@ -70,13 +73,14 @@ export default function ButtonsPetHistory({
             className="h-auto"
           />
         </div>
+
         {/* Row 2 */}
         <div className="flex flex-row gap-1">
-          <Button name="Pruebas" className="h-auto" />
-          <Button name="Tratamiento" className="h-auto" />
-          <Button name="Certificado" className="h-auto" />
-          <Button name="Estadísticas" className="h-auto" />
-          <Button name="Informe" className="h-auto" />
+          <Button name={t("tests")} className="h-auto" />
+          <Button name={t("treatment")} className="h-auto" />
+          <Button name={t("certificate")} className="h-auto" />
+          <Button name={t("statistics")} className="h-auto" />
+          <Button name={t("report")} className="h-auto" />
         </div>
       </div>
     </div>

@@ -1,0 +1,26 @@
+{
+  "owner": "Propietario",
+  "new": "Nuevo",
+  "save": "Guardar",
+  "delete": "Eliminar",
+  "edit": "Modificar",
+  "cancel": "Cancelar",
+  "details": "Detalles",
+
+  "surname": "Apellidos",
+  "name": "Nombres",
+  "idCardNumber": "Cédula",
+  "rif": "R.I.F.",
+  "homePhone": "Telf. Habitación",
+  "mobilePhone": "Telf. Celular",
+  "officePhone": "Telf. Oficina",
+  "email": "Email",
+  "address": "Dirección",
+  "estate": "Urbanización",
+  "person": "Persona",
+  "taxpayer": "Contribuyente",
+  "registered": "Registrado",
+
+  "customerId": "Código",
+  "searchOwner": "Buscar propietario"
+}

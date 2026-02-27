@@ -1,0 +1,37 @@
+{
+  "new": "New",
+  "edit": "Edit",
+  "save": "Save",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "tests": "Tests",
+  "treatment": "Treatment",
+  "certificate": "Certificate",
+  "statistics": "Statistics",
+  "report": "Report",
+
+  "owner": "Owner",
+  "customerNumber": "Client ID",
+  "petName": "Pet Name",
+  "birthDate": "Birth Date",
+  "age": "Age",
+  "species": "Species",
+  "breed": "Breed",
+  "sex": "Sex",
+  "pedigree": "Pedigree",
+  "color": "Color",
+  "TagNumber": "Tag Number",
+  "chip": "Chip",
+  "registrationDate": "Reg. Date",
+  "associate": "Associate",
+
+  "pets": "Pets",
+
+  "recordId": "Record ID",
+  "pet": "Pet",
+
+  "vaccinesHistoryTitle": "Vaccination and Deworming History",
+  "remove": "Remove",
+  "date": "Date",
+  "vaccine": "Vaccine"
+}

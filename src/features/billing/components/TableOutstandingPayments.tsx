@@ -1,26 +1,27 @@
-// Outstanding payments table in OwnersPage.tsx
+import { useTranslation } from "react-i18next";
 
 export default function TableOutstandingPayments() {
+  const { t } = useTranslation("visits");
   const paymentsEmptyRows = 4;
 
   return (
     <div>
       {/* Outstanding payments table */}
       <p className="flex items-center justify-center text-blue-900 font-bold">
-        Cuentas por cobrar
+        {t("outstandingPayments")}
       </p>
       <div className="w-[290px] h-[118px] overflow-y-auto border border-gray-900">
         <table className="bg-amber-50 border border-gray-900 w-full table-fixed bg-amber-50">
           <thead>
             <tr>
               <th className="w-[33%] border border-gray-900 px-2 py-0.5">
-                Fact.
+                {t("invoice")}
               </th>
               <th className="w-[33%] border border-gray-900 px-2 py-0.5">
-                Fecha
+                {t("date")}
               </th>
               <th className="w-[33%] border border-gray-900 px-2 py-0.5">
-                Montcxco
+                {t("amount")}
               </th>
             </tr>
           </thead>

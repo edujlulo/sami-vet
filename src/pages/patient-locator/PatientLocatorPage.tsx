@@ -5,9 +5,12 @@ import { useOwnersContext } from "../../features/owners/context/OwnersContext";
 import { usePets } from "../../features/pets/hooks/usePets";
 import { usePetsByOwner } from "../../features/pets/hooks/usePetsByOwner";
 import { useVisits } from "../../features/visits/hooks/useVisits";
+import { useTranslation } from "react-i18next";
 // import { usePetsByOwner } from "../../features/pets/hooks/usePetsByOwner";
 
 export default function PatientLocatorPage() {
+  const { t } = useTranslation("patient-locator-page");
+
   const [activeTab, setActiveTab] = useState("A"); // state for active tab
 
   const { selectedOwner } = useOwnersContext();
@@ -46,7 +49,7 @@ export default function PatientLocatorPage() {
             `}
             onClick={() => setActiveTab("A")}
           >
-            Propietarios
+            {t("owners")}
           </button>
 
           <button
@@ -64,7 +67,7 @@ export default function PatientLocatorPage() {
             `}
             onClick={() => setActiveTab("B")}
           >
-            Historia de las Mascotas
+            {t("petHistory")}
           </button>
         </div>
 

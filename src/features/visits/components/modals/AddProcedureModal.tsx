@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Button from "../../../../components/Button";
 import LabelInputVisits from "../LabelInputVisits";
 import type { VisitEntity } from "../../../../types/VisitEntity";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   isOpenAddProcedureModal: boolean;
@@ -22,6 +23,8 @@ const AddProcedureModal: React.FC<Props> = ({
   handleCancelVisit,
   onContinueAddProcedureModal,
 }) => {
+  const { t } = useTranslation("visits");
+
   const nodeRef = useRef<HTMLDivElement>(null);
 
   if (!isOpenAddProcedureModal) return null;
@@ -47,8 +50,8 @@ const AddProcedureModal: React.FC<Props> = ({
         nodeRef={nodeRef}
         handle=".modal-header"
         defaultPosition={{
-          x: window.innerWidth / 2 - 200, // half of modal width (400px)
-          y: window.innerHeight / 2 - 180, // approx half height
+          x: window.innerWidth / 2 - 200,
+          y: window.innerHeight / 2 - 180,
         }}
       >
         <div
@@ -58,7 +61,7 @@ const AddProcedureModal: React.FC<Props> = ({
         >
           {/* Header estilo ventana */}
           <div className="modal-header cursor-move bg-blue-400 text-white px-4 py-3 flex justify-between items-center">
-            <h2 className="font-semibold text-lg">Agregar Procedimiento</h2>
+            <h2 className="font-semibold text-lg">{t("addProcedure")}</h2>
 
             {/* Botón X */}
             <button
@@ -74,7 +77,7 @@ const AddProcedureModal: React.FC<Props> = ({
             {/* Procedure */}
             <div className="mb-4">
               <LabelInputVisits
-                label="Procedimiento"
+                label={t("procedure")}
                 visitKey="procedure"
                 visit={selectedVisit ?? emptyVisit}
                 setVisit={setSelectedVisit}
@@ -86,7 +89,7 @@ const AddProcedureModal: React.FC<Props> = ({
             {/* Cost */}
             <div className="mb-10">
               <LabelInputVisits
-                label="Costo"
+                label={t("cost")}
                 visitKey="totalAmount"
                 visit={selectedVisit ?? emptyVisit}
                 setVisit={setSelectedVisit}
@@ -97,13 +100,13 @@ const AddProcedureModal: React.FC<Props> = ({
             {/* Buttons */}
             <div className="flex justify-end gap-6">
               <Button
-                name="Continuar"
+                name={t("continue")}
                 onClick={onContinueAddProcedureModal}
                 className="!border-blue-500 hover:!border-blue-900 hover:!bg-blue-50 !w-30"
               />
 
               <Button
-                name="Salir"
+                name={t("exit")}
                 onClick={handleCancelVisit}
                 className="text-red-900 border-red-400 hover:bg-red-50 hover:border-red-300 !w-20"
               />
@@ -112,7 +115,7 @@ const AddProcedureModal: React.FC<Props> = ({
         </div>
       </Draggable>
     </div>,
-    document.body
+    document.body,
   );
 };
 

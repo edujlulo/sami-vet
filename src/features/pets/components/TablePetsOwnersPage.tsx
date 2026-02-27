@@ -2,6 +2,7 @@ import { useRef, useState, useMemo } from "react";
 import type { Owner } from "../../../types/Owner";
 import type { Pet } from "../../../types/Pet";
 import { usePetsByOwner } from "../hooks/usePetsByOwner";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   selectedOwner: Owner;
@@ -14,13 +15,15 @@ export default function TablePetsOwnersPage({
   handleSelectPet,
   selectedPet,
 }: Props) {
+  const { t } = useTranslation("pets");
+
   const { pets } = usePetsByOwner(selectedOwner.id);
 
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
   const rowRefs = useRef<(HTMLTableRowElement | null)[]>([]);
 
-  const petsEmptyRows = 9 - pets.length;
+  const petsEmptyRows = 11 - pets.length;
 
   // Toggle sorting direction
   function handleSort() {
@@ -75,7 +78,7 @@ export default function TablePetsOwnersPage({
                 onClick={handleSort}
                 className="w-[90%] border border-gray-900 px-2 py-0.5 cursor-pointer select-none hover:bg-amber-200"
               >
-                Mascotas {sortDirection === "asc" ? "▲" : "▼"}
+                {t("pets")} {sortDirection === "asc" ? "▲" : "▼"}
               </th>
             </tr>
           </thead>

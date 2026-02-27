@@ -1,0 +1,26 @@
+{
+  "owner": "Owner",
+  "new": "New",
+  "save": "Save",
+  "delete": "Delete",
+  "edit": "Edit",
+  "cancel": "Cancel",
+  "details": "Details",
+
+  "surname": "Surname",
+  "name": "First Name",
+  "idCardNumber": "ID Number",
+  "rif": "Tax ID",
+  "homePhone": "Home Phone",
+  "mobilePhone": "Mobile Phone",
+  "officePhone": "Office Phone",
+  "email": "Email",
+  "address": "Address",
+  "estate": "Estate",
+  "person": "Person",
+  "taxpayer": "Taxpayer",
+  "registered": "Registered",
+
+  "customerId": "Client ID",
+  "searchOwner": "Search owner"
+}
