@@ -1,0 +1,18 @@
+{
+  "mainTitle": "MENU PRINCIPAL",
+  "locator": "Localizador",
+  "banks": "Bancos",
+  "status": "Estado",
+  "security": "Seguridad",
+  "settings": "Configurar",
+  "backup": "Respaldo",
+  "insurance": "Seguros",
+  "doctors": "Médicos",
+  "employee": "Empleado",
+  "concepts": "Conceptos",
+  "inventory": "Inventario",
+  "service": "Servicio",
+  "suppliers": "Proveedores G.",
+  "procedures": "Procedimientos",
+  "logout": "Salir"
+}

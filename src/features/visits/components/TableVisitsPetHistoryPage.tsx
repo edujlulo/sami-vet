@@ -15,7 +15,7 @@ export default function TableVisitsPetHistoryPage({
   const { selectedPet } = usePetsContext();
   const { visitsByPet } = useVisitsByPet(selectedPet?.id ?? null);
 
-  const emptyRows = 8;
+  const emptyRows = 9 - visitsByPet.length;
 
   const rowRefs = useRef<(HTMLTableRowElement | null)[]>([]);
 

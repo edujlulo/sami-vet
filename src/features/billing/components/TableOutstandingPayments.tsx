@@ -1,7 +1,7 @@
 // Outstanding payments table in OwnersPage.tsx
 
 export default function TableOutstandingPayments() {
-  const paymentsEmptyRows = 3;
+  const paymentsEmptyRows = 4;
 
   return (
     <div>

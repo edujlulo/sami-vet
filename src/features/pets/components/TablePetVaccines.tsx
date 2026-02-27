@@ -1,5 +1,5 @@
 export default function TablePetVaccines() {
-  const emptyRows = 6;
+  const emptyRows = 7;
 
   return (
     <div className="flex flex-col gap-2">

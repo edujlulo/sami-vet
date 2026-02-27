@@ -14,6 +14,7 @@ import { useVisits } from "../../features/visits/hooks/useVisits";
 import AssignVeterinarianModal from "../../features/visits/components/modals/AssignVeterinarianModal";
 import { useVisitsContext } from "../../features/visits/context/VisitsContext";
 import type { VisitWithRelations } from "../../types/VisitWithRelations";
+import LanguageSwitcher from "../../components/LanguageSwitcher";
 
 interface Props {
   handleSelectPet: (pet: Pet) => void;
@@ -45,6 +46,9 @@ export default function OwnersPage({
 
   return (
     <>
+      {/* Language buttons top-right */}
+      <LanguageSwitcher />
+
       <div className="bg-amber-200 pb-10 rounded-b-lg border border-t-0 border-gray-300 ">
         {/* Top box */}
         <div className="flex flex-row items-center justify-center gap-15">

@@ -20,7 +20,7 @@ export default function TablePetsOwnersPage({
 
   const rowRefs = useRef<(HTMLTableRowElement | null)[]>([]);
 
-  const petsEmptyRows = 8 - pets.length;
+  const petsEmptyRows = 9 - pets.length;
 
   // Toggle sorting direction
   function handleSort() {

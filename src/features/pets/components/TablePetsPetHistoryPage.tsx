@@ -14,7 +14,7 @@ export default function TablePetsPetHistoryPage({
   pets,
   selectedPet,
 }: TablePetsPetHistoryPageProps) {
-  const petsEmptyRows = 3 - pets.length;
+  const petsEmptyRows = 4 - pets.length;
 
   // Refs para scroll
   const rowRefs = useRef<(HTMLTableRowElement | null)[]>([]);

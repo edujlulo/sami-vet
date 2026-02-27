@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Button from "../../../components/Button";
 
 interface Props {
@@ -9,6 +10,7 @@ export default function ButtonsVisits({
   handleNewVisit,
   handleEditVisit,
 }: Props) {
+  const navigate = useNavigate();
   return (
     <div>
       <p className="flex items-center justify-center text-blue-900 font-bold">
@@ -34,7 +36,11 @@ export default function ButtonsVisits({
           <Button name="Facturar" className="h-auto" />
           <Button name="Detalles" className="h-auto" />
           <Button name="Reportes" className="h-auto" />
-          <Button name="Salir" className="h-auto text-red-900" />
+          <Button
+            name="Salir"
+            className="h-auto text-red-900"
+            onClick={() => navigate("/")}
+          />
         </div>
       </div>
     </div>

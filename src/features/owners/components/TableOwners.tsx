@@ -12,7 +12,7 @@ export default function TableOwners({
   handleSelect,
   selectedOwner,
 }: Props) {
-  const emptyRows = 8 - owners.length;
+  const emptyRows = 9 - owners.length;
 
   /* ================= SORT ================= */
 

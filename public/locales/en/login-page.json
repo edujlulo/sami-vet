@@ -1,0 +1,12 @@
+{
+  "clinicFullName": "Sistemas Administrativos Médicos Integrales",
+  "clinicTitle": "HUELLAS VETERINARY CLINIC",
+  "clinicLogoAlt": "Clinic Logo",
+  "systemSubtitle": "System for Veterinary Clinics",
+  "currentDate": "Current date 05/02/2026",
+  "enterPassword": "Please enter your password",
+  "passwordPlaceholder": "Password",
+  "loginButton": "Log In",
+  "wrongPassword": "Incorrect password",
+  "revisionDate": "Revision until 05/02/2026"
+}

@@ -1,0 +1,18 @@
+{
+  "mainTitle": "MAIN MENU",
+  "locator": "Locator",
+  "banks": "Banks",
+  "status": "Status",
+  "security": "Security",
+  "settings": "Settings",
+  "backup": "Backup",
+  "insurance": "Insurance",
+  "doctors": "Doctors",
+  "employee": "Employee",
+  "concepts": "Concepts",
+  "inventory": "Inventory",
+  "service": "Service",
+  "suppliers": "Suppliers",
+  "procedures": "Procedures",
+  "logout": "Logout"
+}

@@ -1,5 +1,5 @@
 export default function TableUpcomingVisits() {
-  const emptyRows = 6;
+  const emptyRows = 7;
 
   return (
     <div className="flex flex-col gap-2 mt-2">

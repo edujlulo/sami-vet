@@ -23,7 +23,7 @@ export default function TableVisitsOwnersPage({
   const [visits, setVisits] = useState<VisitWithRelations[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const emptyRows = 8 - visits.length;
+  const emptyRows = 9 - visits.length;
 
   const formattedDate = (date: string) =>
     new Date(date).toLocaleDateString("en-GB", {
