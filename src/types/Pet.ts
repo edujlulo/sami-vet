@@ -8,7 +8,6 @@ export type Pet = {
   sex: string;
   pedigree: string;
   color: string;
-  licensePlate?: string;
-  chip?: string;
+  microchip?: string;
   registrationDate: string | null;
 };

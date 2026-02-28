@@ -26,8 +26,7 @@ export function PetsProvider({ children }: { children: ReactNode }) {
     sex: "",
     pedigree: "",
     color: "",
-    licensePlate: "",
-    chip: "",
+    microchip: "",
     registrationDate: null,
   };
 

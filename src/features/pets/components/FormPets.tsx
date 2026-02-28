@@ -189,17 +189,8 @@ export default function FormPets({
             className="w-30"
           />
           <LabelInputPets
-            label={t("TagNumber")}
-            petKey="licensePlate"
-            pet={selectedPet ?? emptyPet}
-            setPet={setSelectedPet}
-            isEditing={isEditing}
-            isCreating={isCreating}
-            className="w-20"
-          />
-          <LabelInputPets
             label={t("chip")}
-            petKey="chip"
+            petKey="microchip"
             pet={selectedPet ?? emptyPet}
             setPet={setSelectedPet}
             isEditing={isEditing}
