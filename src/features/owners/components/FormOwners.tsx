@@ -36,14 +36,11 @@ export default function FormOwners({
   };
 
   return (
-    <div className="flex flex-col bg-amber-300 py-4 gap-0.5">
+    <div className="flex flex-col bg-amber-300 py-1 mt-2">
       <p className="flex items-center justify-center text-blue-900 font-bold">
         {t("owner")}
       </p>
-      <form
-        className="bg-amber-300 px-4 py-0 flex flex-col gap-0.5"
-        onSubmit={handleSubmit}
-      >
+      <form className="bg-amber-300 px-4 flex flex-col" onSubmit={handleSubmit}>
         {/* First row */}
         <div className="flex flex-row gap-2">
           <LabelInputOwners

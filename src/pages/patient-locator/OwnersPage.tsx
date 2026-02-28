@@ -49,10 +49,10 @@ export default function OwnersPage({
       {/* Language buttons top-right */}
       <LanguageSwitcher />
 
-      <div className="bg-amber-200 pb-10 rounded-b-lg border border-t-0 border-gray-300 ">
+      <div className="bg-amber-200 pb-4 rounded-b-lg border border-t-0 border-gray-300 ">
         {/* Top box */}
         <div className="flex flex-row items-center justify-center gap-15">
-          <div className="flex flex-col gap-2 items-center">
+          <div className="flex flex-col gap-1 items-center">
             <FormOwners
               selectedOwner={selectedOwner}
               setSelectedOwner={setSelectedOwner}
@@ -66,7 +66,7 @@ export default function OwnersPage({
               selectedOwner={selectedOwner}
             />
           </div>
-          <div className="flex flex-col items-center gap-6">
+          <div className="flex flex-col items-center gap-1">
             <ButtonsOwners
               setIsEditing={setIsEditing}
               selectedOwner={selectedOwner}

@@ -144,7 +144,7 @@ export default function TableOwners({
   }
 
   return (
-    <div>
+    <div className="mb-1">
       <div
         className="w-[675px] h-[250px] overflow-y-auto border border-gray-900 rounded-md focus-within:ring-3 focus-within:ring-blue-300"
         tabIndex={0}
@@ -250,7 +250,7 @@ export default function TableOwners({
         </table>
       </div>
 
-      <div className="mt-2">
+      <div className="mt-1">
         <p className="text-blue-900 font-bold">{t("searchOwner")}</p>
         <input className="bg-amber-50 border border-gray-700" />
       </div>

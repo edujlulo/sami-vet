@@ -24,7 +24,7 @@ export default function PatientLocatorPage() {
         className="
     bg-amber-100
     border-[20px] border-amber-400
-    px-2 py-8
+    px-2 py-2
     flex flex-col items-center
   
     w-[1400px]
@@ -36,7 +36,7 @@ export default function PatientLocatorPage() {
         <div className="flex space-x-2">
           <button
             className={`
-              px-68 py-2
+              px-75 py-2
               rounded-t-lg
               border
               border-b-0
@@ -54,7 +54,7 @@ export default function PatientLocatorPage() {
 
           <button
             className={`
-              px-56 py-2
+              px-65 py-2
               rounded-t-lg
               border
               border-b-0

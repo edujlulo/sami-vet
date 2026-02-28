@@ -65,7 +65,7 @@ export default function TablePetsOwnersPage({
   return (
     <div className="flex flex-col justify-center items-center">
       <div
-        className="w-[260px] h-[250px] overflow-y-auto border border-gray-900 focus-within:ring-3 focus-within:ring-blue-300 rounded-md"
+        className="w-[260px] h-[210px] overflow-y-auto border border-gray-900 focus-within:ring-3 focus-within:ring-blue-300 rounded-md"
         tabIndex={0}
         onKeyDown={handleKeyNavigation}
       >

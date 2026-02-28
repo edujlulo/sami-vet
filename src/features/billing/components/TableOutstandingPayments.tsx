@@ -1,11 +1,11 @@
 import { useTranslation } from "react-i18next";
 
 export default function TableOutstandingPayments() {
-  const { t } = useTranslation("visits");
+  const { t } = useTranslation("billing");
   const paymentsEmptyRows = 4;
 
   return (
-    <div>
+    <div className="mt-1">
       {/* Outstanding payments table */}
       <p className="flex items-center justify-center text-blue-900 font-bold">
         {t("outstandingPayments")}

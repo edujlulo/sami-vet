@@ -103,10 +103,10 @@ export default function TableVisitsPetHistoryPage({
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-1">
       <p className="text-blue-800 font-bold">{t("visits")}:</p>
       <div
-        className="w-[700px] h-[250px] overflow-y-auto border border-gray-900 focus-within:ring-3 focus-within:ring-blue-300 rounded-md"
+        className="w-[700px] h-[240px] overflow-y-auto border border-gray-900 focus-within:ring-3 focus-within:ring-blue-300 rounded-md"
         tabIndex={0}
         onKeyDown={handleKeyNavigation}
       >

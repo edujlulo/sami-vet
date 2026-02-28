@@ -28,7 +28,7 @@ export default function ButtonsOwners({
   const { t } = useTranslation("owners");
 
   return (
-    <div className="bg-amber-200 py-2 px-2 mt-4">
+    <div className="bg-amber-200 py-2 px-2">
       <p className="flex items-center justify-center text-blue-900 font-bold">
         {t("owner")}
       </p>

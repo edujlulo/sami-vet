@@ -52,7 +52,7 @@ export default function PetHistoryPage({
       {/* Language buttons top-right */}
       <LanguageSwitcher />
 
-      <div className="bg-amber-200 px-8 py-6 flex justify-center items-center rounded-b-lg border border-t-0 border-gray-300">
+      <div className="bg-amber-200 px-8 py-3 flex justify-center items-center rounded-b-lg border border-t-0 border-gray-300">
         <div className="flex flex-col justify-center items-center gap-1">
           {/* --- Main top box --- */}
           <div className="flex flex-row gap-2">

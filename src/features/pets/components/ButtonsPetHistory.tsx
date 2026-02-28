@@ -28,7 +28,7 @@ export default function ButtonsPetHistory({
   const { t } = useTranslation("pets");
 
   return (
-    <div className="bg-amber-200 py-2 px-2 mt-4">
+    <div className="bg-amber-200 py-2 px-2 mt-2">
       <div className="flex flex-col gap-1 overflow-x-auto">
         {/* Row 1 */}
         <div className="flex flex-row gap-1">

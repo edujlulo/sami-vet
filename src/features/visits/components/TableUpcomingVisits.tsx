@@ -6,7 +6,7 @@ export default function TableUpcomingVisits() {
   const emptyRows = 9;
 
   return (
-    <div className="flex flex-col gap-2 mt-2">
+    <div className="flex flex-col gap-2 mt-1">
       <div className="flex flex-row gap-2 items-center mb-1">
         <p className="text-red-800 font-bold w-35">{t("upcomingVisits")}:</p>
 
@@ -67,7 +67,7 @@ export default function TableUpcomingVisits() {
         </button>
       </div>
 
-      <div className="w-[320px] h-[205px] overflow-y-auto border border-gray-900">
+      <div className="w-[320px] h-[165px] overflow-y-auto border border-gray-900">
         <table className="bg-amber-50 border border-gray-900 w-full table-fixed text-ellipsis">
           <thead>
             <tr>

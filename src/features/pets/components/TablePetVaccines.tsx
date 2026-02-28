@@ -39,7 +39,7 @@ export default function TablePetVaccines() {
           {t("remove")}
         </button>
       </div>
-      <div className="w-[320px] h-[205px] overflow-y-auto border border-gray-900">
+      <div className="w-[320px] h-[165px] overflow-y-auto border border-gray-900">
         <table className="bg-amber-50 border border-gray-900 w-full table-fixed bg-amber-50 text-ellipsis">
           <thead>
             <tr>
