@@ -23,24 +23,26 @@ The goal is not just to build a demo app, but to simulate a professional-grade s
 
 The project follows a feature-based folder structure to keep scalability and maintainability in mind.
 
+```plaintext
 src/
 ├── features/
-│ ├── owners/
-| | ├── components/
-| | ├── hooks/
-| | └── services/
-│ ├── pets/
-| | ├── components/
-| | ├── hooks/
-| | └── services/
-│ └── visits/
-| ├── components/
-| ├── hooks/
-| └── services/
+│   ├── owners/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   └── services/
+│   ├── pets/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   └── services/
+│   └── visits/
+│       ├── components/
+│       ├── hooks/
+│       └── services/
 ├── helpers/
 ├── pages/
 ├── routes/
 └── types/
+```
 
 Each feature encapsulates:
 
