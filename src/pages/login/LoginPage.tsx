@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LanguageSwitcher from "../../components/LanguageSwitcher";
 import { useTranslation } from "react-i18next";
@@ -10,23 +10,33 @@ type LoginPageProps = {
 export default function LoginPage({ onLogin }: LoginPageProps) {
   const { t } = useTranslation("login-page");
 
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
+  // With password authentication:
+  // const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   if (password === "greta") {
+  //     localStorage.setItem("isLoggedIn", "true"); // ✅ Persistir login
+  //     onLogin();
+  //     setPassword("");
+  //     setError("");
+  //     navigate("/");
+  //   } else {
+  //     setError(t("wrongPassword"));
+  //     setPassword("");
+  //   }
+  // };
+
+  // Without password authentication:
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (password === "greta") {
-      localStorage.setItem("isLoggedIn", "true"); // ✅ Persistir login
-      onLogin();
-      setPassword("");
-      setError("");
-      navigate("/");
-    } else {
-      setError(t("wrongPassword"));
-      setPassword("");
-    }
+
+    localStorage.setItem("isLoggedIn", "true"); // ✅ Persist login
+    onLogin();
+    navigate("/");
   };
 
   // La frase con iniciales rojas
@@ -69,9 +79,9 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
             {/* Form */}
             <form
               onSubmit={handleLogin}
-              className="flex flex-col items-center gap-2"
+              className="flex flex-col items-center gap-2 px-50 py-10"
             >
-              <div className="flex flex-row justify-center items-center">
+              {/* <div className="flex flex-row justify-center items-center">
                 <p className="text-lg text-green-800 font-bold leading-none pb-3">
                   {t("enterPassword")}
                 </p>
@@ -85,10 +95,10 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
                   }}
                   className="border p-2 mb-2 bg-amber-50 ml-4 w-30 h-10"
                 />
-              </div>
+              </div> */}
 
               {/* Error message */}
-              {error && <p className="text-red-600 font-bold mt-1">{error}</p>}
+              {/* {error && <p className="text-red-600 font-bold mt-1">{error}</p>} */}
 
               <button
                 type="submit"
