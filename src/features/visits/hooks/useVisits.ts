@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { VisitEntity } from "../../../types/VisitEntity";
 import type { VisitWithRelations } from "../../../types/VisitWithRelations";
 import { useVisitsContext } from "../context/VisitsContext";
 import {
   deleteVisit,
+  fetchVisitsByDate,
   fetchVisitsService,
   insertVisit,
   updateVisit,
@@ -16,9 +17,12 @@ export function useVisits() {
   const { selectedVisit, setSelectedVisit, emptyVisit } = useVisitsContext();
   const { selectedPet, setSelectedPet, emptyPet } = usePetsContext();
   const { selectedOwner } = useOwnersContext();
-  const [visits, setVisits] = useState<VisitWithRelations[]>([]);
 
   const { pets } = usePetsByOwner(selectedOwner.id);
+
+  // 🔹 STATE VISITS (ahora vive aquí)
+  const [visits, setVisits] = useState<VisitWithRelations[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const [isEditing, setIsEditing] = useState(true);
   const [isCreating, setIsCreating] = useState(false);
@@ -27,22 +31,36 @@ export function useVisits() {
   const [isOpenAssignVeterinarianModal, setIsOpenAssignVeterinarianModal] =
     useState(false);
 
-  // ================= FETCH ALL VISITS =================
-
-  const fetchVisits = useCallback(async () => {
-    try {
-      const data = await fetchVisitsService();
-      setVisits(data);
-      return data;
-    } catch (error) {
-      console.error("Error fetching visits:", error);
-      return [];
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchVisits();
-  }, [fetchVisits]);
+  function toVisitWithRelations(
+    visit: VisitEntity,
+    selectedOwner: { id: number; name: string; surname: string },
+    selectedPet: { id: number; name: string },
+  ): VisitWithRelations {
+    return {
+      id: visit.id,
+      petId: selectedPet.id!,
+      ownerId: selectedOwner.id,
+      invoiceNumber: visit.invoiceNumber || "",
+      visitDate: visit.visitDate || "",
+      petName: selectedPet.name,
+      ownerSurname: selectedOwner.surname,
+      ownerName: selectedOwner.name,
+      procedure: visit.procedure || "",
+      vet: visit.vet || "",
+      h: visit.h || "",
+      ex: visit.ex || "",
+      referredBy: visit.referredBy || "",
+      totalAmount: visit.totalAmount || "",
+      weightKg: visit.weightKg || "",
+      reasonForVisit: visit.reasonForVisit || "",
+      physicalExamination: visit.physicalExamination || "",
+      diagnosis: visit.diagnosis || "",
+      notes: visit.notes || "",
+      additionalTests: visit.additionalTests || "",
+      treatmentGiven: visit.treatmentGiven || "",
+      prescribedTreatment: visit.prescribedTreatment || "",
+    };
+  }
 
   // =========== SELECT PET AFTER SELECTED VISIT ============
   useEffect(() => {
@@ -90,40 +108,59 @@ export function useVisits() {
 
   // ================= SAVE =================
   async function handleSaveVisit() {
+    if (!selectedPet?.id) {
+      window.alert("La mascota seleccionada no tiene un ID válido");
+      return;
+    }
+
+    if (!selectedOwner?.id) {
+      window.alert("El propietario seleccionado no tiene un ID válido");
+      return;
+    }
+
     if (!selectedVisit?.vet?.trim()) {
       window.alert("Debe ingresar un médico");
       return;
     }
 
     try {
-      if (!selectedVisit) throw new Error("No visit selected");
-      if (!selectedPet) throw new Error("No pet selected");
-
       const visitToSave: VisitEntity = {
         ...selectedVisit,
-        petId: selectedPet.id!,
+        petId: selectedPet.id,
         visitDate:
           selectedVisit.visitDate || new Date().toISOString().split("T")[0],
       };
 
-      if (isEditing) {
-        console.log("Updating visit data...");
-        if (!visitToSave.id || visitToSave.id === 0) {
-          throw new Error("Cannot update visit without a valid ID");
-        }
-        await updateVisit(visitToSave);
-        setIsOpenAssignVeterinarianModal(false);
-      } else if (isCreating) {
-        console.log("Saving new visit data...");
-        await insertVisit(visitToSave);
+      if (isCreating) {
+        const savedVisit = await insertVisit(visitToSave);
+        const visitWithRelations = toVisitWithRelations(
+          savedVisit,
+          selectedOwner,
+          {
+            id: selectedPet.id,
+            name: selectedPet.name,
+          },
+        );
+        addVisit(visitWithRelations); // ✅ actualización automática de la tabla
+        setSelectedVisit(visitWithRelations);
         setIsCreating(false);
         setIsOpenAssignVeterinarianModal(false);
         setIsEditing(true);
-      } else {
-        return;
+      } else if (isEditing) {
+        const savedVisit = await updateVisit(visitToSave);
+        const visitWithRelations = toVisitWithRelations(
+          savedVisit,
+          selectedOwner,
+          {
+            id: selectedPet.id,
+            name: selectedPet.name,
+          },
+        );
+        updateVisitInArray(visitWithRelations); // ✅ actualización automática de la tabla
+        setIsOpenAssignVeterinarianModal(false);
       }
     } catch (error) {
-      console.error("Error saving visit:", error);
+      console.error(error);
     }
   }
 
@@ -138,7 +175,7 @@ export function useVisits() {
 
     try {
       await deleteVisit(selectedVisit.id);
-      await fetchVisits();
+      // await fetchVisits();
       setSelectedVisit(emptyVisit);
       setIsCreating(false);
     } catch (error) {
@@ -153,7 +190,7 @@ export function useVisits() {
     setIsCreating(false);
   }
 
-  // ============ ON CONTINUE ADD PROCEDURE MODAL ==============
+  // ============ ON CONTINUE AddProcedureModal.tsx ==============
   function onContinueAddProcedureModal() {
     if (!selectedVisit?.procedure?.trim()) {
       alert("Debe ingresar un procedimiento");
@@ -163,8 +200,64 @@ export function useVisits() {
     setIsOpenAddProcedureModal(false);
   }
 
+  // ================= LOAD ALL =================
+  const loadVisitsAll = async () => {
+    try {
+      setLoading(true);
+
+      const data = await fetchVisitsService();
+      setVisits(data);
+    } catch (error) {
+      console.error("Error loading visits:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ================= LOAD BY DATE =================
+  const loadVisitsByDate = async (date: string) => {
+    try {
+      setLoading(true);
+      const data = await fetchVisitsByDate(date);
+      setVisits(data);
+    } catch (error) {
+      console.error("Error loading visits by date:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ================= LOAD TODAY =================
+  const loadVisitsToday = async () => {
+    const today = new Date().toISOString().split("T")[0];
+    await loadVisitsByDate(today);
+  };
+
+  // ================= HANDLE FILTER =================
+  const handleFilterChange = (
+    filter: "today" | "byDate" | "all",
+    date?: string,
+  ) => {
+    if (filter === "today") {
+      loadVisitsToday();
+    } else if (filter === "byDate" && date) {
+      loadVisitsByDate(date);
+    } else {
+      loadVisitsAll();
+    }
+  };
+
+  // ============ Add new visit after created ============
+  const addVisit = (visit: VisitWithRelations) => {
+    setVisits((prev) => [visit, ...prev]);
+  };
+
+  // ============ Update visit after edited ============
+  const updateVisitInArray = (visit: VisitWithRelations) => {
+    setVisits((prev) => prev.map((v) => (v.id === visit.id ? visit : v)));
+  };
+
   return {
-    visits,
     handleSelectVisit,
     handleCancelVisit,
     handleSaveVisit,
@@ -181,5 +274,8 @@ export function useVisits() {
     isOpenAddProcedureModal,
     onContinueAddProcedureModal,
     isOpenAssignVeterinarianModal,
+    visits,
+    loading,
+    handleFilterChange,
   };
 }

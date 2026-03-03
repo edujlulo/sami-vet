@@ -92,6 +92,9 @@ export default function OwnersPage({
           <TableVisitsOwnersPage
             handleSelectVisit={handleSelectVisit}
             selectedVisit={selectedVisit}
+            visits={visits.visits}
+            loading={visits.loading}
+            handleFilterChange={visits.handleFilterChange}
           />
           <ButtonsVisits
             handleNewVisit={visits.handleNewVisit}

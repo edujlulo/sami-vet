@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 interface Props {
-  onFilterChange: (filter: "today" | "byDate" | "all", date?: string) => void;
+  handleFilterChange: (
+    filter: "today" | "byDate" | "all",
+    date?: string,
+  ) => void;
 }
 
 export default function FiltersTableVisitsOwnersPage({
-  onFilterChange,
+  handleFilterChange,
 }: Props) {
   const { t } = useTranslation("visits");
 
@@ -18,9 +21,9 @@ export default function FiltersTableVisitsOwnersPage({
   const handleSelect = (value: "today" | "byDate" | "all") => {
     setSelected(value);
     if (value === "byDate") {
-      onFilterChange(value, date);
+      handleFilterChange(value, date);
     } else {
-      onFilterChange(value);
+      handleFilterChange(value);
     }
   };
 
@@ -28,13 +31,13 @@ export default function FiltersTableVisitsOwnersPage({
     const newDate = e.target.value;
     setDate(newDate);
     if (selected === "byDate") {
-      onFilterChange("byDate", newDate);
+      handleFilterChange("byDate", newDate);
     }
   };
 
   // Initial filter will be today
   useEffect(() => {
-    onFilterChange("all");
+    handleFilterChange("all");
   }, []);
 
   return (

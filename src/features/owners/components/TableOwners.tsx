@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Owner } from "../../../types/Owner";
 import { useTranslation } from "react-i18next";
 
@@ -142,6 +142,25 @@ export default function TableOwners({
       />
     );
   }
+
+  // ========== Auto scroll when change selectedOwner ==========
+  useEffect(() => {
+    if (!selectedOwner) return;
+
+    const index = sortedOwners.findIndex((o) => o.id === selectedOwner.id);
+    if (index === -1) return;
+
+    const row = rowRefs.current[index];
+    const container = row?.closest("div"); // tu div scrollable
+
+    if (row && container) {
+      const containerTop = container.getBoundingClientRect().top;
+      const rowTop = row.getBoundingClientRect().top;
+
+      const stickyOffset = 25; // <- altura de tu sticky header en px (ajusta según tu CSS)
+      container.scrollTop += rowTop - containerTop - stickyOffset;
+    }
+  }, [selectedOwner, sortedOwners]);
 
   return (
     <div className="mb-1">
