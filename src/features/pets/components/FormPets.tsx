@@ -149,6 +149,7 @@ export default function FormPets({
             setPet={setSelectedPet}
             isEditing={isEditing}
             isCreating={isCreating}
+            className="w-35"
           />
           <LabelInputPets
             label={t("breed")}
@@ -165,7 +166,7 @@ export default function FormPets({
             setPet={setSelectedPet}
             isEditing={isEditing}
             isCreating={isCreating}
-            className="w-30"
+            className="w-35"
           />
           <LabelInputPets
             label={t("pedigree")}
@@ -208,7 +209,7 @@ export default function FormPets({
                 ? "text"
                 : "date"
             }
-            className="w-30"
+            className="w-40"
           />
           <button
             type="submit"

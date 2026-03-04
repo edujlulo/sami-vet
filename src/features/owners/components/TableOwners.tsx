@@ -157,7 +157,7 @@ export default function TableOwners({
       const containerTop = container.getBoundingClientRect().top;
       const rowTop = row.getBoundingClientRect().top;
 
-      const stickyOffset = 25; // <- altura de tu sticky header en px (ajusta según tu CSS)
+      const stickyOffset = 95; // <- altura de tu sticky header en px (ajusta según tu CSS)
       container.scrollTop += rowTop - containerTop - stickyOffset;
     }
   }, [selectedOwner, sortedOwners]);
