@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { VisitEntity } from "../../../types/VisitEntity";
 import type { VisitWithRelations } from "../../../types/VisitWithRelations";
 import { useOwners } from "../../owners/hooks/useOwners";
@@ -53,7 +53,11 @@ export default function TableVisitsOwnersPage({
   }
 
   const sortedVisits = [...visits].sort((a, b) => {
-    if (!sortConfig.key) return a.id - b.id;
+    if (!sortConfig.key) {
+      if (a.id === undefined) return 1;
+      if (b.id === undefined) return -1;
+      return a.id - b.id;
+    }
 
     const aValue = a[sortConfig.key];
     const bValue = b[sortConfig.key];
@@ -128,7 +132,7 @@ export default function TableVisitsOwnersPage({
     );
   }
 
-  // ===================== Navigation con teclado =====================
+  // ===================== Navigation with keyboard =====================
   const rowRefs = useRef<(HTMLTableRowElement | null)[]>([]);
 
   function handleKeyNavigation(e: React.KeyboardEvent<HTMLDivElement>) {
@@ -154,6 +158,25 @@ export default function TableVisitsOwnersPage({
       e.preventDefault();
     }
   }
+
+  // ========== Auto scroll when change selectedOwner ==========
+  useEffect(() => {
+    if (!selectedVisit) return;
+
+    const index = sortedVisits.findIndex((o) => o.id === selectedVisit.id);
+    if (index === -1) return;
+
+    const row = rowRefs.current[index];
+    const container = row?.closest("div"); // tu div scrollable
+
+    if (row && container) {
+      const containerTop = container.getBoundingClientRect().top;
+      const rowTop = row.getBoundingClientRect().top;
+
+      const stickyOffset = 25; // <- altura de tu sticky header en px (ajusta según tu CSS)
+      container.scrollTop += rowTop - containerTop - stickyOffset;
+    }
+  }, [selectedVisit, sortedVisits]);
 
   // ===================== UI =====================
   return (
@@ -207,7 +230,9 @@ export default function TableVisitsOwnersPage({
             {sortedVisits.map((visit, index) => (
               <tr
                 key={visit.id}
-                ref={(el) => (rowRefs.current[index] = el)}
+                ref={(el) => {
+                  rowRefs.current[index] = el;
+                }}
                 onClick={() => {
                   handleSelectVisit(visit);
                   handleSelectOwnerById(visit.ownerId);
