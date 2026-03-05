@@ -13,6 +13,8 @@ export default function PatientLocatorPage() {
 
   const [activeTab, setActiveTab] = useState("A"); // state for active tab
 
+  const [showInvoicesPage, setShowInvoicesPage] = useState(false); // State for show the invoices page
+
   const { selectedOwner } = useOwnersContext();
   const { refetch } = usePetsByOwner(selectedOwner.id);
   const { handleSelectPet } = usePets({ refetch });
@@ -33,9 +35,11 @@ export default function PatientLocatorPage() {
         {/* --- Tabs --- */}
 
         {/* --- Header with tabs --- */}
-        <div className="flex space-x-2">
-          <button
-            className={`
+
+        {!showInvoicesPage && (
+          <div className="flex space-x-2">
+            <button
+              className={`
               px-75 py-2
               rounded-t-lg
               border
@@ -47,13 +51,13 @@ export default function PatientLocatorPage() {
                   : "bg-amber-500 border-transparent hover:bg-amber-600"
               }
             `}
-            onClick={() => setActiveTab("A")}
-          >
-            {t("owners")}
-          </button>
+              onClick={() => setActiveTab("A")}
+            >
+              {t("owners")}
+            </button>
 
-          <button
-            className={`
+            <button
+              className={`
               px-65 py-2
               rounded-t-lg
               border
@@ -65,11 +69,12 @@ export default function PatientLocatorPage() {
                   : "bg-amber-500 border-transparent hover:bg-amber-600"
               }
             `}
-            onClick={() => setActiveTab("B")}
-          >
-            {t("petHistory")}
-          </button>
-        </div>
+              onClick={() => setActiveTab("B")}
+            >
+              {t("petHistory")}
+            </button>
+          </div>
+        )}
 
         {/* --- Tabs contein --- */}
         <div>
@@ -77,6 +82,8 @@ export default function PatientLocatorPage() {
             <OwnersPage
               handleSelectPet={handleSelectPet}
               handleSelectVisit={handleSelectVisit}
+              showInvoicesPage={showInvoicesPage}
+              setShowInvoicesPage={setShowInvoicesPage}
             />
           )}
           {activeTab === "B" && (

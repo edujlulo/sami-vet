@@ -3,7 +3,6 @@ import TableOwners from "../../features/owners/components/TableOwners";
 import ButtonsOwners from "../../features/owners/components/ButtonsOwners";
 import TablePetsOwnersPage from "../../features/pets/components/TablePetsOwnersPage";
 import TableVisitsOwnersPage from "../../features/visits/components/TableVisitsOwnersPage";
-import TableOutstandingPayments from "../../features/billing/components/TableOutstandingPayments";
 import ButtonsVisits from "../../features/visits/components/ButtonsVisits";
 import { useOwners } from "../../features/owners/hooks/useOwners";
 import { useOwnersContext } from "../../features/owners/context/OwnersContext";
@@ -15,15 +14,21 @@ import AssignVeterinarianModal from "../../features/visits/components/modals/Ass
 import { useVisitsContext } from "../../features/visits/context/VisitsContext";
 import type { VisitWithRelations } from "../../types/VisitWithRelations";
 import LanguageSwitcher from "../../components/LanguageSwitcher";
+import TableOutstandingPaymentsOwnersPage from "../../features/invoices/components/TableOutstandingPaymentsOwnersPage";
+import InvoicesPage from "../../features/invoices/components/InvoicesPage";
 
 interface Props {
   handleSelectPet: (pet: Pet) => void;
   handleSelectVisit: (visit: VisitWithRelations) => void;
+  showInvoicesPage: boolean;
+  setShowInvoicesPage: boolean;
 }
 
 export default function OwnersPage({
   handleSelectPet,
   handleSelectVisit,
+  showInvoicesPage,
+  setShowInvoicesPage,
 }: Props) {
   const {
     owners,
@@ -44,6 +49,16 @@ export default function OwnersPage({
   const { selectedPet } = usePetsContext();
   const { selectedVisit, setSelectedVisit, emptyVisit } = useVisitsContext();
 
+  // =================== Invoice Page UI ====================
+  if (showInvoicesPage) {
+    return (
+      <>
+        <InvoicesPage setShowInvoicesPage={setShowInvoicesPage} />
+      </>
+    );
+  }
+
+  // =================== Owners Page UI ====================
   return (
     <>
       {/* Language buttons top-right */}
@@ -83,7 +98,7 @@ export default function OwnersPage({
               handleSelectPet={handleSelectPet}
               selectedPet={selectedPet}
             />
-            <TableOutstandingPayments />
+            <TableOutstandingPaymentsOwnersPage />
           </div>
         </div>
 
@@ -99,6 +114,7 @@ export default function OwnersPage({
           <ButtonsVisits
             handleNewVisit={visits.handleNewVisit}
             handleEditVisit={visits.handleEditVisit}
+            setShowInvoicesPage={setShowInvoicesPage}
           />
         </div>
       </div>

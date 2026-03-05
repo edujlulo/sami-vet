@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-export default function TableOutstandingPayments() {
+export default function TableOutstandingPaymentsOwnersPage() {
   const { t } = useTranslation("billing");
   const paymentsEmptyRows = 4;
 

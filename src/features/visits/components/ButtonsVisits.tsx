@@ -5,11 +5,13 @@ import { useTranslation } from "react-i18next";
 interface Props {
   handleNewVisit: () => void;
   handleEditVisit: () => void;
+  setShowInvoicesPage: boolean;
 }
 
 export default function ButtonsVisits({
   handleNewVisit,
   handleEditVisit,
+  setShowInvoicesPage,
 }: Props) {
   const { t } = useTranslation("visits");
   const navigate = useNavigate();
@@ -37,7 +39,11 @@ export default function ButtonsVisits({
             onClick={handleEditVisit}
             className="h-auto"
           />
-          <Button name={t("invoice")} className="h-auto" />
+          <Button
+            name={t("invoice")}
+            onClick={() => setShowInvoicesPage(true)}
+            className="h-auto"
+          />
           <Button name={t("details")} className="h-auto" />
           <Button name={t("reports")} className="h-auto" />
           <Button
